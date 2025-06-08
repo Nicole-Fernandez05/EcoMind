@@ -201,7 +201,7 @@ main {
 /* Hero Section - Combined Background */
 .hero-section {
     position: relative;
-    background-image: url('https://placehold.co/1920x1080/c0d7f2/333?text=Mountain+Landscape+with+Person');
+    background-image: url('../images/backgroundwiththegirl.svg');
     background-size: cover;
     background-position: center bottom;
     color: #fff;
