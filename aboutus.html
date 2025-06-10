@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoMind</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/cssaboutus.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <button class="hamburger-icon" id="hamburger-icon">☰</button>
+            <div class="logo">
+                <span class="logo-icon">
+                    <img src="https://placehold.co/30x30/4CAF50/fff?text=L" alt="Leaf Icon">
+                </span>
+                ECOMIND
+            </div>
+        </div>
+        <nav class="top-nav-links">
+            <a href="#home" class="active">Home</a>
+            <a href="#about-us">About Us</a>
+            <a href="#modules">Modules</a>
+            <a href="#game">Game</a>
+            <a href="#" class="login-btn">Login</a>
+        </nav>
+    </header>
+
+    <!-- Sliding Sidebar Container -->
+    <div class="sidebar-container" id="sidebar-container">
+        <aside class="sidebar-menu" id="sidebar-menu">
+            <button class="close-sidebar-btn" id="close-sidebar-btn">&times;</button>
+            <ul class="sidebar-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#modules">Modules</a></li>
+                <li><a href="#quizzes">Quizzes</a></li>
+                <li><a href="#final-assessment">Final Assessment</a></li>
+                <li><a href="#certification">Certification</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <main>
+        <section class="hero-section" id="about-us">
+            <div class="hero-overlay"></div>
+            <div class="hero-globe-illustration"></div>
+            <div class="hero-content">
+                <h1>What about us</h1>
+                <p>
+                    EcoMind is a web-based educational platform dedicated to promoting awareness and action on proper waste management.
+                    Our goal is to equip students, volunteers, and community members with the knowledge and tools needed to understand the
+                    environmental impact of waste and adopt responsible disposal practices. Through interactive lessons, quizzes, and real-world
+                    challenges, we aim to build a more informed and environmentally responsible generation.
+                </p>
+            </div>
+        </section>
+
+        <section class="partnerships-section">
+            <div class="partnerships-content">
+                <div class="partner-logos">
+                    <div class="partner-logo-item">
+                        <a href="https://www.ivolunteer.com.ph/"><img src="images/iVolunteer Logo.svg" alt="iVOLUNTEER Logo"></a>
+                    </div>
+                    <div class="partner-logo-item">
+                        <a href="https://www.savethechildren.org.ph/"><img src="images/Save the Children Logo.svg" alt="Save the Children Logo"></a>
+                    </div>
+                    <div class="partner-logo-item">
+                        <a href="https://www.pnvsca.gov.ph/"><img src="images/PNVSCA Logo.svg" alt="PNVSCA Logo"></a>
+                    </div>
+                    <div class="partner-logo-item">
+                        <a href="https://preciousplasticph.com/"><img src="images/Precious Plastic Logo.svg" alt="Precious Plastic Logo"></a>
+                    </div>
+                    <div class="partner-logo-item">
+                        <a href="https://www.parms.com.ph/"><img src="images/parms logo.svg" alt="parms logo"></a>
+                    </div>
+                    <div class="partner-logo-item">
+                        <a href="https://tzuchi.org.ph/what-we-do/environmental-protection/recycling-center/"><img src="images/tzuchi logo.svg" alt="tzuchi logo"></a>
+                    </div>
+                </div>
+                <div class="partnerships-text">
+                    <h3>Partnerships organizations</h3>
+                    <p>Discover our partner organizations—NGOs, government programs, and environmental groups—working together to promote sustainable waste management and community impact.</p>
+                </div>
+            </div>
+        </section>
+
+            <!-- This is the container where comments will be displayed dynamically -->
+            <div id="dropBoxContainer"></div>
+
+            <div class="comment-form-container">
+                <label for="comment">Add Comment</label>
+                <textarea id="comment" placeholder="Write your comment here..."></textarea>
+                <!-- Checkbox for anonymous posting -->
+                <div class="checkbox-container">
+                    <input type="checkbox" id="anonymousCheckbox" />
+                    <label for="anonymousCheckbox" style="display:inline; margin-left:8px;">Post anonymously</label>
+                </div>
+                <button type="submit">Submit</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-column">
+                <h3>ECOMIND</h3>
+                <div class="footer-social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                    <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+                    <a href="#"><i class="fab fa-pinterest"></i> Pinterest</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>About Us</h3>
+                <ul>
+                    <li><a href="#">About Ecomind</a></li>
+                    <li><a href="#">Vision & Mission</a></li>
+                    <li><a href="#">Partnership</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li>1-800-555-5555</li>
+                    <li><a href="#">Join us</a></li>
+                    <li><a href="#">Email us</a></li>
+                    <li><a href="#">Customer Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Learning</h3>
+                <ul>
+                    <li><a href="#">Modules</a></li>
+                    <li><a href="#">Quizzes</a></li>
+                    <li><a href="#">Games</a></li>
+                    <li><a href="#">Volunteers</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2025 Ecomind</span>
+            <a href="#">Ecomind Policies</a>
+            <a href="#">Terms of Use</a>
+            <a href="#">About us</a>
+        </div>
+    </footer>
+</body>
+<script src="js/jsaboutus.js"></script>
+</html>
