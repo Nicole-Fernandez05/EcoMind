@@ -1,0 +1,499 @@
+/* Basic Reset & Body Styling (Essential for consistent layout) */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f8f8;
+    display: flex; /* Use flexbox for main layout */
+    flex-direction: column; /* Stack header, main, and footer vertically */
+    min-height: 100vh; /* Ensure body takes full viewport height */
+    overflow-x: hidden; /* Prevent horizontal scroll due to sidebar */
+    /* Placeholder for login background image */
+    background-image: url('../images/backgroundlogin.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+}
+
+/* Overlay for the background image */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.25);
+    z-index: -1;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/*
+------------------------------------------
+NAVIGATION BAR (HEADER) STYLES
+------------------------------------------
+*/
+.header {
+    background-color: #fff;
+    padding: 15px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    position: fixed; /* Make header fixed */
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100; /* Ensure it's above other content */
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    display: flex; /* Make logo itself a flex container */
+    align-items: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    gap: 10px; /* Space between logo icon, text, and hamburger */
+}
+
+.logo-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #4CAF50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    flex-shrink: 0; /* Prevent icon from shrinking */
+}
+
+.logo-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Hamburger Menu Icon - Always visible and inside .logo */
+.hamburger-icon {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+    padding: 5px;
+    display: block; /* Always visible */
+    flex-shrink: 0; /* Prevent icon from shrinking */
+}
+
+.top-nav-links {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.top-nav-links a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 600;
+    padding: 8px 12px;
+    transition: color 0.3s ease;
+    border-radius: 8px;
+}
+
+.top-nav-links a:hover {
+    color: #4CAF50;
+    background-color: #e6f7e6;
+}
+
+/* Login Button specific styles */
+.top-nav-links .login-btn {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.top-nav-links .login-btn:hover {
+    background-color: #45a049;
+    color: #fff; /* Keep text white on hover */
+}
+
+/*
+------------------------------------------
+SIDEBAR STYLES
+------------------------------------------
+*/
+/* Sliding Sidebar Container (Overlay) */
+.sidebar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1000;
+}
+
+.sidebar-container.open {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Actual Sliding Sidebar Menu */
+.sidebar-menu {
+    width: 280px;
+    height: 100%;
+    background-color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-menu.open {
+    transform: translateX(0);
+}
+
+.close-sidebar-btn {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #555;
+    align-self: flex-end;
+    margin-bottom: 20px;
+}
+
+.sidebar-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-links li {
+    margin-bottom: 10px;
+}
+
+.sidebar-links a {
+    display: block;
+    text-decoration: none;
+    color: #555;
+    font-weight: 600;
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-links a:hover {
+    background-color: #e6f7e6;
+    color: #4CAF50;
+}
+
+.sidebar-links a.active {
+    background-color: #d4edda;
+    color: #4CAF50;
+    font-weight: 700;
+}
+
+/*
+------------------------------------------
+MAIN CONTENT (LOGIN PAGE) STYLES
+------------------------------------------
+*/
+.main-content {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    gap: 0px; /* Added gap between sections */
+    align-items: flex-start;
+    min-height: calc(100vh - 80px); /* Adjusting for header height */
+    padding-top: 6rem; /* Space for fixed header */
+    justify-content: center;
+    flex-grow: 1; /* Allow main content to grow */
+}
+
+.welcome-section {
+    /* Placeholder for welcome image */
+    background-image: url('../images/loginwelcome.svg');
+    background-size: cover; /* Changed from contain to cover */
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 20px 0px 0px 20px; /* All corners rounded */
+    padding: 3rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    height: 500px;
+    width: 350px; /* Set fixed width to match login section */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.welcome-section h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.login-section {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 0px 20px 20px 0px; /* All corners rounded */
+    padding: 2rem;
+    width: 350px; /* Explicitly set width for clarity */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    height: 500px; /* Explicitly set height for clarity */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-section h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #333;
+    font-size: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #4682B4;
+}
+
+.password-field {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #666;
+}
+
+.password-toggle img {
+    width: 20px;
+    height: 20px;
+}
+
+.login-button {
+    width: 100%;
+    padding: 0.8rem;
+    background: #9ACD32;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #2d5016;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-bottom: 1rem;
+}
+
+.login-button:hover {
+    background: #8FBC8F;
+}
+
+.social-login {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.social-btn {
+    flex: 1;
+    padding: 0.6rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.social-btn:hover {
+    border-color: #4682B4;
+    background: #f0f8ff;
+}
+
+.register-btn {
+    width: 100%;
+    padding: 0.8rem;
+    background: transparent;
+    border: 2px solid #9ACD32;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: #2d5016;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.register-btn:hover {
+    background: #9ACD32;
+    color: white;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    text-align: center;
+    position: relative;
+}
+
+.close-button {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.login-button.mt-4 {
+    margin-top: 1rem;
+}
+
+/*
+------------------------------------------
+RESPONSIVE ADJUSTMENTS
+------------------------------------------
+*/
+@media (max-width: 768px) {
+    /* Header */
+    .top-nav-links {
+        display: none; /* Hide top nav links on smaller screens */
+    }
+    .header-left .logo {
+        gap: 5px; /* Adjust gap for smaller screens */
+    }
+
+    /* Main Content / Login Page */
+    .main-content {
+        flex-direction: column;
+        gap: 1rem; /* Smaller gap when stacked */
+        padding: 1rem;
+        padding-top: 6rem;
+    }
+
+    .welcome-section {
+        width: 100%; /* Full width on mobile */
+        max-width: 400px; /* Max width for mobile */
+        border-radius: 20px; /* All corners rounded */
+        height: auto; /* Height adjusts to content on mobile */
+        padding: 2rem;
+    }
+
+    .welcome-section h1 {
+        font-size: 2rem;
+    }
+
+    .login-section {
+        width: 100%; /* Full width on mobile */
+        max-width: 400px; /* Max width for mobile */
+        border-radius: 20px; /* All corners rounded */
+        height: auto; /* Height adjusts to content on mobile */
+        align-self: center;
+    }
+}
+
+@media (min-width: 769px) {
+    /* Show desktop navigation links on larger screens */
+    .top-nav-links {
+        display: flex;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Header */
+    .logo {
+        font-size: 20px;
+    }
+    .logo-icon {
+        width: 25px;
+        height: 25px;
+    }
+
+    /* Sidebar */
+    .sidebar-menu {
+        width: 220px; /* Make sidebar narrower on very small screens */
+    }
+}
