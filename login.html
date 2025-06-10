@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoMind - Environmental Education</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/csslogin.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">
+                <button class="hamburger-icon" id="hamburger-icon">☰</button>
+                <span class="logo-icon">
+                    <img src="images/logoecomind.svg" alt="Leaf Icon">
+                </span>
+                ECOMIND
+            </div>
+        </div>
+        <nav class="top-nav-links">
+            <a href="#home" class="active">Home</a>
+            <a href="#modules">Modules</a>
+            <a href="#game">Game</a>
+            <a href="#" class="login-btn">Login</a>
+        </nav>
+    </header>
+
+    <div class="sidebar-container" id="sidebar-container">
+        <aside class="sidebar-menu" id="sidebar-menu">
+            <button class="close-sidebar-btn" id="close-sidebar-btn">&times;</button>
+            <ul class="sidebar-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#modules">Modules</a></li>
+                <li><a href="#quizzes">Quizzes</a></li>
+                <li><a href="#final-assessment">Final Assessment</a></li>
+                <li><a href="#certification">Certification</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <main class="main-content">
+        <section class="welcome-section">
+            </section>
+
+        <section class="login-section">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="email" id="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <div class="password-field">
+                        <input type="password" id="password" placeholder="Password" required>
+                        <span class="password-toggle" onclick="togglePassword()">
+                            <img id="passwordToggleImg" src="https://placehold.co/20x20/CCCCCC/000000?text=👁️" alt="Show password">
+                        </span>
+                    </div>
+                </div>
+                <button type="submit" class="login-button">Login</button>
+            </form>
+
+            <div class="social-login">
+                <button class="social-btn" onclick="socialLogin('facebook')">
+                    <img src="https://placehold.co/16x16/3B5998/FFFFFF?text=f" alt="Facebook" width="16" height="16"> Facebook
+                </button>
+                <button class="social-btn" onclick="socialLogin('google')">
+                    <img src="https://placehold.co/16x16/DB4437/FFFFFF?text=G" alt="Google" width="16" height="16"> Google
+                </button>
+            </div>
+
+            <button class="register-btn" onclick="showRegister()">Register</button>
+        </section>
+    </main>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <p id="modalMessage"></p>
+            <button class="login-button mt-4" onclick="closeModal()">OK</button>
+        </div>
+    </div>
+
+    <script src="js/jslogin.js"></script>
+</body>
+</html>
