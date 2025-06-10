@@ -1,0 +1,522 @@
+
+    /*
+    ------------------------------------------
+    GLOBAL & RESET STYLES (Combined from both projects)
+    ------------------------------------------
+    */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f0fdf4; /* From new UI components */
+      display: flex; /* From existing project */
+      flex-direction: column; /* From existing project */
+      min-height: 100vh; /* From existing project */
+      overflow-x: hidden; /* From existing project */
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /*
+    ------------------------------------------
+    HEADER STYLES (Updated to new UI components, with fixed position maintained)
+    ------------------------------------------
+    */
+    .header {
+      position: fixed; /* Maintained from previous version for sticky header */
+      top: 0; /* Maintained */
+      left: 0; /* Maintained */
+      width: 100%; /* Maintained */
+      background-color: #fff;
+      padding: 15px 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0; /* Prevents header from shrinking */
+      border-bottom-left-radius: 1rem; /* Maintained from previous version */
+      border-bottom-right-radius: 1rem; /* Maintained */
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 15px; /* Space between hamburger and logo (from new code) */
+    }
+
+    /* Hamburger Menu Icon - Now consistently visible based on new component's intent */
+    .hamburger-icon {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #333;
+      padding: 5px;
+      display: block; /* Ensure it's always visible */
+      flex-shrink: 0;
+    }
+
+    .logo {
+      display: flex; /* Make logo itself a flex container */
+      align-items: center;
+      font-size: 24px;
+      font-weight: 700;
+      color: #333;
+      gap: 10px; /* Space between logo icon and text */
+    }
+
+    .logo-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #4CAF50; /* Green background for circular icon */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      flex-shrink: 0; /* Prevent icon from shrinking */
+    }
+
+    .logo-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Ensures the image covers the circular area */
+    }
+
+    .top-nav-links {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+
+    .top-nav-links a {
+      text-decoration: none;
+      color: #555;
+      font-weight: 600;
+      padding: 8px 12px;
+      transition: color 0.3s ease, background-color 0.3s ease;
+      border-radius: 8px;
+    }
+
+    .top-nav-links a:hover {
+      color: #4CAF50; /* Green text on hover */
+      background-color: #e6f7e6; /* Light green background on hover */
+    }
+
+    /* Login Button specific styles */
+    .top-nav-links .login-btn {
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+      border: none; /* Ensure no default button border */
+      cursor: pointer; /* Ensure button cursor */
+    }
+
+    .top-nav-links .login-btn:hover {
+      background-color: #45a049;
+      color: #fff; /* Keep text white on hover */
+    }
+
+    /*
+    ------------------------------------------
+    SIDEBAR STYLES (From existing project, retained as is)
+    ------------------------------------------
+    */
+    /* Sliding Sidebar Container (Overlay) */
+    .sidebar-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+      visibility: hidden; /* Hidden by default */
+      opacity: 0; /* Fade in effect */
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      z-index: 1000; /* Ensures it's on top of everything */
+    }
+
+    .sidebar-container.open {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* Actual Sliding Sidebar Menu */
+    .sidebar-menu {
+      width: 280px; /* Default width */
+      height: 100%;
+      background-color: #fff;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateX(-100%); /* Initially off-screen to the left */
+      transition: transform 0.3s ease; /* Smooth slide transition */
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+      padding: 20px;
+      box-sizing: border-box; /* Include padding in width */
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-menu.open {
+      transform: translateX(0); /* Slide into view */
+    }
+
+    .close-sidebar-btn {
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: #555;
+      align-self: flex-end; /* Pushes button to the right */
+      margin-bottom: 20px;
+    }
+
+    .sidebar-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar-links li {
+      margin-bottom: 10px;
+    }
+
+    .sidebar-links a {
+      display: block;
+      text-decoration: none;
+      color: #555;
+      font-weight: 600;
+      padding: 12px 15px;
+      border-radius: 8px; /* Rounded corners */
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .sidebar-links a:hover {
+      background-color: #e6f7e6; /* Light green background on hover */
+      color: #4CAF50; /* Green text on hover */
+    }
+
+    .sidebar-links a.active {
+      background-color: #d4edda; /* Active link background */
+      color: #4CAF50; /* Active link text color */
+      font-weight: 700;
+    }
+
+    /*
+    ------------------------------------------
+    MAIN CONTENT STYLES (Hero & Eco-Challenge - From new UI components, retained as is)
+    ------------------------------------------
+    */
+    .hero {
+      background: url('https://placehold.co/1920x600/a0d8f0/000000?text=Nature+Background') no-repeat center center/cover;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      padding-top: 80px; /* Adjust for fixed header */
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .cards-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .card {
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 1rem;
+      padding: 1rem;
+      text-align: center;
+      width: 220px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card h3 {
+      color: #166534;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    .card button {
+      padding: 0.5rem 1rem;
+      background-color: #16a34a;
+      border: none;
+      color: white;
+      border-radius: 9999px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .card button:hover {
+      background-color: #15803d;
+    }
+
+    .eco-challenge-section {
+      max-width: 1200px;
+      margin: 4rem auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding: 0 1rem;
+    }
+
+    .eco-challenge-section img {
+      max-width: 350px;
+      border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .eco-challenge-text {
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .eco-challenge-text h2 {
+      font-size: 2.5rem;
+      color: #166534;
+      margin-bottom: 1rem;
+    }
+
+    .eco-challenge-text p {
+      color: #444;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+
+    .eco-challenge-text button {
+      background-color: #16a34a;
+      color: white;
+      padding: 0.75rem 2rem;
+      border: none;
+      border-radius: 9999px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .eco-challenge-text button:hover {
+      background-color: #15803d;
+    }
+
+    /*
+    ------------------------------------------
+    FOOTER STYLES (Updated to new UI components)
+    ------------------------------------------
+    */
+    .footer {
+      background-color: #4F6D44; /* Updated to new color */
+      color: #fff;
+      padding: 60px 0 30px;
+      position: relative;
+      margin-top: auto;
+      flex-shrink: 0;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      padding-top: 0;
+    }
+
+    .footer-column {
+      flex: 1;
+      min-width: 200px;
+      color: #fff;
+      text-align: center;
+    }
+
+    .footer-column h3 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    .footer-column ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-column ul li a, .footer-column ul li {
+      text-decoration: none;
+      color: #eee; /* Updated to new color */
+      transition: color 0.3s ease;
+    }
+
+    .footer-column ul li a:hover {
+      color: #c9e4c9; /* Updated to new hover color */
+    }
+
+    .footer-social-icons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+      align-items: center;
+    }
+
+    .footer-social-icons a {
+      color: #eee; /* Updated to new color */
+      font-size: 16px;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-social-icons a:hover {
+      color: #fff;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 14px;
+      color: #aaa; /* Updated to new color */
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-bottom a {
+      text-decoration: none;
+      color: #aaa; /* Updated to new color */
+      transition: color 0.3s ease;
+    }
+
+    .footer-bottom a:hover {
+      color: #fff;
+    }
+
+    /*
+    ------------------------------------------
+    RESPONSIVE ADJUSTMENTS (Combined and refined)
+    ------------------------------------------
+    */
+    @media (max-width: 767px) {
+      /* Header adjustments for smaller screens */
+      .top-nav-links {
+        display: none; /* Hide top nav links on smaller screens */
+      }
+      /* Hamburger is already visible due to 'display: block' default */
+
+      /* Footer adjustments for smaller screens */
+      .footer-container {
+        flex-direction: column; /* Stack footer columns vertically */
+        align-items: center; /* Center stacked columns */
+      }
+      .footer-column {
+        min-width: unset; /* Allow columns to take full width */
+        width: 100%;
+        text-align: center; /* Center column headings when stacked */
+      }
+      .footer-social-icons {
+        flex-direction: row; /* Display social icons horizontally when stacked */
+        justify-content: center;
+      }
+      .footer-bottom-links {
+        flex-direction: column; /* Stack bottom links vertically on small screens */
+        gap: 0.5rem;
+      }
+    }
+
+    @media (min-width: 768px) {
+      /* Header adjustments for larger screens */
+      .header {
+        padding: 1rem 3rem; /* Adjust padding for desktop */
+      }
+      .top-nav-links {
+        display: flex; /* Show desktop nav links on larger screens */
+      }
+      /* Hamburger is already visible due to 'display: block' default (no hiding needed here) */
+
+      /* Main content adjustments for larger screens */
+      .cards-container {
+        flex-direction: row;
+      }
+      .eco-challenge-section {
+        flex-direction: row;
+      }
+      .eco-challenge-text {
+        text-align: left;
+      }
+
+      /* Footer adjustments for larger screens */
+      .footer-container {
+        grid-template-columns: repeat(4, minmax(0, 1fr)); /* 4 columns on desktop */
+      }
+      .footer-bottom-links {
+        flex-direction: row; /* Horizontal bottom links on desktop */
+        gap: 2rem;
+        margin-top: 0;
+        margin-left: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      /* Header adjustments for very small screens */
+      .logo {
+        font-size: 20px;
+      }
+      .logo-icon {
+        width: 25px;
+        height: 25px;
+      }
+
+      /* Sidebar adjustments for very small screens */
+      .sidebar-menu {
+        width: 220px; /* Make sidebar narrower on very small screens */
+        padding: 15px; /* Adjust padding */
+      }
+    }
