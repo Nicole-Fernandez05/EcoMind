@@ -1,0 +1,141 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ecomind - Learn Segregation</title>
+  <!-- Google Fonts: Inter (more comprehensive weights from existing project) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome (kept from existing project for potential other uses) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- CSS Stylesheet (integrated from new UI components) -->
+  <link rel="stylesheet" href="css/cssgamehomepage.css">
+</head>
+<body>
+  <!-- New Header (Integrated from new UI components) -->
+  <header class="header">
+    <div class="header-left">
+      <!-- Hamburger icon is now consistently outside and to the left of the logo block -->
+      <button class="hamburger-icon" id="hamburger-icon">☰</button>
+      <div class="logo">
+        <span class="logo-icon">
+          <img src="https://placehold.co/30x30/4CAF50/fff?text=L" alt="Leaf Icon">
+        </span>
+        ECOMIND
+      </div>
+    </div>
+    <nav class="top-nav-links">
+      <a href="#home" class="active">Home</a>
+      <a href="#modules">Modules</a>
+      <a href="#game">Game</a>
+      <a href="#" class="login-btn">Login</a>
+    </nav>
+  </header>
+
+  <!-- Existing Sidebar (Retained from existing project) -->
+  <div class="sidebar-container" id="sidebar-container">
+    <aside class="sidebar-menu" id="sidebar-menu">
+      <button class="close-sidebar-btn" id="close-sidebar-btn">&times;</button>
+      <ul class="sidebar-links">
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#modules">Modules</a></li>
+        <li><a href="#quizzes">Quizzes</a></li>
+        <li><a href="#final-assessment">Final Assessment</a></li>
+        <li><a href="#certification">Certification</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Main Content (Integrated from new UI components) -->
+  <section class="hero">
+    <h1>LEARN SEGREGATION</h1>
+    <div class="cards-container">
+      <div class="card">
+        <img src="https://placehold.co/200x150/d4edda/000000?text=Biodegradable" alt="Biodegradable">
+        <h3>Biodegradable</h3>
+        <p>Waste breaks down naturally and can be used for composting.</p>
+        <button>Learn</button>
+      </div>
+      <div class="card">
+        <img src="https://placehold.co/200x150/cce5ff/000000?text=Recyclable" alt="Recyclable">
+        <h3>Recyclable</h3>
+        <p>Items that can be processed and reused again.</p>
+        <button>Learn</button>
+      </div>
+      <div class="card">
+        <img src="https://placehold.co/200x150/fdd8b2/000000?text=Non-Biodegradable" alt="Non-Biodegradable">
+        <h3>Non-Biodegradable</h3>
+        <p>Materials that don't decompose easily and harm the environment.</p>
+        <button>Learn</button>
+      </div>
+      <div class="card">
+        <img src="https://placehold.co/200x150/ffc0cb/000000?text=Hazardous" alt="Hazardous">
+        <h3>Hazardous</h3>
+        <p>Waste that poses a threat to health or environment.</p>
+        <button>Learn</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="eco-challenge-section">
+    <img src="https://placehold.co/400x400/90ee90/000000?text=Recycling+Person" alt="Person recycling">
+    <div class="eco-challenge-text">
+      <h2>EcoSort Challenge</h2>
+      <p>Learn to sort, protect the Earth.</p>
+      <p>Sort waste into four categories – biodegradable, non-biodegradable, recyclable, and hazardous – race against the clock to score points and help build a cleaner, greener planet!</p>
+      <button>Start</button>
+    </div>
+  </section>
+
+  <!-- New Footer (Integrated based on your latest provided code) -->
+  <footer class="footer">
+    <div class="container footer-content">
+        <div class="footer-column">
+            <h3>ECOMIND</h3>
+            <div class="footer-social-icons">
+                <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+                <a href="#"><i class="fab fa-pinterest"></i> Pinterest</a>
+            </div>
+        </div>
+        <div class="footer-column">
+            <h3>About Us</h3>
+            <ul>
+                <li><a href="#">About Ecomind</a></li>
+                <li><a href="#">Vision & Mission</a></li>
+                <li><a href="#">Partnership</a></li>
+                <li><a href="#">Sustainability</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Contact Us</h3>
+            <ul>
+                <li>1-800-555-5555</li>
+                <li><a href="#">Join us</a></li>
+                <li><a href="#">Email us</a></li>
+                <li><a href="#">Customer Support</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Learning</h3>
+            <ul>
+                <li><a href="#">Modules</a></li>
+                <li><a href="#">Quizzes</a></li>
+                <li><a href="#">Games</a></li>
+                <li><a href="#">Volunteers</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span>&copy; 2049 Fitma</span>
+        <a href="#">Fitma Policies</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">About us</a>
+    </div>
+</footer>
+
+   <script src="js/jsgamehomepage.js"></script>
+     
+</body>
+</html>
