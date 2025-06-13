@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecomind - Integrated Components</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /*
+        ------------------------------------------
+        GLOBAL & RESET STYLES (Essential for consistent layout)
+        ------------------------------------------
+        */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f8f8;
+            display: flex;             /* Use flexbox for main layout */
+            flex-direction: column;    /* Stack header, main, and footer vertically */
+            min-height: 100vh;         /* Ensure body takes full viewport height */
+            overflow-x: hidden;        /* Prevent horizontal scroll due to sidebar transition */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /*
+        ------------------------------------------
+        NAVIGATION BAR (HEADER) STYLES
+        ------------------------------------------
+        */
+        .header {
+            background-color: #fff;
+            padding: 15px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0; /* Prevents header from shrinking */
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #4CAF50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hamburger-icon {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+            padding: 5px;
+            display: block; /* Always visible to open sidebar */
+            flex-shrink: 0;
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .top-nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            padding: 8px 12px;
+            transition: color 0.3s ease;
+            border-radius: 8px;
+        }
+
+        .top-nav-links a:hover {
+            color: #4CAF50;
+            background-color: #e6f7e6;
+        }
+
+        .top-nav-links .login-btn {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .top-nav-links .login-btn:hover {
+            background-color: #45a049;
+            color: #fff;
+        }
+
+        /*
+        ------------------------------------------
+        SIDEBAR STYLES
+        ------------------------------------------
+        */
+        .sidebar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar-container.open {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .sidebar-menu {
+            width: 280px;
+            height: 100%;
+            background-color: #fff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-menu.open {
+            transform: translateX(0);
+        }
+
+        .close-sidebar-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #555;
+            align-self: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-links li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-links a {
+            display: block;
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .sidebar-links a:hover {
+            background-color: #e6f7e6;
+            color: #4CAF50;
+        }
+
+        .sidebar-links a.active {
+            background-color: #d4edda;
+            color: #4CAF50;
+            font-weight: 700;
+        }
+
+        /*
+        ------------------------------------------
+        FOOTER STYLES
+        ------------------------------------------
+        */
+        .footer {
+            background-color: #4F6D44;
+            color: #fff;
+            padding: 60px 0 30px;
+            position: relative;
+            margin-top: auto; /* Pushes footer to the bottom of the page */
+            flex-shrink: 0; /* Prevents footer from shrinking */
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding-top: 0;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+            color: #fff;
+            text-align: center; /* Default for smaller screens/columns */
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a, .footer-column ul li {
+            text-decoration: none;
+            color: #eee;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: #c9e4c9;
+        }
+
+        .footer-social-icons {
+            display: flex;
+            flex-direction: column; /* Stack vertically by default */
+            gap: 10px;
+            margin-top: 10px;
+            align-items: center; /* Center icons when stacked */
+        }
+
+        .footer-social-icons a {
+            color: #eee;
+            font-size: 16px;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-social-icons a:hover {
+            color: #fff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            color: #aaa;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .footer-bottom a {
+            text-decoration: none;
+            color: #aaa;
+            transition: color 0.3s ease;
+        }
+        .footer-bottom a:hover {
+            color: #fff;
+        }
+
+
+        /*
+        ------------------------------------------
+        RESPONSIVE ADJUSTMENTS
+        ------------------------------------------
+        */
+        @media (max-width: 768px) {
+            /* Header adjustments for smaller screens */
+            .hamburger-icon {
+                display: block; /* Ensure hamburger is visible */
+            }
+            .header {
+                flex-direction: row; /* Keep logo and hamburger on one row */
+                justify-content: space-between;
+                align-items: center;
+            }
+            .top-nav-links {
+                display: none; /* Hide regular nav links on small screens */
+            }
+
+            /* Footer adjustments for smaller screens */
+            .footer-content {
+                flex-direction: column; /* Stack footer columns vertically */
+                align-items: center; /* Center stacked columns */
+            }
+            .footer-column {
+                min-width: unset; /* Allow columns to take full width */
+                width: 100%;
+            }
+            .footer-column h3 {
+                text-align: center; /* Center column headings when stacked */
+            }
+            .footer-social-icons {
+                flex-direction: row; /* Display social icons horizontally when stacked */
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* Header adjustments for very small screens */
+            .logo {
+                font-size: 20px;
+            }
+            .logo-icon {
+                width: 25px;
+                height: 25px;
+            }
+
+            /* Sidebar adjustments for very small screens */
+            .sidebar-menu {
+                width: 220px; /* Make sidebar narrower */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">
+                <button class="hamburger-icon" id="hamburger-icon">☰</button>
+                <span class="logo-icon">
+                    <img src="https://placehold.co/30x30/4CAF50/fff?text=L" alt="Leaf Icon">
+                </span>
+                ECOMIND
+            </div>
+        </div>
+        <nav class="top-nav-links">
+            <a href="#home" class="active">Home</a>
+            <a href="#modules">Modules</a>
+            <a href="#game">Game</a>
+            <a href="#" class="login-btn">Login</a>
+        </nav>
+    </header>
+
+    <div class="sidebar-container" id="sidebar-container">
+        <aside class="sidebar-menu" id="sidebar-menu">
+            <button class="close-sidebar-btn" id="close-sidebar-btn">&times;</button>
+            <ul class="sidebar-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#modules">Modules</a></li>
+                <li><a href="#quizzes">Quizzes</a></li>
+                <li><a href="#final-assessment">Final Assessment</a></li>
+                <li><a href="#certification">Certification</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <main style="flex-grow: 1; padding: 20px; text-align: center;">
+        <h1>Welcome to Ecomind!</h1>
+        <p>This is a placeholder for your main page content. The header, sidebar, and footer are integrated below.</p>
+        <p>You can replace this `main` section with the actual content for your specific page.</p>
+        <div style="height: 500px; background-color: #f0f0f0; margin-top: 30px; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+            Your main content goes here. This div is just for visual height.
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-column">
+                <h3>ECOMIND</h3>
+                <div class="footer-social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                    <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+                    <a href="#"><i class="fab fa-pinterest"></i> Pinterest</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>About Us</h3>
+                <ul>
+                    <li><a href="#">About Ecomind</a></li>
+                    <li><a href="#">Vision & Mission</a></li>
+                    <li><a href="#">Partnership</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li>1-800-555-5555</li>
+                    <li><a href="#">Join us</a></li>
+                    <li><a href="#">Email us</a></li>
+                    <li><a href="#">Customer Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Learning</h3>
+                <ul>
+                    <li><a href="#">Modules</a></li>
+                    <li><a href="#">Quizzes</a></li>
+                    <li><a href="#">Games</a></li>
+                    <li><a href="#">Volunteers</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2049 Fitma</span>
+            <a href="#">Fitma Policies</a>
+            <a href="#">Terms of Use</a>
+            <a href="#">About us</a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const closeSidebarBtn = document.getElementById('close-sidebar-btn');
+            const sidebarContainer = document.getElementById('sidebar-container');
+            const sidebarMenu = document.getElementById('sidebar-menu');
+
+            // Open sidebar
+            hamburgerIcon.addEventListener('click', () => {
+                sidebarContainer.classList.add('open');
+                sidebarMenu.classList.add('open');
+            });
+
+            // Close sidebar by clicking close button
+            closeSidebarBtn.addEventListener('click', () => {
+                sidebarContainer.classList.remove('open');
+                sidebarMenu.classList.remove('open');
+            });
+
+            // Close sidebar by clicking outside the menu (on the overlay)
+            sidebarContainer.addEventListener('click', (event) => {
+                // Check if the click occurred directly on the container and not on the sidebar menu itself
+                if (event.target === sidebarContainer) {
+                    sidebarContainer.classList.remove('open');
+                    sidebarMenu.classList.remove('open');
+                }
+            });
+
+            // Optional: Close sidebar when a link inside is clicked
+            const sidebarLinks = document.querySelectorAll('.sidebar-links a');
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    sidebarContainer.classList.remove('open');
+                    sidebarMenu.classList.remove('open');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
