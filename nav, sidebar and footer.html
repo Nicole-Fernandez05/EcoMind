@@ -3,16 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecomind - Integrated Components</title>
+    <title>Ecomind - Reusable Components</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
     <style>
-        /*
-        ------------------------------------------
-        GLOBAL & RESET STYLES (Essential for consistent layout)
-        ------------------------------------------
-        */
+        /* Basic Reset & Body Styling (Essential for consistent layout) */
         * {
             margin: 0;
             padding: 0;
@@ -24,10 +19,10 @@
             line-height: 1.6;
             color: #333;
             background-color: #f8f8f8;
-            display: flex;             /* Use flexbox for main layout */
-            flex-direction: column;    /* Stack header, main, and footer vertically */
-            min-height: 100vh;         /* Ensure body takes full viewport height */
-            overflow-x: hidden;        /* Prevent horizontal scroll due to sidebar transition */
+            display: flex; /* Use flexbox for main layout */
+            flex-direction: column; /* Stack header, main, and other content vertically */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            overflow-x: hidden; /* Prevent horizontal scroll due to sidebar */
         }
 
         .container {
@@ -37,9 +32,9 @@
         }
 
         /*
-        ------------------------------------------
+        ---
         NAVIGATION BAR (HEADER) STYLES
-        ------------------------------------------
+        ---
         */
         .header {
             background-color: #fff;
@@ -48,41 +43,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-shrink: 0; /* Prevents header from shrinking */
+            flex-shrink: 0; /* Prevent header from shrinking */
+            width: 100%; /* Ensure header takes full width */
         }
 
         .header-left {
             display: flex;
             align-items: center;
+            gap: 15px; /* Space between hamburger and logo */
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            font-size: 24px;
-            font-weight: 700;
-            color: #333;
-            gap: 10px;
-        }
-
-        .logo-icon {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: #4CAF50;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-
-        .logo-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
+        /* Hamburger Menu Icon - Always visible */
         .hamburger-icon {
             background: none;
             border: none;
@@ -90,12 +61,39 @@
             cursor: pointer;
             color: #333;
             padding: 5px;
-            display: block; /* Always visible to open sidebar */
-            flex-shrink: 0;
+            display: block; /* Ensure it's always visible */
+            flex-shrink: 0; /* Prevent icon from shrinking */
+        }
+
+        .logo {
+            display: flex; /* Make logo itself a flex container */
+            align-items: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            gap: 10px; /* Space between logo icon and text */
+        }
+
+        .logo-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #4CAF50; /* Green background for circular icon */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            flex-shrink: 0; /* Prevent icon from shrinking */
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the image covers the circular area */
         }
 
         .top-nav-links {
-            display: flex;
+            display: flex; /* Always display top nav links */
             gap: 25px;
             align-items: center;
         }
@@ -105,15 +103,16 @@
             color: #555;
             font-weight: 600;
             padding: 8px 12px;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, background-color 0.3s ease;
             border-radius: 8px;
         }
 
         .top-nav-links a:hover {
-            color: #4CAF50;
-            background-color: #e6f7e6;
+            color: #4CAF50; /* Green text on hover */
+            background-color: #e6f7e6; /* Light green background on hover */
         }
 
+        /* Login Button specific styles */
         .top-nav-links .login-btn {
             background-color: #4CAF50;
             color: #fff;
@@ -124,25 +123,26 @@
 
         .top-nav-links .login-btn:hover {
             background-color: #45a049;
-            color: #fff;
+            color: #fff; /* Keep text white on hover */
         }
 
         /*
-        ------------------------------------------
+        ---
         SIDEBAR STYLES
-        ------------------------------------------
+        ---
         */
+        /* Sliding Sidebar Container (Overlay) */
         .sidebar-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            visibility: hidden;
-            opacity: 0;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+            visibility: hidden; /* Hidden by default */
+            opacity: 0; /* Fade in effect */
             transition: opacity 0.3s ease, visibility 0.3s ease;
-            z-index: 1000;
+            z-index: 1000; /* Ensures it's on top of everything */
         }
 
         .sidebar-container.open {
@@ -150,23 +150,25 @@
             opacity: 1;
         }
 
+        /* Actual Sliding Sidebar Menu */
         .sidebar-menu {
-            width: 280px;
+            width: 280px; /* Default width */
             height: 100%;
             background-color: #fff;
             position: absolute;
             top: 0;
             left: 0;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+            transform: translateX(-100%); /* Initially off-screen to the left */
+            transition: transform 0.3s ease; /* Smooth slide transition */
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
             padding: 20px;
+            box-sizing: border-box; /* Include padding in width */
             display: flex;
             flex-direction: column;
         }
 
         .sidebar-menu.open {
-            transform: translateX(0);
+            transform: translateX(0); /* Slide into view */
         }
 
         .close-sidebar-btn {
@@ -175,7 +177,7 @@
             font-size: 28px;
             cursor: pointer;
             color: #555;
-            align-self: flex-end;
+            align-self: flex-end; /* Pushes button to the right */
             margin-bottom: 20px;
         }
 
@@ -195,48 +197,50 @@
             color: #555;
             font-weight: 600;
             padding: 12px 15px;
-            border-radius: 8px;
+            border-radius: 8px; /* Rounded corners */
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .sidebar-links a:hover {
-            background-color: #e6f7e6;
-            color: #4CAF50;
+            background-color: #e6f7e6; /* Light green background on hover */
+            color: #4CAF50; /* Green text on hover */
         }
 
         .sidebar-links a.active {
-            background-color: #d4edda;
-            color: #4CAF50;
+            background-color: #d4edda; /* Active link background */
+            color: #4CAF50; /* Active link text color */
             font-weight: 700;
         }
 
         /*
-        ------------------------------------------
-        FOOTER STYLES
-        ------------------------------------------
+        ---
+        FOOTER STYLES (Non-Responsive)
+        ---
         */
         .footer {
-            background-color: #4F6D44;
+            background-color: #4F6D44; /* Dark green */
             color: #fff;
             padding: 60px 0 30px;
             position: relative;
-            margin-top: auto; /* Pushes footer to the bottom of the page */
+            margin-top: auto; /* Pushes footer to the bottom */
             flex-shrink: 0; /* Prevents footer from shrinking */
         }
 
         .footer-content {
-            display: flex;
+            display: flex; /* Keep flex display for columns */
             justify-content: center;
-            flex-wrap: wrap;
+            flex-wrap: wrap; /* Allows columns to wrap if space is tight, but won't force a stacked layout */
             gap: 30px;
             padding-top: 0;
+            max-width: 1200px; /* Constrain content width */
+            margin: 0 auto; /* Center content */
         }
 
         .footer-column {
             flex: 1;
-            min-width: 200px;
+            min-width: 200px; /* Minimum width for columns */
             color: #fff;
-            text-align: center; /* Default for smaller screens/columns */
+            text-align: center; /* Center text within columns */
         }
 
         .footer-column h3 {
@@ -254,7 +258,7 @@
             margin-bottom: 10px;
         }
 
-        .footer-column ul li a, .footer-column ul li {
+        .footer-column ul li a, .footer-column ul li { /* Included li itself for consistent text color */
             text-decoration: none;
             color: #eee;
             transition: color 0.3s ease;
@@ -266,10 +270,10 @@
 
         .footer-social-icons {
             display: flex;
-            flex-direction: column; /* Stack vertically by default */
+            flex-direction: column; /* Social icons remain stacked vertically */
             gap: 10px;
             margin-top: 10px;
-            align-items: center; /* Center icons when stacked */
+            align-items: center; /* Center icons */
         }
 
         .footer-social-icons a {
@@ -292,9 +296,9 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 14px;
             color: #aaa;
-            display: flex;
+            display: flex; /* Keep flex display for bottom links */
             justify-content: center;
-            flex-wrap: wrap;
+            flex-wrap: wrap; /* Allow wrapping if needed */
             gap: 20px;
         }
         .footer-bottom a {
@@ -306,66 +310,14 @@
             color: #fff;
         }
 
-
-        /*
-        ------------------------------------------
-        RESPONSIVE ADJUSTMENTS
-        ------------------------------------------
-        */
-        @media (max-width: 768px) {
-            /* Header adjustments for smaller screens */
-            .hamburger-icon {
-                display: block; /* Ensure hamburger is visible */
-            }
-            .header {
-                flex-direction: row; /* Keep logo and hamburger on one row */
-                justify-content: space-between;
-                align-items: center;
-            }
-            .top-nav-links {
-                display: none; /* Hide regular nav links on small screens */
-            }
-
-            /* Footer adjustments for smaller screens */
-            .footer-content {
-                flex-direction: column; /* Stack footer columns vertically */
-                align-items: center; /* Center stacked columns */
-            }
-            .footer-column {
-                min-width: unset; /* Allow columns to take full width */
-                width: 100%;
-            }
-            .footer-column h3 {
-                text-align: center; /* Center column headings when stacked */
-            }
-            .footer-social-icons {
-                flex-direction: row; /* Display social icons horizontally when stacked */
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            /* Header adjustments for very small screens */
-            .logo {
-                font-size: 20px;
-            }
-            .logo-icon {
-                width: 25px;
-                height: 25px;
-            }
-
-            /* Sidebar adjustments for very small screens */
-            .sidebar-menu {
-                width: 220px; /* Make sidebar narrower */
-            }
-        }
+        /* Removed @media queries for footer responsiveness to keep a consistent layout */
     </style>
 </head>
 <body>
     <header class="header">
         <div class="header-left">
+            <button class="hamburger-icon" id="hamburger-icon">☰</button>
             <div class="logo">
-                <button class="hamburger-icon" id="hamburger-icon">☰</button>
                 <span class="logo-icon">
                     <img src="https://placehold.co/30x30/4CAF50/fff?text=L" alt="Leaf Icon">
                 </span>
@@ -395,11 +347,9 @@
 
     <main style="flex-grow: 1; padding: 20px; text-align: center;">
         <h1>Welcome to Ecomind!</h1>
-        <p>This is a placeholder for your main page content. The header, sidebar, and footer are integrated below.</p>
-        <p>You can replace this `main` section with the actual content for your specific page.</p>
-        <div style="height: 500px; background-color: #f0f0f0; margin-top: 30px; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
-            Your main content goes here. This div is just for visual height.
-        </div>
+        <p>This is a placeholder for your main page content. The header and sidebar are ready to be integrated into any page.</p>
+        <p>Adjust the `main` section's padding and styling as needed for your specific page layout.</p>
+        <p>This page now includes a detailed footer which maintains its layout across all screen sizes.</p>
     </main>
 
     <footer class="footer">
@@ -460,12 +410,14 @@
             hamburgerIcon.addEventListener('click', () => {
                 sidebarContainer.classList.add('open');
                 sidebarMenu.classList.add('open');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling body when sidebar is open
             });
 
             // Close sidebar by clicking close button
             closeSidebarBtn.addEventListener('click', () => {
                 sidebarContainer.classList.remove('open');
                 sidebarMenu.classList.remove('open');
+                document.body.style.overflow = ''; // Allow body scrolling again
             });
 
             // Close sidebar by clicking outside the menu (on the overlay)
@@ -474,6 +426,7 @@
                 if (event.target === sidebarContainer) {
                     sidebarContainer.classList.remove('open');
                     sidebarMenu.classList.remove('open');
+                    document.body.style.overflow = ''; // Allow body scrolling again
                 }
             });
 
@@ -483,6 +436,7 @@
                 link.addEventListener('click', () => {
                     sidebarContainer.classList.remove('open');
                     sidebarMenu.classList.remove('open');
+                    document.body.style.overflow = ''; // Allow body scrolling again
                 });
             });
         });
