@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecomind - Module 2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles for the body and overall layout */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-top: 64px; /* Matches the header height to prevent content overlap */
+            margin: 0; /* Ensures no default body margin */
+            box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
+        }
+        *, *::before, *::after {
+            box-sizing: inherit; /* Inherit box-sizing for all elements */
+        }
+
+        /* Header Navigation Bar Styles */
+        .header-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            height: 64px;
+            width: 100%; /* Ensures it takes full width */
+        }
+        .header-nav .logo-info {
+            display: flex;
+            align-items: center;
+            gap: 8px; /* space-x-2 */
+        }
+        .header-nav .logo-text {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.2em; /* text-xl */
+        }
+        .header-nav .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .header-nav .nav-links {
+            display: flex;
+            align-items: center;
+            flex-wrap: nowrap;
+            margin-left: auto;
+        }
+        .header-nav .nav-link {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: color 0.3s ease;
+        }
+        .header-nav .nav-link:hover {
+            color: #16a34a;
+        }
+        .header-nav .login-btn-custom {
+            background: #b0cc29;
+            color: black;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-left: 30px;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+            white-space: nowrap;
+            /* --- Updated styles for removing outline and providing alternative focus --- */
+            outline: none; /* Removes the default outline */
+            border: none; /* Ensures no border appears on focus */
+            box-shadow: none; /* Removes any default box-shadow on focus */
+            cursor: pointer;
+            /* Optional: Add a subtle alternative focus indicator if outline is removed */
+            /* This will appear when the button is tabbed to */
+        }
+        .header-nav .login-btn-custom:hover {
+            background-color: #a6bb28;
+        }
+        /* New focus style to replace the default outline */
+        .header-nav .login-btn-custom:focus-visible {
+            box-shadow: 0 0 0 2px rgba(176, 204, 41, 0.5), 0 0 0 4px rgba(176, 204, 41, 0.3); /* A more prominent but subtle green shadow */
+            outline: none; /* Ensure no outline even with focus-visible */
+            border: none; /* Ensure no border */
+        }
+
+        /* Original mobile menu toggle and media queries */
+        .header-nav .mobile-menu-toggle {
+            display: none; /* hidden */
+        }
+        @media (min-width: 768px) { /* md: */
+            .header-nav .mobile-menu-toggle {
+                display: none; /* md:hidden */
+            }
+            .header-nav .nav-links {
+                display: flex; /* md:flex */
+            }
+        }
+        @media (max-width: 767px) { /* For screens smaller than md */
+            .header-nav .nav-links {
+                display: none;
+            }
+            .header-nav .mobile-menu-toggle {
+                display: block; /* Show on mobile */
+            }
+        }
+
+        /* Main Content Area */
+        main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Module Title Section Styles */
+        .header-title-section {
+            width: 100%; /* w-full */
+            text-align: center;
+            background-color: #E5CBAF; /* Orange background */
+            padding: 5vh 2vw; /* Responsive padding */
+        }
+        .header-title-section .title-box {
+            max-width: 900px; /* max-w-4xl */
+            margin: auto; /* mx-auto */
+            background-color: rgba(255, 255, 255, 0.7); /* bg-white bg-opacity-70 */
+            border-radius: 10px; /* rounded-lg */
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05); /* shadow-xl */
+            padding: 32px; /* p-8 */
+            margin-bottom: 32px; /* mb-8 */
+            text-align: center; /* text-center */
+        }
+        .header-title-section h1 {
+            font-size: 6.5vw; /* text-4xl sm:text-5xl md:text-6xl lg:text-7xl */
+            font-weight: bold;
+            color: #1f2937; /* text-gray-800 */
+            margin-bottom: 0.2em; /* mb-2 */
+        }
+        .header-title-section h2 {
+            font-size: 2.7vw; /* text-xl sm:text-2xl md:text-3xl lg:text-4xl */
+            font-weight: 500;
+            color: #374151; /* text-gray-700 */
+        }
+
+        /* Font Size Controls */
+        .font-size-controls {
+            width: 100%; /* w-full */
+            max-width: 900px; /* max-w-4xl */
+            padding-left: 16px; /* px-4 */
+            padding-right: 16px; /* px-4 */
+            display: flex; /* flex */
+            justify-content: flex-end; /* justify-end */
+            align-items: center; /* items-center */
+            gap: 8px; /* space-x-2 */
+            padding-top: 16px; /* py-4 */
+            padding-bottom: 16px; /* py-4 */
+        }
+        .font-size-controls span {
+            color: #374151; /* text-gray-700 */
+            font-size: 0.875rem; /* text-sm */
+            font-weight: 500; /* font-medium */
+        }
+        .font-size-button {
+            background-color: #d1d5db; /* bg-gray-300 */
+            color: #1f2937; /* text-gray-800 */
+            font-weight: bold; /* font-bold */
+            padding: 4px 12px; /* py-1 px-3 */
+            border-radius: 8px; /* rounded-lg */
+            font-size: 0.875rem; /* text-sm */
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* transition duration-300 ease-in-out */
+        }
+        .font-size-button:hover {
+            background-color: #9ca3af; /* hover:bg-gray-400 */
+        }
+
+        /* Main interactive sections grid */
+        .interactive-sections-grid {
+            width: 100%; /* w-full */
+            max-width: 900px; /* max-w-4xl */
+            padding-left: 16px; /* px-4 */
+            padding-right: 16px; /* px-4 */
+            display: grid; /* grid */
+            grid-template-columns: 1fr; /* grid-cols-1 */
+            gap: 24px; /* gap-6 */
+            padding-top: 32px; /* py-8 */
+            padding-bottom: 32px; /* py-8 */
+        }
+
+        /* Individual Content Section Styles (Infographics, Video, Quiz, Explanation) */
+        .content-section {
+            display: flex; /* flex */
+            flex-direction: column; /* flex-col */
+            align-items: center; /* items-center */
+            justify-content: center; /* justify-center */
+            background-color: rgba(255, 255, 255, 0.8); /* bg-white bg-opacity-80 */
+            border-radius: 12px; /* rounded-xl */
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05); /* shadow-lg */
+            padding: 24px; /* p-6 */
+        }
+        @media (min-width: 768px) { /* md: */
+            .content-section {
+                flex-direction: row; /* md:flex-row */
+            }
+        }
+
+        .section-button {
+            flex-shrink: 0; /* flex-shrink-0 */
+            background-color: #f59e0b; /* bg-yellow-500 */
+            color: white; /* text-white */
+            font-weight: 600; /* font-semibold */
+            padding: 12px 24px; /* py-3 px-6 */
+            border-radius: 8px; /* rounded-lg */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* shadow-md */
+            transition: all 0.3s ease-in-out; /* transition duration-300 ease-in-out transform */
+            margin-bottom: 16px; /* mb-4 */
+            border: none;
+            cursor: pointer;
+        }
+        .section-button:hover {
+            background-color: #d97706; /* hover:bg-yellow-600 */
+            transform: scale(1.05); /* hover:scale-105 */
+        }
+        @media (min-width: 768px) { /* md: */
+            .section-button {
+                margin-bottom: 0; /* md:mb-0 */
+                margin-right: 24px; /* md:mr-6 */
+            }
+        }
+
+        .content-display {
+            flex-grow: 1; /* flex-grow */
+            width: 100%; /* w-full */
+            background-color: #d1fae5; /* bg-green-100 */
+            border-radius: 8px; /* rounded-lg */
+            padding: 16px; /* p-4 */
+            min-height: 150px; /* content-box */
+            display: flex; /* flex */
+            align-items: center; /* items-center */
+            justify-content: center; /* justify-center */
+            color: #4b5563; /* text-gray-600 */
+            text-align: center; /* text-center */
+        }
+
+        /* Styles for content loaded dynamically (e.g., inside infographics-content) */
+        .inner-content-wrapper {
+            padding: 16px; /* p-4 */
+            background-color: white; /* bg-white */
+            border-radius: 8px; /* rounded-lg */
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.06); /* shadow-inner */
+            color: #1f2937; /* text-gray-800 */
+            width: 100%; /* w-full */
+            text-align: left; /* Align text to left for better readability in explanations */
+        }
+        /* Specific style for explanation content to justify text */
+        .explanation-content-inner-wrapper {
+            text-align: justify;
+        }
+
+        .inner-content-wrapper h3 {
+            font-weight: bold; /* font-bold */
+            font-size: 1.125rem; /* text-lg */
+            margin-bottom: 16px; /* mb-4 */
+        }
+        .image-gallery {
+            display: flex; /* flex */
+            flex-direction: column; /* flex-col */
+            align-items: center; /* items-center */
+            gap: 16px; /* space-y-4 */
+        }
+        .image-gallery img {
+            width: 100%; /* w-full */
+            height: auto; /* h-auto */
+            border-radius: 8px; /* rounded-lg */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* shadow-md */
+            max-width: 800px; /* max-w-xl (converted from Tailwind's 36rem which is approx 576px, making it more flexible) */
+            display: block; /* Ensures proper rendering of images */
+        }
+        .image-caption {
+            font-size: 0.875rem; /* text-sm */
+            color: #6b7280; /* text-gray-500 */
+        }
+        .close-button {
+            margin-top: 24px; /* mt-6 */
+            background-color: #ef4444; /* bg-red-500 */
+            color: white; /* text-white */
+            font-weight: 600; /* font-semibold */
+            padding: 8px 16px; /* py-2 px-4 */
+            border-radius: 8px; /* rounded-lg */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* shadow-md */
+            transition: all 0.3s ease-in-out; /* transition duration-300 ease-in-out */
+            border: none;
+            cursor: pointer;
+        }
+        .close-button:hover {
+            background-color: #dc2626; /* hover:bg-red-600 */
+        }
+        .content-link {
+            color: #2563eb; /* text-blue-600 */
+            text-decoration: none; /* hover:underline */
+            margin-top: 16px; /* mt-4 */
+            display: inline-block; /* inline-block */
+            transition: text-decoration 0.3s ease;
+        }
+        .content-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Video specific styles */
+        .video-container {
+            position: relative; /* relative */
+            width: 100%; /* w-full */
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        }
+        .video-iframe {
+            position: absolute; /* absolute */
+            top: 0; /* top-0 */
+            left: 0; /* left-0 */
+            width: 100%; /* w-full */
+            height: 100%; /* h-full */
+            border-radius: 6px; /* rounded-md */
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #4f6d3f;
+            color: #ccc;
+            padding: 40px 20px;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        footer .footer-container {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: center;
+        }
+        footer h3 {
+            color: white;
+            font-weight: 600; /* font-semibold */
+            margin-bottom: 12px;
+        }
+        footer ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        footer ul li {
+            margin-bottom: 8px; /* space-y-2 */
+        }
+        footer ul li a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 0.875rem; /* text-sm */
+            display: flex; /* Ensures SVG and text align */
+            align-items: center; /* Aligns SVG and text vertically */
+            transition: color 0.3s ease;
+        }
+        footer ul li a:hover {
+            color: #a6db4a;
+        }
+        footer ul li a svg {
+            width: 1rem; /* Equivalent to w-4 (16px) */
+            height: 1rem; /* Equivalent to h-4 (16px) */
+            margin-right: 0.25rem; /* Equivalent to mr-1 (4px) */
+        }
+        footer .bottom-bar {
+            text-align: center;
+            margin-top: 24px;
+            border-top: 1px solid #35522c;
+            padding-top: 16px;
+        }
+        footer .bottom-bar a {
+            margin: 0 12px;
+            color: #a6db4a;
+            text-decoration: none;
+        }
+        /* Video paragraph margin */
+        .video-description-paragraph {
+            margin-top: 1rem; /* mt-4 */
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="header-nav">
+        <div class="logo-info">
+            <img src="https://placehold.co/40x40/6a994e/ffffff?text=Logo" alt="Ecomind Logo" class="logo-img">
+            <span class="logo-text">Ecomind</span>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="nav-link">Home</a>
+            <a href="#" class="nav-link">About Us</a>
+            <a href="#" class="nav-link">Module</a>
+            <a href="#" class="nav-link">Game</a>
+            <button class="login-btn-custom">Login</button>
+        </div>
+        <div class="mobile-menu-toggle">
+            <button class="focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <div class="header-title-section">
+            <div class="title-box">
+                <h1>MODULE 4</h1> <h2>Methods of Waste Disposal</h2> </div>
+        </div>
+
+        <div class="font-size-controls">
+            <span>Font Size:</span>
+            <button id="decrease-font-btn" class="font-size-button">-</button>
+            <button id="reset-font-btn" class="font-size-button">Reset</button>
+            <button id="increase-font-btn" class="font-size-button">+</button>
+        </div>
+
+        <div class="interactive-sections-grid">
+
+            <div class="content-section">
+                <button id="infographics-btn" class="section-button">
+                    Infographics
+                </button>
+                <div id="infographics-content" class="content-display">
+                    Click on the infographic to open it in full view. Explore key facts, visuals, and data at a glance to help you better understand the topic.
+                </div>
+            </div>
+
+            <div class="content-section">
+                <button id="video-btn" class="section-button">
+                    Video
+                </button>
+                <div id="video-content" class="content-display">
+                    Tap to play the video and dive deeper into the subject. Watch at your own pace and absorb insights through engaging visuals and expert explanations.
+                </div>
+            </div>
+
+            <div class="content-section">
+                <button id="explanation-btn" class="section-button">
+                    Explanation
+                </button>
+                <div id="explanation-content" class="content-display">
+                    Click "Explanation" to learn more.
+                </div>
+            </div>
+
+            <div class="content-section">
+                <button id="quiz-btn" class="section-button">
+                    Quiz
+                </button>
+                <div id="quiz-content" class="content-display">
+                    Think you’ve got it down? Click to start the quiz and put your knowledge to the test. It’s a quick and fun way to review what you’ve learned!
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div>
+                <h3>ECOMIND</h3>
+                <ul>
+                    <li><a href="#"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M7 10v4h3v7h4v-7h3l1-4h-4V7a1 1 0 011-1h3V2h-3a5 5 0 00-5 5v3H7z"></path></svg> Instagram</a></li>
+                    <li><a href="#"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.88 0-1 .2-1 1v2h3l-1 3h-2v6.95c5.05-.5 9-4.76 9-9.95z"></path></svg> Facebook</a></li>
+                    <li><a href="#"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.4-1.83.6-2.82.774a4.07 4.07 0 001.8-2.71c-.93.55-1.95.9-3.04 1.1A4.07 4.07 0 0012.01 2c-2.67 0-4.85 2.18-4.85 4.85 0 .38.04.75.12 1.12C7.7 8.16 4.08 6.22 1.63 3.19c-.4.68-.63 1.47-.63 2.3 0 1.68.86 3.16 2.17 4.04-.8-.03-1.55-.25-2.2-.6v.05c0 2.35 1.67 4.28 3.89 4.73-.4.1-.8.16-1.2.16-.3 0-.6-.03-.88-.08.62 1.95 2.42 3.37 4.56 3.4-.64.5-1.46.8-2.34.8-1.5 0-2.8-.8-3.7-1.9.08 1.1.4 2.1.9 3.03C6.3 20.3 8.3 21 10.5 21c7.4 0 11.4-6.12 11.4-11.4 0-.17-.003-.34-.01-.5.78-.57 1.46-1.28 2-2.08z"></path></svg> Twitter</a></li>
+                    <li><a href="#"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M.2 5.5l7 4.2v-3.7L.2 1.8V5.5zm.2 12.5l7-4.2v3.7L.2 22.2V18zm8-12.7v3.7l7 4.2V8.3l-7-4.2zm0 12.7v-3.7l7-4.2v8.3l-7 4.2z"></path></svg> Pinterest</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>About Us</h3>
+                <ul>
+                    <li><a href="#">Our Mission</a></li>
+                    <li><a href="#">Meet the Team</a></li>
+                    <li><a href="#">Partnership</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><a href="#">1-800-555-5555</a></li>
+                    <li><a href="#">Email Us</a></li>
+                    <li><a href="#">Customer Support</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Learning</h3>
+                <ul>
+                    <li><a href="#">Modules</a></li>
+                    <li><a href="#">Quizzes</a></li>
+                    <li><a href="#">Games</a></li>
+                    <li><a href="#">Volunteering</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="bottom-bar">
+            © 2023 Ecomind. All rights reserved. <a href="#">Terms of Use</a> | <a href="#">Privacy Policy</a>
+        </div>
+    </footer>
+
+    <script>
+        // Get references to buttons and content areas
+        const explanationBtn = document.getElementById('explanation-btn');
+        const infographicsBtn = document.getElementById('infographics-btn');
+        const videoBtn = document.getElementById('video-btn');
+        const quizBtn = document.getElementById('quiz-btn');
+
+        const explanationContent = document.getElementById('explanation-content');
+        const infographicsContent = document.getElementById('infographics-content');
+        const videoContent = document.getElementById('video-content');
+        const quizContent = document.getElementById('quiz-content');
+
+        // Get font size control buttons
+        const increaseFontBtn = document.getElementById('increase-font-btn');
+        const decreaseFontBtn = document.getElementById('decrease-font-btn');
+        const resetFontBtn = document.getElementById('reset-font-btn');
+
+        // Get reference to the main content area
+        const mainContent = document.getElementById('main-content');
+
+        // Store default messages for content areas
+        const defaultExplanationContent = `
+            <div class="content-text-default">
+                Click to view a detailed explanation that breaks the topic down into simple, explanations. Great for building a deeper understanding at your own pace.
+            </div>
+        `;
+        const defaultInfographicsContent = `
+            <div class="content-text-default">
+                Click on the infographic to open it in full view. Explore key facts, visuals, and data at a glance to help you better understand the topic.
+            </div>
+        `;
+        const defaultVideoContent = `
+            <div class="content-text-default">
+                Tap to play the video and dive deeper into the subject. Watch at your own pace and absorb insights through engaging visuals and expert explanations.
+            </div>
+        `;
+        const defaultQuizContent = `
+            <div class="content-text-default">
+                Think you’ve got it down? Click to start the quiz and put your knowledge to the test. It’s a quick and fun way to review what you’ve learned!
+            </div>
+        `;
+
+        // Default font size for the main content area
+        let initialMainFontSize;
+        let currentMainFontSize;
+        const FONT_SIZE_STEP = 1; // Step in pixels for font size adjustment
+        const MAX_FONT_SIZE_DIFF = 5; // Max difference from initial size (e.g., +5px, -5px)
+
+        // Function to update content
+        function updateContent(element, content) {
+            element.innerHTML = content;
+        }
+
+        // Function to set font size for the main content area
+        function setFontSize(size) {
+            mainContent.style.fontSize = `${size}px`;
+            localStorage.setItem('userMainFontSize', size); // Save preference to local storage
+        }
+
+        // Load font size from local storage on page load
+        function loadFontSize() {
+            const savedFontSize = localStorage.getItem('userMainFontSize');
+            if (savedFontSize) {
+                currentMainFontSize = parseFloat(savedFontSize);
+                setFontSize(currentMainFontSize);
+            }
+        }
+
+        // Event listeners for font size controls
+        increaseFontBtn.addEventListener('click', () => {
+            if (currentMainFontSize < initialMainFontSize + MAX_FONT_SIZE_DIFF) {
+                currentMainFontSize += FONT_SIZE_STEP;
+                setFontSize(currentMainFontSize);
+            }
+        });
+
+        decreaseFontBtn.addEventListener('click', () => {
+            if (currentMainFontSize > initialMainFontSize - MAX_FONT_SIZE_DIFF) {
+                currentMainFontSize -= FONT_SIZE_STEP;
+                setFontSize(currentMainFontSize);
+            }
+        });
+
+        resetFontBtn.addEventListener('click', () => {
+            currentMainFontSize = initialMainFontSize;
+            setFontSize(currentMainFontSize);
+        });
+
+        // Function to toggle content visibility
+        function toggleContent(buttonId, contentElement, newContent, defaultContent, isExternalLink = false) {
+            // If it's an external link (like the quiz), just redirect and don't toggle content on this page
+            if (isExternalLink) {
+                window.location.href = newContent;
+                return;
+            }
+
+            // Close all other content areas first
+            const allContentElements = [explanationContent, infographicsContent, videoContent, quizContent];
+            const allDefaultContents = [defaultExplanationContent, defaultInfographicsContent, defaultVideoContent, defaultQuizContent];
+
+            allContentElements.forEach((element, index) => {
+                // Only reset if it's a different content area and currently showing content (not its own default)
+                if (element !== contentElement && element.innerHTML.trim() !== allDefaultContents[index].trim()) {
+                    updateContent(element, allDefaultContents[index]);
+                }
+            });
+
+            // Toggle content for the clicked button's content area
+            // Check if the current content is the default (i.e., it's currently "closed")
+            if (contentElement.innerHTML.trim() === defaultContent.trim()) {
+                updateContent(contentElement, newContent); // Open it
+            } else {
+                updateContent(contentElement, defaultContent); // Close it
+            }
+        }
+
+        // Event listener for the Explanation button
+        explanationBtn.addEventListener('click', () => {
+            const explanationHtml = `
+                <div class="inner-content-wrapper explanation-content-inner-wrapper">
+                    <p class="explanation-title">Landfill, incineration/combustion, recovery and recycling, plasma gasification, composting, waste-to-energy, and waste minimization.</p>
+                    <p>Landfill involves burying waste, widely used but space-intensive. Incineration burns waste to reduce its volume and stress on landfills, also known as thermal treatment. Recovery and recycling convert waste into new products or energy, conserving resources and reducing pollution. Plasma gasification uses intense heat to break down waste, producing energy. Composting turns organic waste into nutrient-rich soil. Waste-to-energy transforms non-recyclable waste into power or fuel, reducing reliance on fossil fuels. Waste minimization reduces waste creation by reusing, repairing, and choosing sustainable products.</p>
+                    <button id="close-explanation-btn" class="close-button">
+                        Close Explanation
+                    </button>
+                </div>
+            `;
+            toggleContent('explanation-btn', explanationContent, explanationHtml, defaultExplanationContent);
+
+            // Add event listener for the new close button if it exists
+            const closeExplanationBtn = document.getElementById('close-explanation-btn');
+            if (closeExplanationBtn) {
+                closeExplanationBtn.addEventListener('click', () => {
+                    updateContent(explanationContent, defaultExplanationContent);
+                });
+            }
+        });
+
+        // Event listeners for existing buttons
+        infographicsBtn.addEventListener('click', () => {
+            const infographicsHtml = `
+                <div class="inner-content-wrapper">
+                    <h3>Infographics on Waste Segregation</h3>
+                    <div class="image-gallery">
+                        <img src="infographic41.jpg" alt="Infographic 1">
+                        <img src="infographic42.jpg" alt="Infographic 2">
+                    </div>
+                    <button id="close-infographics-btn" class="close-button">
+                        Close Infographics
+                    </button>
+                    <a href="#" class="content-link">Top (Optional)</a>
+                </div>
+            `;
+            toggleContent('infographics-btn', infographicsContent, infographicsHtml, defaultInfographicsContent);
+
+            // Add event listener for the new close button if it exists
+            const closeInfographicsBtn = document.getElementById('close-infographics-btn');
+            if (closeInfographicsBtn) {
+                closeInfographicsBtn.addEventListener('click', () => {
+                    updateContent(infographicsContent, defaultInfographicsContent);
+                });
+            }
+        });
+
+        videoBtn.addEventListener('click', () => {
+            const videoHtml = `
+                <div class="inner-content-wrapper">
+                    <h3>Educational Video: Waste Classification</h3>
+                    <div class="video-container">
+                        <iframe class="video-iframe" src="https://www.youtube.com/embed/-JO27OR2V5E" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <p class="video-description-paragraph">We generate a lot of waste every week, but have we ever considered where it goes? Modern garbage disposal systems provide you with a variety of waste disposal solutions. Examining the many possibilities will assist you in identifying a solution that is not only beneficial to you but also to the environment.</p>
+                    <button id="close-video-btn" class="close-button">
+                        Close Video
+                    </button>
+                </div>
+            `;
+            toggleContent('video-btn', videoContent, videoHtml, defaultVideoContent);
+
+            // Add event listener for the new close button for video
+            const closeVideoBtn = document.getElementById('close-video-btn');
+            if (closeVideoBtn) {
+                closeVideoBtn.addEventListener('click', () => {
+                    updateContent(videoContent, defaultVideoContent);
+                });
+            }
+        });
+
+        quizBtn.addEventListener('click', () => {
+            // This will directly redirect, no content toggle on the current page for quiz
+            toggleContent('quiz-btn', quizContent, 'quiz.html', defaultQuizContent, true);
+        });
+
+        // Initialize content areas with default messages and load font size on page load
+        window.onload = function() {
+            // Ensure mainContent element is available before getting its computed style
+            if (mainContent) {
+                // Redefine initialMainFontSize and currentMainFontSize after mainContent is available
+                initialMainFontSize = parseFloat(getComputedStyle(mainContent).fontSize);
+                currentMainFontSize = initialMainFontSize;
+            }
+
+            // Set initial content for all sections
+            updateContent(explanationContent, defaultExplanationContent);
+            updateContent(infographicsContent, defaultInfographicsContent);
+            updateContent(videoContent, defaultVideoContent);
+            updateContent(quizContent, defaultQuizContent);
+            loadFontSize(); // Load saved font size
+        };
+    </script>
+</body>
+</html>
