@@ -1,3 +1,4 @@
+
 // --- Sidebar and Header Navigation JavaScript ---
 const hamburgerIcon = document.getElementById('hamburger-icon');
 const closeSidebarBtn = document.getElementById('close-sidebar-btn');
@@ -182,3 +183,16 @@ window.onclick = function(event) {
         closeModal();
     }
 }
+
+// User type selection functionality
+function selectUserType(selectedBtn, userType) {
+     // Remove active class from all user type buttons
+    const allButtons = document.querySelectorAll('.user-type-btn');
+    allButtons.forEach(btn => btn.classList.remove('active'));
+            
+    // Add active class to the clicked button
+    selectedBtn.classList.add('active');
+            
+    // Store the selected user type (optional - for form processing)
+    selectedBtn.setAttribute('data-selected', userType);
+        }
