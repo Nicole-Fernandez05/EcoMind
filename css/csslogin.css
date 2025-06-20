@@ -1,4 +1,46 @@
 /* Basic Reset & Body Styling (Essential for consistent layout) */
+/* User Type Buttons Styling */
+        .user-type-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .user-type-btn {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .user-type-btn:hover {
+            border-color: #9ACD32;
+            background: #f0f8ff;
+            color: #2d5016;
+        }
+
+        .user-type-btn.active {
+            background: #9ACD32;
+            border-color: #9ACD32;
+            color: #2d5016;
+        }
+
+        .or-divider {
+            color: #666;
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 0 0.5rem;
+            flex-shrink: 0;
+        }
+
 * {
     margin: 0;
     padding: 0;
