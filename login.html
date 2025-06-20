@@ -8,47 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/csslogin.css">
     <style>
-        /* User Type Buttons Styling */
-        .user-type-buttons {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-            justify-content: center;
-            align-items: center;
-        }
 
-        .user-type-btn {
-            flex: 1;
-            padding: 0.6rem 1rem;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            background: white;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #555;
-        }
-
-        .user-type-btn:hover {
-            border-color: #9ACD32;
-            background: #f0f8ff;
-            color: #2d5016;
-        }
-
-        .user-type-btn.active {
-            background: #9ACD32;
-            border-color: #9ACD32;
-            color: #2d5016;
-        }
-
-        .or-divider {
-            color: #666;
-            font-size: 0.8rem;
-            font-weight: 500;
-            padding: 0 0.5rem;
-            flex-shrink: 0;
-        }
     </style>
 </head>
 <body>
@@ -132,18 +92,7 @@
 
     <script src="js/jslogin.js"></script>
     <script>
-        // User type selection functionality
-        function selectUserType(selectedBtn, userType) {
-            // Remove active class from all user type buttons
-            const allButtons = document.querySelectorAll('.user-type-btn');
-            allButtons.forEach(btn => btn.classList.remove('active'));
-            
-            // Add active class to the clicked button
-            selectedBtn.classList.add('active');
-            
-            // Store the selected user type (optional - for form processing)
-            selectedBtn.setAttribute('data-selected', userType);
-        }
+        
     </script>
 </body>
 </html>
