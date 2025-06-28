@@ -1,0 +1,567 @@
+/* Basic Reset & Body Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f8f8;
+    display: flex; /* Use flexbox for main layout */
+    flex-direction: column; /* Stack header, main, and other content vertically */
+    min-height: 100vh; /* Ensure body takes full viewport height */
+    overflow-x: hidden; /* Prevent horizontal scroll due to sidebar */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/*
+---
+NAVIGATION BAR (HEADER) STYLES
+---
+*/
+.header {
+    background-color: #fff;
+    padding: 15px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0; /* Prevent header from shrinking */
+    width: 100%; /* Ensure header takes full width */
+    position: fixed; /* Fix header to top */
+    top: 0;
+    left: 0;
+    z-index: 50; /* Ensure it's above other content */
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Space between hamburger and logo */
+}
+
+/* Hamburger Menu Icon - Always visible */
+.hamburger-icon {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+    padding: 5px;
+    display: block; /* Ensure it's always visible */
+    flex-shrink: 0; /* Prevent icon from shrinking */
+}
+
+.logo {
+    display: flex; /* Make logo itself a flex container */
+    align-items: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    gap: 10px; /* Space between logo icon and text */
+}
+
+.logo-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #4CAF50; /* Green background for circular icon */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    flex-shrink: 0; /* Prevent icon from shrinking */
+}
+
+.logo-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the circular area */
+}
+
+.top-nav-links {
+    display: none; /* Hidden by default for mobile */
+    gap: 25px;
+    align-items: center;
+}
+
+.top-nav-links a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 600;
+    padding: 8px 12px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    border-radius: 8px;
+}
+
+.top-nav-links a:hover {
+    color: #4CAF50; /* Green text on hover */
+    background-color: #e6f7e6; /* Light green background on hover */
+}
+
+/* Login Button specific styles */
+.top-nav-links .login-btn {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.top-nav-links .login-btn:hover {
+    background-color: #45a049;
+    color: #fff; /* Keep text white on hover */
+}
+
+/* Media query for larger screens (md breakpoint equivalent) */
+@media (min-width: 768px) {
+    .header {
+        padding-left: 48px; /* md:px-12 equivalent */
+        padding-right: 48px; /* md:px-12 equivalent */
+    }
+    .top-nav-links {
+        display: flex; /* Show on larger screens */
+    }
+    .hamburger-icon {
+        display: none; /* Hide hamburger on larger screens */
+    }
+}
+
+/*
+---
+SIDEBAR STYLES
+---
+*/
+/* Sliding Sidebar Container (Overlay) */
+.sidebar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+    visibility: hidden; /* Hidden by default */
+    opacity: 0; /* Fade in effect */
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1000; /* Ensures it's on top of everything */
+}
+
+.sidebar-container.open {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Actual Sliding Sidebar Menu */
+.sidebar-menu {
+    width: 280px; /* Default width */
+    height: 100%;
+    background-color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%); /* Initially off-screen to the left */
+    transition: transform 0.3s ease; /* Smooth slide transition */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    padding: 20px;
+    box-sizing: border-box; /* Include padding in width */
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-menu.open {
+    transform: translateX(0); /* Slide into view */
+}
+
+.close-sidebar-btn {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #555;
+    align-self: flex-end; /* Pushes button to the right */
+    margin-bottom: 20px;
+}
+
+.sidebar-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-links li {
+    margin-bottom: 10px;
+}
+
+.sidebar-links a {
+    display: block;
+    text-decoration: none;
+    color: #555;
+    font-weight: 600;
+    padding: 12px 15px;
+    border-radius: 8px; /* Rounded corners */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-links a:hover {
+    background-color: #e6f7e6; /* Light green background on hover */
+    color: #4CAF50; /* Green text on hover */
+}
+
+.sidebar-links a.active {
+    background-color: #d4edda; /* Active link background */
+    color: #4CAF50; /* Active link text color */
+    font-weight: 700;
+}
+
+/*
+---
+QUIZ STYLES
+---
+*/
+main {
+    flex-grow: 1; /* Allows main content to fill available space */
+    padding-top: 80px; /* Offset for fixed header */
+    padding-bottom: 20px; /* Spacing before footer */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto; /* Make main content area scrollable */
+    width: 100%;
+}
+
+.quiz-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 12px; /* Rounded corners */
+    text-align: center;
+    max-width: 900px; /* Increased max-width for better layout */
+    width: 95%; /* Responsive width */
+    margin: 20px auto; /* Center with margin */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 400px; /* Min height to prevent collapse */
+}
+
+.question-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 20px; /* Increased margin */
+    font-size: 1.1em;
+    color: #555;
+    padding: 0 10px;
+}
+
+.item-number, .time {
+    font-weight: 700; /* Bold */
+    color: #4CAF50; /* Green color */
+}
+
+.question {
+    background-color: #e6f7e6; /* Light green */
+    padding: 30px; /* Increased padding */
+    margin-bottom: 30px; /* Increased margin */
+    border-radius: 10px; /* More rounded */
+    text-align: center;
+    max-width: 800px;
+    width: 100%;
+    font-size: 1.25em; /* Larger font */
+    font-weight: 600;
+    color: #333;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 15px; /* Increased gap */
+    max-width: 800px;
+    width: 100%;
+    margin-bottom: 30px; /* Increased margin */
+}
+
+.option {
+    background-color: #d9d9d9;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #444;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.option:hover {
+    background-color: #c0c0c0;
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.option.selected {
+    background-color: #FFD700; /* Yellow selected */
+    color: #333; /* Darker text for contrast on yellow */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(0);
+}
+
+.navigation {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.submit-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 28px; /* Larger padding */
+    border-radius: 25px; /* Pill shape */
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Results Display */
+.results-container {
+    display: flex;
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    justify-content: center; /* Center items */
+    width: 100%;
+    max-width: 1000px;
+    margin-top: 20px;
+    gap: 20px; /* Space between columns */
+    align-items: flex-start; /* Align items to the start so they don't stretch vertically */
+}
+
+.results-list, .chart-section { /* Renamed chart-container to chart-section for layout purposes */
+    flex: 1 1 45%; /* Allows items to grow/shrink, take about 45% of width */
+    min-width: 300px; /* Minimum width before wrapping */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px; /* Margin for vertical spacing when wrapped */
+}
+
+.results-list h2 {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.results-list div {
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: left; /* Align text left for readability */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.results-list .correct {
+    background-color: #d4edda; /* Light green for correct */
+    color: #155724; /* Darker green text */
+    border: 1px solid #c3e6cb;
+}
+
+.results-list .incorrect {
+    background-color: #f8d7da; /* Light red for incorrect */
+    color: #721c24; /* Darker red text */
+    border: 1px solid #f5c6cb;
+}
+
+.results-list p {
+    margin-bottom: 5px;
+}
+
+.results-list strong {
+    font-weight: 600;
+}
+
+.chart-section { /* Flex container for chart and info */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart-container { /* This is where the canvas for the chart will be */
+    width: 100%; /* Take full width of parent */
+    max-width: 350px; /* Max width for the chart */
+    height: 350px; /* Square aspect ratio for pie chart */
+    display: flex; /* Centering canvas inside */
+    justify-content: center;
+    align-items: center;
+}
+
+.chart-title {
+    font-weight: 700;
+    margin-top: 15px; /* Adjust margin based on new layout */
+    font-size: 1.5em;
+    color: #333;
+}
+
+.chart-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 1.1em;
+    color: #555;
+    text-align: center; /* Center text within info */
+}
+
+.chart-info p {
+    margin: 5px 0;
+    font-weight: 500;
+}
+
+.retake-quiz-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.retake-quiz-button:hover {
+    background-color: #45a049;
+}
+
+
+/*
+---
+FOOTER STYLES
+---
+*/
+.footer {
+    background-color: #4F6D44; /* Dark green */
+    color: #fff;
+    padding: 60px 0 30px;
+    position: relative;
+    margin-top: auto; /* Pushes footer to the bottom */
+    flex-shrink: 0; /* Prevents footer from shrinking */
+}
+
+.footer-content {
+    display: flex; /* Keep flex display for columns */
+    justify-content: center;
+    flex-wrap: wrap; /* Allows columns to wrap if space is tight */
+    gap: 30px;
+    padding-top: 0;
+    max-width: 1200px; /* Constrain content width */
+    margin: 0 auto; /* Center content */
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 200px; /* Minimum width for columns */
+    color: #fff;
+    text-align: center; /* Center text within columns */
+}
+
+.footer-column h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 10px;
+}
+
+.footer-column ul li a, .footer-column ul li { /* Included li itself for consistent text color */
+    text-decoration: none;
+    color: #eee;
+    transition: color 0.3s ease;
+}
+
+.footer-column ul li a:hover {
+    color: #c9e4c9;
+}
+
+.footer-social-icons {
+    display: flex;
+    flex-direction: column; /* Social icons remain stacked vertically */
+    gap: 10px;
+    margin-top: 10px;
+    align-items: center; /* Center icons */
+}
+
+.footer-social-icons a {
+    color: #eee;
+    font-size: 16px;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-social-icons a:hover {
+    color: #fff;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 14px;
+    color: #aaa;
+    display: flex; /* Keep flex display for bottom links */
+    justify-content: center;
+    flex-wrap: wrap; /* Allow wrapping if needed */
+    gap: 20px;
+}
+.footer-bottom a {
+    text-decoration: none;
+    color: #aaa;
+    transition: color 0.3s ease;
+}
+.footer-bottom a:hover {
+    color: #fff;
+}
+
+/* Responsive adjustments for footer columns */
+@media (max-width: 768px) {
+    .footer-column {
+        flex-basis: 45%; /* Two columns on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-column {
+        flex-basis: 100%; /* Single column on very small screens */
+    }
+}
