@@ -7,7 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Basic Reset & Body Styling (Essential for consistent layout) */
+        /* Your existing CSS styles here */
+        /* Basic Reset & Body Styling */
         * {
             margin: 0;
             padding: 0;
@@ -19,10 +20,10 @@
             line-height: 1.6;
             color: #333;
             background-color: #f8f8f8;
-            display: flex; /* Use flexbox for main layout */
-            flex-direction: column; /* Stack header, main, and other content vertically */
-            min-height: 100vh; /* Ensure body takes full viewport height */
-            overflow-x: hidden; /* Prevent horizontal scroll due to sidebar */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .container {
@@ -31,11 +32,7 @@
             padding: 0 20px;
         }
 
-        /*
-        ---
-        NAVIGATION BAR (HEADER) STYLES
-        ---
-        */
+        /* Header Styles */
         .header {
             background-color: #fff;
             padding: 15px 20px;
@@ -43,21 +40,19 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-shrink: 0; /* Prevent header from shrinking */
-            width: 100%; /* Ensure header takes full width */
-            position: fixed; /* Keep header fixed at the top */
+            position: fixed;
             top: 0;
             left: 0;
-            z-index: 100; /* Ensure header is above other content */
+            width: 100%;
+            z-index: 100;
         }
 
         .header-left {
             display: flex;
             align-items: center;
-            gap: 15px; /* Space between hamburger and logo */
+            gap: 15px;
         }
 
-        /* Hamburger Menu Icon - Always visible */
         .hamburger-icon {
             background: none;
             border: none;
@@ -65,39 +60,36 @@
             cursor: pointer;
             color: #333;
             padding: 5px;
-            display: block; /* Ensure it's always visible */
-            flex-shrink: 0; /* Prevent icon from shrinking */
         }
 
         .logo {
-            display: flex; /* Make logo itself a flex container */
+            display: flex;
             align-items: center;
             font-size: 24px;
             font-weight: 700;
             color: #333;
-            gap: 10px; /* Space between logo icon and text */
+            gap: 10px;
         }
 
         .logo-icon {
             width: 30px;
             height: 30px;
             border-radius: 50%;
-            background-color: #4CAF50; /* Green background for circular icon */
+            background-color: #4CAF50;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            flex-shrink: 0; /* Prevent icon from shrinking */
         }
 
         .logo-icon img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ensures the image covers the circular area */
+            object-fit: cover;
         }
 
         .top-nav-links {
-            display: flex; /* Always display top nav links */
+            display: flex;
             gap: 25px;
             align-items: center;
         }
@@ -112,11 +104,10 @@
         }
 
         .top-nav-links a:hover {
-            color: #4CAF50; /* Green text on hover */
-            background-color: #e6f7e6; /* Light green background on hover */
+            color: #4CAF50;
+            background-color: #e6f7e6;
         }
 
-        /* Login Button specific styles */
         .top-nav-links .login-btn {
             background-color: #4CAF50;
             color: #fff;
@@ -127,33 +118,27 @@
 
         .top-nav-links .login-btn:hover {
             background-color: #45a049;
-            color: #fff; /* Keep text white on hover */
+            color: #fff;
         }
 
-        /* Hide top navigation links on small screens */
         @media (max-width: 767px) {
             .top-nav-links {
                 display: none;
             }
         }
 
-        /*
-        ---
-        SIDEBAR STYLES
-        ---
-        */
-        /* Sliding Sidebar Container (Overlay) */
+        /* Sidebar Styles */
         .sidebar-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
-            visibility: hidden; /* Hidden by default */
-            opacity: 0; /* Fade in effect */
+            background-color: rgba(0, 0, 0, 0.5);
+            visibility: hidden;
+            opacity: 0;
             transition: opacity 0.3s ease, visibility 0.3s ease;
-            z-index: 1000; /* Ensures it's on top of everything */
+            z-index: 1000;
         }
 
         .sidebar-container.open {
@@ -161,25 +146,24 @@
             opacity: 1;
         }
 
-        /* Actual Sliding Sidebar Menu */
         .sidebar-menu {
-            width: 280px; /* Default width */
+            width: 280px;
             height: 100%;
             background-color: #fff;
             position: absolute;
             top: 0;
             left: 0;
-            transform: translateX(-100%); /* Initially off-screen to the left */
-            transition: transform 0.3s ease; /* Smooth slide transition */
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
             padding: 20px;
-            box-sizing: border-box; /* Include padding in width */
+            box-sizing: border-box;
             display: flex;
             flex-direction: column;
         }
 
         .sidebar-menu.open {
-            transform: translateX(0); /* Slide into view */
+            transform: translateX(0);
         }
 
         .close-sidebar-btn {
@@ -188,7 +172,7 @@
             font-size: 28px;
             cursor: pointer;
             color: #555;
-            align-self: flex-end; /* Pushes button to the right */
+            align-self: flex-end;
             margin-bottom: 20px;
         }
 
@@ -208,50 +192,42 @@
             color: #555;
             font-weight: 600;
             padding: 12px 15px;
-            border-radius: 8px; /* Rounded corners */
+            border-radius: 8px;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .sidebar-links a:hover {
-            background-color: #e6f7e6; /* Light green background on hover */
-            color: #4CAF50; /* Green text on hover */
+            background-color: #e6f7e6;
+            color: #4CAF50;
         }
 
         .sidebar-links a.active {
-            background-color: #d4edda; /* Active link background */
-            color: #4CAF50; /* Active link text color */
+            background-color: #d4edda;
+            color: #4CAF50;
             font-weight: 700;
         }
 
-        /*
-        ---
-        FOOTER STYLES (Non-Responsive)
-        ---
-        */
+        /* Footer Styles */
         .footer {
-            background-color: #4F6D44; /* Dark green */
+            background-color: #4F6D44;
             color: #fff;
             padding: 60px 0 30px;
-            position: relative;
-            margin-top: auto; /* Pushes footer to the bottom */
-            flex-shrink: 0; /* Prevents footer from shrinking */
+            margin-top: auto;
         }
 
         .footer-content {
-            display: flex; /* Keep flex display for columns */
+            display: flex;
             justify-content: center;
-            flex-wrap: wrap; /* Allows columns to wrap if space is tight, but won't force a stacked layout */
+            flex-wrap: wrap;
             gap: 30px;
-            padding-top: 0;
-            max-width: 1200px; /* Constrain content width */
-            margin: 0 auto; /* Center content */
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .footer-column {
             flex: 1;
-            min-width: 200px; /* Minimum width for columns */
-            color: #fff;
-            text-align: center; /* Center text within columns */
+            min-width: 200px;
+            text-align: center;
         }
 
         .footer-column h3 {
@@ -269,7 +245,7 @@
             margin-bottom: 10px;
         }
 
-        .footer-column ul li a, .footer-column ul li { /* Included li itself for consistent text color */
+        .footer-column ul li a {
             text-decoration: none;
             color: #eee;
             transition: color 0.3s ease;
@@ -281,10 +257,10 @@
 
         .footer-social-icons {
             display: flex;
-            flex-direction: column; /* Social icons remain stacked vertically */
+            flex-direction: column;
             gap: 10px;
             margin-top: 10px;
-            align-items: center; /* Center icons */
+            align-items: center;
         }
 
         .footer-social-icons a {
@@ -307,16 +283,18 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 14px;
             color: #aaa;
-            display: flex; /* Keep flex display for bottom links */
+            display: flex;
             justify-content: center;
-            flex-wrap: wrap; /* Allow wrapping if needed */
+            flex-wrap: wrap;
             gap: 20px;
         }
+
         .footer-bottom a {
             text-decoration: none;
             color: #aaa;
             transition: color 0.3s ease;
         }
+
         .footer-bottom a:hover {
             color: #fff;
         }
@@ -327,236 +305,258 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 80px; /* Adjust padding to account for fixed header */
-            /* Set a CSS variable for the base font size */
-            --base-font-size: 16px; /* Default base font size */
+            padding-top: 80px;
+            --base-font-size: 16px;
             font-size: var(--base-font-size);
         }
 
         /* Module Title Section Styles */
         .header-title-section {
-            width: 100%; /* w-full */
+            width: 100%;
             text-align: center;
-            background-color: #E5CBAF; /* Orange background */
-            padding: 5vh 2vw; /* Responsive padding */
+            background-color: #E5CBAF;
+            padding: 5vh 2vw;
         }
+
         .header-title-section .title-box {
-            max-width: 900px; /* max-w-4xl */
-            margin: auto; /* mx-auto */
-            background-color: rgba(255, 255, 255, 0.7); /* bg-white bg-opacity-70 */
-            border-radius: 10px; /* rounded-lg */
-            box-shadow: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05); /* shadow-xl */
-            padding: 32px; /* p-8 */
-            margin-bottom: 32px; /* mb-8 */
-            text-align: center; /* text-center */
+            max-width: 900px;
+            margin: auto;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
+            padding: 32px;
+            margin-bottom: 32px;
+            text-align: center;
         }
+
         .header-title-section h1 {
-            /* Now relative to --base-font-size */
-            /* Using calc() with em units for responsiveness and scaling with --base-font-size */
-            font-size: calc(2.5em + 1vw); /* Base 2.5em, plus 1vw for responsiveness */
+            font-size: calc(2.5em + 1vw);
             font-weight: bold;
-            color: #1f2937; /* text-gray-800 */
-            margin-bottom: 0.2em; /* mb-2 */
+            color: #1f2937;
+            margin-bottom: 0.2em;
         }
+
         .header-title-section h2 {
-            /* Now relative to --base-font-size */
-            /* Using calc() with em units for responsiveness and scaling with --base-font-size */
-            font-size: calc(1.5em + 0.5vw); /* Base 1.5em, plus 0.5vw for responsiveness */
+            font-size: calc(1.5em + 0.5vw);
             font-weight: 500;
-            color: #374151; /* text-gray-700 */
+            color: #374151;
         }
 
         /* Font Size Controls */
         .font-size-controls {
-            width: 100%; /* w-full */
-            max-width: 900px; /* max-w-4xl */
-            padding-left: 16px; /* px-4 */
-            padding-right: 16px; /* px-4 */
-            display: flex; /* flex */
-            justify-content: flex-end; /* justify-end */
-            align-items: center; /* items-center */
-            gap: 8px; /* space-x-2 */
-            padding-top: 16px; /* py-4 */
-            padding-bottom: 16px; /* py-4 */
+            width: 100%;
+            max-width: 900px;
+            padding-left: 16px;
+            padding-right: 16px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 8px;
+            padding-top: 16px;
+            padding-bottom: 16px;
         }
+
         .font-size-controls span {
-            color: #374151; /* text-gray-700 */
-            font-size: 0.875rem; /* text-sm */
-            font-weight: 500; /* font-medium */
+            color: #374151;
+            font-size: 0.875rem;
+            font-weight: 500;
         }
+
         .font-size-button {
-            background-color: #d1d5db; /* bg-gray-300 */
-            color: #1f2937; /* text-gray-800 */
-            font-weight: bold; /* font-bold */
-            padding: 4px 12px; /* py-1 px-3 */
-            border-radius: 8px; /* rounded-lg */
-            font-size: 0.875rem; /* text-sm */
+            background-color: #d1d5db;
+            color: #1f2937;
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 0.875rem;
             border: none;
             cursor: pointer;
-            transition: background-color 0.3s ease; /* transition duration-300 ease-in-out */
+            transition: background-color 0.3s ease;
         }
+
         .font-size-button:hover {
-            background-color: #9ca3af; /* hover:bg-gray-400 */
+            background-color: #9ca3af;
         }
 
         /* Main interactive sections grid */
         .interactive-sections-grid {
-            width: 100%; /* w-full */
-            max-width: 900px; /* max-w-4xl */
-            padding-left: 16px; /* px-4 */
-            padding-right: 16px; /* px-4 */
-            display: grid; /* grid */
-            grid-template-columns: 1fr; /* grid-cols-1 */
-            gap: 24px; /* gap-6 */
-            padding-top: 32px; /* py-8 */
-            padding-bottom: 32px; /* py-8 */
+            width: 100%;
+            max-width: 900px;
+            padding-left: 16px;
+            padding-right: 16px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            padding-top: 32px;
+            padding-bottom: 32px;
         }
 
-        /* Individual Content Section Styles (Infographics, Video, Quiz, Explanation) */
+        /* Individual Content Section Styles */
         .content-section {
-            display: flex; /* flex */
-            flex-direction: column; /* flex-col */
-            align-items: center; /* items-center */
-            justify-content: center; /* justify-center */
-            background-color: rgba(255, 255, 255, 0.8); /* bg-white bg-opacity-80 */
-            border-radius: 12px; /* rounded-xl */
-            box-shadow: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05); /* shadow-lg */
-            padding: 24px; /* p-6 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
+            padding: 24px;
         }
-        @media (min-width: 768px) { /* md: */
+
+        @media (min-width: 768px) {
             .content-section {
-                flex-direction: row; /* md:flex-row */
+                flex-direction: row;
             }
         }
 
         .section-button {
-            flex-shrink: 0; /* flex-shrink-0 */
-            background-color: #f59e0b; /* bg-yellow-500 */
-            color: white; /* text-white */
-            font-weight: 600; /* font-semibold */
-            padding: 12px 24px; /* py-3 px-6 */
-            border-radius: 8px; /* rounded-lg */
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* shadow-md */
-            transition: all 0.3s ease-in-out; /* transition duration-300 ease-in-out transform */
-            margin-bottom: 16px; /* mb-4 */
+            flex-shrink: 0;
+            background-color: #f59e0b;
+            color: white;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease-in-out;
+            margin-bottom: 16px;
             border: none;
             cursor: pointer;
         }
+
         .section-button:hover {
-            background-color: #d97706; /* hover:bg-yellow-600 */
-            transform: scale(1.05); /* hover:scale-105 */
+            background-color: #d97706;
+            transform: scale(1.05);
         }
-        @media (min-width: 768px) { /* md: */
+
+        .section-button:disabled {
+            background-color: #cccccc; /* Greyed out for disabled */
+            cursor: not-allowed;
+            transform: none; /* No hover transform when disabled */
+        }
+
+        .section-button:disabled:hover {
+            background-color: #cccccc; /* Keep greyed out on hover when disabled */
+        }
+
+        @media (min-width: 768px) {
             .section-button {
-                margin-bottom: 0; /* md:mb-0 */
-                margin-right: 24px; /* md:mr-6 */
+                margin-bottom: 0;
+                margin-right: 24px;
             }
         }
 
         .content-display {
-            flex-grow: 1; /* flex-grow */
-            width: 100%; /* w-full */
-            background-color: #d1fae5; /* bg-green-100 */
-            border-radius: 8px; /* rounded-lg */
-            padding: 16px; /* p-4 */
-            min-height: 150px; /* content-box */
-            display: flex; /* flex */
-            align-items: center; /* items-center */
-            justify-content: center; /* justify-center */
-            color: #4b5563; /* text-gray-600 */
-            text-align: center; /* text-center */
-            font-size: 1em; /* Relative to main's font-size */
+            flex-grow: 1;
+            width: 100%;
+            background-color: #d1fae5;
+            border-radius: 8px;
+            padding: 16px;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4b5563;
+            text-align: center;
+            font-size: 1em;
         }
 
-        /* Styles for content loaded dynamically (e.g., inside infographics-content) */
+        /* Styles for content loaded dynamically */
         .inner-content-wrapper {
-            padding: 16px; /* p-4 */
-            background-color: white; /* bg-white */
-            border-radius: 8px; /* rounded-lg */
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.06); /* shadow-inner */
-            color: #1f2937; /* text-gray-800 */
-            width: 100%; /* w-full */
-            text-align: left; /* Align text to left for better readability in explanations */
-            font-size: 1em; /* Ensures inner content scales with parent */
+            padding: 16px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+            color: #1f2937;
+            width: 100%;
+            text-align: left;
+            font-size: 1em;
         }
-        /* Specific style for explanation content to justify text */
+
         .explanation-content-inner-wrapper {
             text-align: justify;
         }
 
         .inner-content-wrapper h3 {
-            font-weight: bold; /* font-bold */
-            font-size: 1.2em; /* Relative to inner-content-wrapper's font-size */
-            margin-bottom: 16px; /* mb-4 */
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 16px;
         }
+
         .inner-content-wrapper p {
-            font-size: 0.9em; /* Relative to inner-content-wrapper's font-size */
+            font-size: 0.9em;
         }
+
         .image-gallery {
-            display: flex; /* flex */
-            flex-direction: column; /* flex-col */
-            align-items: center; /* items-center */
-            gap: 16px; /* space-y-4 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
         }
+
         .image-gallery img {
-            width: 100%; /* w-full */
-            height: auto; /* h-auto */
-            border-radius: 8px; /* rounded-lg */
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* shadow-md */
-            /* Using em for max-width so it scales with the base font size */
-            max-width: 35em; /* Approximately 560px with default 16px font-size (35 * 16 = 560) */
-            display: block; /* Ensures proper rendering of images */
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-width: 35em;
+            display: block;
         }
+
         .image-caption {
-            font-size: 0.8em; /* Relative to inner-content-wrapper's font-size */
-            color: #6b7280; /* text-gray-500 */
+            font-size: 0.8em;
+            color: #6b7280;
         }
+
         .close-button {
-            margin-top: 24px; /* mt-6 */
-            background-color: #ef4444; /* bg-red-500 */
-            color: white; /* text-white */
-            font-weight: 600; /* font-semibold */
-            padding: 8px 16px; /* py-2 px-4 */
-            border-radius: 8px; /* rounded-lg */
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* shadow-md */
-            transition: all 0.3s ease-in-out; /* transition duration-300 ease-in-out */
+            margin-top: 24px;
+            background-color: #ef4444;
+            color: white;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease-in-out;
             border: none;
             cursor: pointer;
-            font-size: 0.9em; /* Relative to inner-content-wrapper's font-size */
+            font-size: 0.9em;
         }
+
         .close-button:hover {
-            background-color: #dc2626; /* hover:bg-red-600 */
+            background-color: #dc2626;
         }
+
         .content-link {
-            color: #2563eb; /* text-blue-600 */
-            text-decoration: none; /* hover:underline */
-            margin-top: 16px; /* mt-4 */
-            display: inline-block; /* inline-block */
+            color: #2563eb;
+            text-decoration: none;
+            margin-top: 16px;
+            display: inline-block;
             transition: text-decoration 0.3s ease;
-            font-size: 0.9em; /* Relative to inner-content-wrapper's font-size */
+            font-size: 0.9em;
         }
+
         .content-link:hover {
             text-decoration: underline;
         }
 
         /* Video specific styles */
         .video-container {
-            position: relative; /* relative */
-            width: 100%; /* w-full */
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
         }
+
         .video-iframe {
-            position: absolute; /* absolute */
-            top: 0; /* top-0 */
-            left: 0; /* left-0 */
-            width: 100%; /* w-full */
-            height: 100%; /* h-full */
-            border-radius: 6px; /* rounded-md */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 6px;
         }
-        /* Video paragraph margin */
+
         .video-description-paragraph {
-            margin-top: 1rem; /* mt-4 */
-            font-size: 0.9em; /* Relative to inner-content-wrapper's font-size */
+            margin-top: 1rem;
+            font-size: 0.9em;
         }
     </style>
 </head>
@@ -595,7 +595,9 @@
     <main id="main-content">
         <div class="header-title-section">
             <div class="title-box">
-                <h1>MODULE 1</h1> <h2>Introduction to Waste Segregation</h2> </div>
+                <h1>MODULE 1</h1>
+                <h2>Introduction to Waste Segregation</h2>
+            </div>
         </div>
 
         <div class="font-size-controls">
@@ -606,7 +608,6 @@
         </div>
 
         <div class="interactive-sections-grid">
-
             <div class="content-section">
                 <button id="infographics-btn" class="section-button">
                     Infographics
@@ -730,14 +731,14 @@
             });
 
             // Module Page Specific JS (Font Size and Content Toggling)
-            const explanationBtn = document.getElementById('explanation-btn');
             const infographicsBtn = document.getElementById('infographics-btn');
             const videoBtn = document.getElementById('video-btn');
+            const explanationBtn = document.getElementById('explanation-btn');
             const quizBtn = document.getElementById('quiz-btn');
 
-            const explanationContent = document.getElementById('explanation-content');
             const infographicsContent = document.getElementById('infographics-content');
             const videoContent = document.getElementById('video-content');
+            const explanationContent = document.getElementById('explanation-content');
             const quizContent = document.getElementById('quiz-content');
 
             const increaseFontBtn = document.getElementById('increase-font-btn');
@@ -748,19 +749,22 @@
 
             const defaultExplanationContent = `
                 <div class="content-text-default">
-                    Click to view a detailed explanation that breaks the topic down into simple, explanations. Great for building a deeper understanding at your own pace.
+                    Click to view a detailed explanation that breaks the topic down into simple explanations. Great for building a deeper understanding at your own pace.
                 </div>
             `;
+
             const defaultInfographicsContent = `
                 <div class="content-text-default">
                     Click on the infographic to open it in full view. Explore key facts, visuals, and data at a glance to help you better understand the topic.
                 </div>
             `;
+
             const defaultVideoContent = `
                 <div class="content-text-default">
                     Tap to play the video and dive deeper into the subject. Watch at your own pace and absorb insights through engaging visuals and expert explanations.
                 </div>
             `;
+
             const defaultQuizContent = `
                 <div class="content-text-default">
                     Think you’ve got it down? Click to start the quiz and put your knowledge to the test. It’s a quick and fun way to review what you’ve learned!
@@ -772,18 +776,20 @@
             const FONT_SIZE_STEP = 1;
             const MAX_FONT_SIZE_DIFF = 5;
 
-            // Function to update content
+            // Flags to track if content sections have been visited
+            let infographicsVisited = false;
+            let videoVisited = false;
+            let explanationVisited = false;
+
             function updateContent(element, content) {
                 element.innerHTML = content;
             }
 
-            // Function to set font size using CSS variable
             function setMainContentFontSize(size) {
                 mainContent.style.setProperty('--base-font-size', `${size}px`);
-                localStorage.setItem('userMainFontSize', size); // Save preference to local storage
+                localStorage.setItem('userMainFontSize', size);
             }
 
-            // Load font size from local storage on page load
             function loadFontSize() {
                 const savedFontSize = localStorage.getItem('userMainFontSize');
                 if (savedFontSize) {
@@ -792,7 +798,13 @@
                 }
             }
 
-            // Event listeners for font size controls
+            // Function to update button states based on visited flags
+            function updateButtonStates() {
+                videoBtn.disabled = !infographicsVisited;
+                explanationBtn.disabled = !videoVisited;
+                quizBtn.disabled = !explanationVisited;
+            }
+
             increaseFontBtn.addEventListener('click', () => {
                 if (currentMainFontSize < initialMainFontSize + MAX_FONT_SIZE_DIFF) {
                     currentMainFontSize += FONT_SIZE_STEP;
@@ -812,15 +824,14 @@
                 setMainContentFontSize(currentMainFontSize);
             });
 
-            // Function to toggle content visibility
             function toggleContent(buttonId, contentElement, newContent, defaultContent, isExternalLink = false) {
                 if (isExternalLink) {
                     window.location.href = newContent;
                     return;
                 }
 
-                const allContentElements = [explanationContent, infographicsContent, videoContent, quizContent];
-                const allDefaultContents = [defaultExplanationContent, defaultInfographicsContent, defaultVideoContent, defaultQuizContent];
+                const allContentElements = [infographicsContent, videoContent, explanationContent, quizContent];
+                const allDefaultContents = [defaultInfographicsContent, defaultVideoContent, defaultExplanationContent, defaultQuizContent];
 
                 allContentElements.forEach((element, index) => {
                     if (element !== contentElement && element.innerHTML.trim() !== allDefaultContents[index].trim()) {
@@ -833,35 +844,27 @@
                 } else {
                     updateContent(contentElement, defaultContent);
                 }
-            }
 
-            explanationBtn.addEventListener('click', () => {
-                const explanationHtml = `
-                    <div class="inner-content-wrapper explanation-content-inner-wrapper">
-                        <p class="explanation-title">Waste segregation, environmental protection, recycling and resource recovery, efficient waste management, public health and safety, sustainable practices, and the global waste challenge.</p> <br>
-                        <p>Sorting waste into categories prevents pollution and supports recycling. It keeps soil, water, and air clean. Recyclables can be reused, saving resources. Waste is easier to collect, transport, and dispose of. Proper handling reduces disease and toxic exposure. Responsible waste habits and a circular economy are encouraged. Over 2 billion tons of waste are poorly managed, but segregation helps reduce this impact.</p>
-                        <button id="close-explanation-btn" class="close-button">
-                            Close Explanation
-                        </button>
-                    </div>
-                `;
-                toggleContent('explanation-btn', explanationContent, explanationHtml, defaultExplanationContent);
-
-                const closeExplanationBtn = document.getElementById('close-explanation-btn');
-                if (closeExplanationBtn) {
-                    closeExplanationBtn.addEventListener('click', () => {
-                        updateContent(explanationContent, defaultExplanationContent);
-                    });
+                // Mark the corresponding section as visited
+                if (buttonId === 'infographics-btn') {
+                    infographicsVisited = true;
+                } else if (buttonId === 'video-btn') {
+                    videoVisited = true;
+                } else if (buttonId === 'explanation-btn') {
+                    explanationVisited = true;
                 }
-            });
+                
+                updateButtonStates(); // Update button states after each interaction
+            }
 
             infographicsBtn.addEventListener('click', () => {
                 const infographicsHtml = `
                     <div class="inner-content-wrapper">
+                        <h3>Infographics on Waste Segregation</h3>
                         <div class="image-gallery">
-                            <img src= infographic11.jpg alt="Infographic 1">
-                            <img src= infographic12.jpg alt="Infographic 2">
-                            <img src= infographic13.jpg alt="Infographic 3">
+                            <img src="infographic11.jpg" alt="Infographic 1">
+                            <img src="infographic12.jpg" alt="Infographic 2">
+                            <img src="infographic13.jpg" alt="Infographic 3">
                         </div>
                         <button id="close-infographics-btn" class="close-button">
                             Close Infographics
@@ -886,7 +889,7 @@
                         <div class="video-container">
                             <iframe class="video-iframe" src="https://www.youtube.com/embed/0ZiD_Lb3Tm0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
-                        <p class="video-description-paragraph">Waste segregation is the practice of separating waste into different categories, such as organic, recyclable, and hazardous materials. By doing this, we can ensure that each type of waste is disposed ofproperly, reducing pollution, conserving resources, and promoting a healthier planet</p>
+                        <p class="video-description-paragraph">Waste segregation is the practice of separating waste into different categories, such as organic, recyclable, and hazardous materials. By doing this, we can ensure that each type of waste is disposed of properly, reducing pollution, conserving resources, and promoting a healthier planet.</p>
                         <button id="close-video-btn" class="close-button">
                             Close Video
                         </button>
@@ -902,31 +905,47 @@
                 }
             });
 
-            quizBtn.addEventListener('click', () => {
-                // In a real application, you'd navigate to a quiz page or load quiz content dynamically here.
-                // For demonstration, we'll just show an alert or a temporary message.
-                // alert('Quiz functionality coming soon!');
-                toggleContent('quiz-btn', quizContent, 'quiz.html', defaultQuizContent, true); // Example of an external link
+            explanationBtn.addEventListener('click', () => {
+                const explanationHtml = `
+                    <div class="inner-content-wrapper explanation-content-inner-wrapper">
+                        <p class="explanation-title">Waste segregation, environmental protection, recycling and resource recovery, efficient waste management, public health and safety, sustainable practices, and the global waste challenge.</p>
+                        <p>Sorting waste into categories prevents pollution and supports recycling. It keeps soil, water, and air clean. Recyclables can be reused, saving resources. Waste is easier to collect, transport, and dispose of. Proper handling reduces disease and toxic exposure. Responsible waste habits and a circular economy are encouraged. Over 2 billion tons of waste are poorly managed, but segregation helps reduce this impact.</p>
+                        <button id="close-explanation-btn" class="close-button">
+                            Close Explanation
+                        </button>
+                    </div>
+                `;
+                toggleContent('explanation-btn', explanationContent, explanationHtml, defaultExplanationContent);
+
+                const closeExplanationBtn = document.getElementById('close-explanation-btn');
+                if (closeExplanationBtn) {
+                    closeExplanationBtn.addEventListener('click', () => {
+                        updateContent(explanationContent, defaultExplanationContent);
+                    });
+                }
             });
 
-            // Initialize content areas with default messages and load font size on page load
-            // This function runs when the DOM is fully loaded.
-            const initializePage = function() {
+            quizBtn.addEventListener('click', () => {
+                toggleContent('quiz-btn', quizContent, 'quiz.html', defaultQuizContent, true);
+            });
+
+            function initializePage() {
                 if (mainContent) {
-                    // Get the initial computed font size of the main content area
                     initialMainFontSize = parseFloat(getComputedStyle(mainContent).fontSize);
                     currentMainFontSize = initialMainFontSize;
                 }
 
-                // Set initial content for all sections
                 updateContent(explanationContent, defaultExplanationContent);
                 updateContent(infographicsContent, defaultInfographicsContent);
                 updateContent(videoContent, defaultVideoContent);
                 updateContent(quizContent, defaultQuizContent);
-                loadFontSize(); // Load saved font size
-            };
+                loadFontSize();
 
-            initializePage(); // Call the initialization function when the DOM is ready.
+                // Set initial button states
+                updateButtonStates();
+            }
+
+            initializePage();
         });
     </script>
 </body>
