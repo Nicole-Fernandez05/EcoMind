@@ -130,9 +130,7 @@ NAVIGATION BAR (HEADER) STYLES
     .top-nav-links {
         display: flex; /* Show on larger screens */
     }
-    .hamburger-icon {
-        display: none; /* Hide hamburger on larger screens */
-    }
+    /* REMOVED: .hamburger-icon { display: none; } */
 }
 
 /*
