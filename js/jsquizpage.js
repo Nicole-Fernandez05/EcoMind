@@ -161,7 +161,6 @@ function shuffleArray(array) {
 
 // Function to rephrase question and options using LLM
 async function fetchRephrasedQuestion(originalQuestionObj) {
-    // Construct the prompt to get rephrased question and options without prefixes, plus the correct answer text
     const prompt = `Rephrase the following multiple-choice question and its options. Provide the correct answer text separately. Ensure the meaning of the question and the correct answer remains the same.
     \nOriginal Question: ${originalQuestionObj.question}
     \nOriginal Options (without A,B,C,D prefixes):
@@ -189,7 +188,8 @@ async function fetchRephrasedQuestion(originalQuestionObj) {
             }
         }
     };
-    const apiKey = ""; // Remember to fill in your API Key
+    // **IMPORTANT**: Replace with your actual API key
+    const apiKey = "YOUR_GEMINI_API_KEY"; // <<< Replace this placeholder
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
     try {
@@ -238,8 +238,6 @@ async function fetchRephrasedQuestion(originalQuestionObj) {
     } catch (error) {
         console.error("Error fetching rephrased question:", error);
         return originalQuestionObj; // Fallback to original on error
-    } finally {
-        // Removed showLoading(false);
     }
 }
 
@@ -293,6 +291,14 @@ async function updateQuestion() {
     const itemNumber = document.querySelector('.item-number');
 
     if (currentQuestionIndex < questions.length) {
+        // Clear content while fetching to avoid "Loading..." text
+        questionText.textContent = "";
+        optionsElements.forEach(option => {
+            option.textContent = "";
+            option.classList.remove('selected');
+        });
+        itemNumber.textContent = `Item ${currentQuestionIndex + 1}`; // Update item number immediately
+
         // Fetch rephrased question and options
         const originalQuestion = questions[currentQuestionIndex];
         const rephrasedData = await fetchRephrasedQuestion(originalQuestion);
@@ -301,12 +307,11 @@ async function updateQuestion() {
         questions[currentQuestionIndex].options = rephrasedData.options;
         questions[currentQuestionIndex].answer = rephrasedData.answer; // Update to new answer string
 
+        // Populate with fetched data
         questionText.textContent = questions[currentQuestionIndex].question;
         optionsElements.forEach((option, index) => {
             option.textContent = questions[currentQuestionIndex].options[index];
-            option.classList.remove('selected');
         });
-        itemNumber.textContent = `Item ${currentQuestionIndex + 1}`;
     }
 }
 
