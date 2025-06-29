@@ -1,563 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ecomind - Module 2</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* Basic Reset & Body Styling (Essential for consistent layout) */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f8f8f8;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header Styles */
-        .header {
-            background-color: #fff;
-            padding: 15px 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 100;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .hamburger-icon {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #333;
-            padding: 5px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            font-size: 24px;
-            font-weight: 700;
-            color: #333;
-            gap: 10px;
-        }
-
-        .logo-icon {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: #4CAF50;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        .logo-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .top-nav-links {
-            display: flex;
-            gap: 25px;
-            align-items: center;
-        }
-
-        .top-nav-links a {
-            text-decoration: none;
-            color: #555;
-            font-weight: 600;
-            padding: 8px 12px;
-            transition: color 0.3s ease, background-color 0.3s ease;
-            border-radius: 8px;
-        }
-
-        .top-nav-links a:hover {
-            color: #4CAF50;
-            background-color: #e6f7e6;
-        }
-
-        .top-nav-links .login-btn {
-            background-color: #4CAF50;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 8px;
-            transition: background-color 0.3s ease;
-        }
-
-        .top-nav-links .login-btn:hover {
-            background-color: #45a049;
-            color: #fff;
-        }
-
-        @media (max-width: 767px) {
-            .top-nav-links {
-                display: none;
-            }
-        }
-
-        /* Sidebar Styles */
-        .sidebar-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            z-index: 1000;
-        }
-
-        .sidebar-container.open {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .sidebar-menu {
-            width: 280px;
-            height: 100%;
-            background-color: #fff;
-            position: absolute;
-            top: 0;
-            left: 0;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .sidebar-menu.open {
-            transform: translateX(0);
-        }
-
-        .close-sidebar-btn {
-            background: none;
-            border: none;
-            font-size: 28px;
-            cursor: pointer;
-            color: #555;
-            align-self: flex-end;
-            margin-bottom: 20px;
-        }
-
-        .sidebar-links {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .sidebar-links li {
-            margin-bottom: 10px;
-        }
-
-        .sidebar-links a {
-            display: block;
-            text-decoration: none;
-            color: #555;
-            font-weight: 600;
-            padding: 12px 15px;
-            border-radius: 8px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .sidebar-links a:hover {
-            background-color: #e6f7e6;
-            color: #4CAF50;
-        }
-
-        .sidebar-links a.active {
-            background-color: #d4edda;
-            color: #4CAF50;
-            font-weight: 700;
-        }
-
-        /* Footer Styles */
-        .footer {
-            background-color: #4F6D44;
-            color: #fff;
-            padding: 60px 0 30px;
-            margin-top: auto;
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-column {
-            flex: 1;
-            min-width: 200px;
-            text-align: center;
-        }
-
-        .footer-column h3 {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: #fff;
-        }
-
-        .footer-column ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-column ul li a {
-            text-decoration: none;
-            color: #eee;
-            transition: color 0.3s ease;
-        }
-
-        .footer-column ul li a:hover {
-            color: #c9e4c9;
-        }
-
-        .footer-social-icons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 10px;
-            align-items: center;
-        }
-
-        .footer-social-icons a {
-            color: #eee;
-            font-size: 16px;
-            transition: color 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .footer-social-icons a:hover {
-            color: #fff;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            margin-top: 50px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 14px;
-            color: #aaa;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .footer-bottom a {
-            text-decoration: none;
-            color: #aaa;
-            transition: color 0.3s ease;
-        }
-
-        .footer-bottom a:hover {
-            color: #fff;
-        }
-
-        /* Main Content Area */
-        main {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 80px;
-            --base-font-size: 16px;
-            font-size: var(--base-font-size);
-        }
-
-        /* Module Title Section Styles */
-        .header-title-section {
-            width: 100%;
-            text-align: center;
-            background-color: #E5CBAF;
-            padding: 5vh 2vw;
-        }
-
-        .header-title-section .title-box {
-            max-width: 900px;
-            margin: auto;
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: 10px;
-            box-shadow: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
-            padding: 32px;
-            margin-bottom: 32px;
-            text-align: center;
-        }
-
-        .header-title-section h1 {
-            font-size: calc(2.5em + 1vw);
-            font-weight: bold;
-            color: #1f2937;
-            margin-bottom: 0.2em;
-        }
-
-        .header-title-section h2 {
-            font-size: calc(1.5em + 0.5vw);
-            font-weight: 500;
-            color: #374151;
-        }
-
-        /* Font Size Controls */
-        .font-size-controls {
-            width: 100%;
-            max-width: 900px;
-            padding-left: 16px;
-            padding-right: 16px;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 8px;
-            padding-top: 16px;
-            padding-bottom: 16px;
-        }
-
-        .font-size-controls span {
-            color: #374151;
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-
-        .font-size-button {
-            background-color: #d1d5db;
-            color: #1f2937;
-            font-weight: bold;
-            padding: 4px 12px;
-            border-radius: 8px;
-            font-size: 0.875rem;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .font-size-button:hover {
-            background-color: #9ca3af;
-        }
-
-        /* Main interactive sections grid */
-        .interactive-sections-grid {
-            width: 100%;
-            max-width: 900px;
-            padding-left: 16px;
-            padding-right: 16px;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 24px;
-            padding-top: 32px;
-            padding-bottom: 32px;
-        }
-
-        /* Individual Content Section Styles */
-        .content-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 12px;
-            box-shadow: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
-            padding: 24px;
-        }
-
-        @media (min-width: 768px) {
-            .content-section {
-                flex-direction: row;
-            }
-        }
-
-        .section-button {
-            flex-shrink: 0;
-            background-color: #f59e0b;
-            color: white;
-            font-weight: 600;
-            padding: 12px 24px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: all 0.3s ease-in-out;
-            margin-bottom: 16px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .section-button:hover {
-            background-color: #d97706;
-            transform: scale(1.05);
-        }
-
-        .section-button:disabled {
-            background-color: #cccccc; /* Greyed out for disabled */
-            cursor: not-allowed;
-            transform: none; /* No hover transform when disabled */
-        }
-
-        .section-button:disabled:hover {
-            background-color: #cccccc; /* Keep greyed out on hover when disabled */
-        }
-
-        @media (min-width: 768px) {
-            .section-button {
-                margin-bottom: 0;
-                margin-right: 24px;
-            }
-        }
-
-        .content-display {
-            flex-grow: 1;
-            width: 100%;
-            background-color: #d1fae5;
-            border-radius: 8px;
-            padding: 16px;
-            min-height: 150px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #4b5563;
-            text-align: center;
-            font-size: 1em;
-        }
-
-        /* Styles for content loaded dynamically */
-        .inner-content-wrapper {
-            padding: 16px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
-            color: #1f2937;
-            width: 100%;
-            text-align: left;
-            font-size: 1em;
-        }
-
-        .explanation-content-inner-wrapper {
-            text-align: justify;
-        }
-
-        .inner-content-wrapper h3 {
-            font-weight: bold;
-            font-size: 1.2em;
-            margin-bottom: 16px;
-        }
-
-        .inner-content-wrapper p {
-            font-size: 0.9em;
-        }
-
-        .image-gallery {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .image-gallery img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            max-width: 35em;
-            display: block;
-        }
-
-        .image-caption {
-            font-size: 0.8em;
-            color: #6b7280;
-        }
-
-        .close-button {
-            margin-top: 24px;
-            background-color: #ef4444;
-            color: white;
-            font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: all 0.3s ease-in-out;
-            border: none;
-            cursor: pointer;
-            font-size: 0.9em;
-        }
-
-        .close-button:hover {
-            background-color: #dc2626;
-        }
-
-        .content-link {
-            color: #2563eb;
-            text-decoration: none;
-            margin-top: 16px;
-            display: inline-block;
-            transition: text-decoration 0.3s ease;
-            font-size: 0.9em;
-        }
-
-        .content-link:hover {
-            text-decoration: underline;
-        }
-
-        /* Video specific styles */
-        .video-container {
-            position: relative;
-            width: 100%;
-            padding-top: 56.25%;
-        }
-
-        .video-iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 6px;
-        }
-
-        .video-description-paragraph {
-            margin-top: 1rem;
-            font-size: 0.9em;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="Modules.css" />
 </head>
 <body>
     <header class="header">
@@ -565,7 +14,7 @@
             <button class="hamburger-icon" id="hamburger-icon">☰</button>
             <div class="logo">
                 <span class="logo-icon">
-                    <img src="https://placehold.co/30x30/4CAF50/fff?text=L" alt="Leaf Icon">
+                    <img src="https://placehold.co/30x30/4CAF50/fff?text=L" alt="Leaf Icon" />
                 </span>
                 ECOMIND
             </div>
@@ -594,49 +43,42 @@
     <main id="main-content">
         <div class="header-title-section">
             <div class="title-box">
-                <h1>MODULE 2</h1> <h2>Cause & Effect</h2> </div>
+                <h1>MODULE 2</h1>
+                <h2>Cause & Effect</h2>
+            </div>
         </div>
 
         <div class="font-size-controls">
             <span>Font Size:</span>
-            <button id="decrease-font-btn" class="font-size-button">-</button>
+            <button id="decrease-font-btn" class="font-size-button">‑</button>
             <button id="reset-font-btn" class="font-size-button">Reset</button>
             <button id="increase-font-btn" class="font-size-button">+</button>
         </div>
 
         <div class="interactive-sections-grid">
-
             <div class="content-section">
-                <button id="infographics-btn" class="section-button">
-                    Infographics
-                </button>
+                <button id="infographics-btn" class="section-button">Infographics</button>
                 <div id="infographics-content" class="content-display">
                     Click on the infographic to open it in full view. Explore key facts, visuals, and data at a glance to help you better understand the topic.
                 </div>
             </div>
 
             <div class="content-section">
-                <button id="video-btn" class="section-button">
-                    Video
-                </button>
+                <button id="video-btn" class="section-button">Video</button>
                 <div id="video-content" class="content-display">
                     Tap to play the video and dive deeper into the subject. Watch at your own pace and absorb insights through engaging visuals and expert explanations.
                 </div>
             </div>
 
             <div class="content-section">
-                <button id="explanation-btn" class="section-button">
-                    Explanation
-                </button>
+                <button id="explanation-btn" class="section-button">Explanation</button>
                 <div id="explanation-content" class="content-display">
-                    Click "Explanation" to learn more.
+                    Click “Explanation” to learn more.
                 </div>
             </div>
 
             <div class="content-section">
-                <button id="quiz-btn" class="section-button">
-                    Quiz
-                </button>
+                <button id="quiz-btn" class="section-button">Quiz</button>
                 <div id="quiz-content" class="content-display">
                     Think you’ve got it down? Click to start the quiz and put your knowledge to the test. It’s a quick and fun way to review what you’ve learned!
                 </div>
@@ -667,7 +109,7 @@
             <div class="footer-column">
                 <h3>Contact Us</h3>
                 <ul>
-                    <li>1-800-555-5555</li>
+                    <li>1‑800‑555‑5555</li>
                     <li><a href="#">Join us</a></li>
                     <li><a href="#">Email us</a></li>
                     <li><a href="#">Customer Support</a></li>
@@ -692,258 +134,176 @@
     </footer>
 
     <script>
-          document.addEventListener('DOMContentLoaded', () => {
-            // Sidebar and Header JS
-            const hamburgerIcon = document.getElementById('hamburger-icon');
-            const closeSidebarBtn = document.getElementById('close-sidebar-btn');
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburgerIcon    = document.getElementById('hamburger-icon');
+            const closeSidebarBtn  = document.getElementById('close-sidebar-btn');
             const sidebarContainer = document.getElementById('sidebar-container');
-            const sidebarMenu = document.getElementById('sidebar-menu');
+            const sidebarMenu      = document.getElementById('sidebar-menu');
 
             hamburgerIcon.addEventListener('click', () => {
                 sidebarContainer.classList.add('open');
                 sidebarMenu.classList.add('open');
                 document.body.style.overflow = 'hidden';
             });
-
             closeSidebarBtn.addEventListener('click', () => {
                 sidebarContainer.classList.remove('open');
                 sidebarMenu.classList.remove('open');
                 document.body.style.overflow = '';
             });
-
-            sidebarContainer.addEventListener('click', (event) => {
-                if (event.target === sidebarContainer) {
+            sidebarContainer.addEventListener('click', e => {
+                if (e.target === sidebarContainer) {
                     sidebarContainer.classList.remove('open');
                     sidebarMenu.classList.remove('open');
                     document.body.style.overflow = '';
                 }
             });
-
-            const sidebarLinks = document.querySelectorAll('.sidebar-links a');
-            sidebarLinks.forEach(link => {
+            document.querySelectorAll('.sidebar-links a').forEach(link =>
                 link.addEventListener('click', () => {
                     sidebarContainer.classList.remove('open');
                     sidebarMenu.classList.remove('open');
                     document.body.style.overflow = '';
-                });
-            });
+                })
+            );
 
-            // Module Page Specific JS (Font Size and Content Toggling)
-            const infographicsBtn = document.getElementById('infographics-btn');
-            const videoBtn = document.getElementById('video-btn');
             const explanationBtn = document.getElementById('explanation-btn');
-            const quizBtn = document.getElementById('quiz-btn');
+            const infographicsBtn= document.getElementById('infographics-btn');
+            const videoBtn       = document.getElementById('video-btn');
+            const quizBtn        = document.getElementById('quiz-btn');
 
-            const infographicsContent = document.getElementById('infographics-content');
-            const videoContent = document.getElementById('video-content');
             const explanationContent = document.getElementById('explanation-content');
-            const quizContent = document.getElementById('quiz-content');
+            const infographicsContent= document.getElementById('infographics-content');
+            const videoContent       = document.getElementById('video-content');
+            const quizContent        = document.getElementById('quiz-content');
 
             const increaseFontBtn = document.getElementById('increase-font-btn');
             const decreaseFontBtn = document.getElementById('decrease-font-btn');
-            const resetFontBtn = document.getElementById('reset-font-btn');
-
-            const mainContent = document.getElementById('main-content');
+            const resetFontBtn    = document.getElementById('reset-font-btn');
+            const mainContent     = document.getElementById('main-content');
 
             const defaultExplanationContent = `
                 <div class="content-text-default">
                     Click to view a detailed explanation that breaks the topic down into simple explanations. Great for building a deeper understanding at your own pace.
-                </div>
-            `;
-
+                </div>`;
             const defaultInfographicsContent = `
                 <div class="content-text-default">
                     Click on the infographic to open it in full view. Explore key facts, visuals, and data at a glance to help you better understand the topic.
-                </div>
-            `;
-
+                </div>`;
             const defaultVideoContent = `
                 <div class="content-text-default">
                     Tap to play the video and dive deeper into the subject. Watch at your own pace and absorb insights through engaging visuals and expert explanations.
-                </div>
-            `;
-
+                </div>`;
             const defaultQuizContent = `
                 <div class="content-text-default">
                     Think you’ve got it down? Click to start the quiz and put your knowledge to the test. It’s a quick and fun way to review what you’ve learned!
-                </div>
-            `;
+                </div>`;
 
-            let initialMainFontSize;
-            let currentMainFontSize;
-            const FONT_SIZE_STEP = 1;
-            const MAX_FONT_SIZE_DIFF = 5;
+            let initialMainFontSize, currentMainFontSize;
+            const STEP = 1, MAX_DIFF = 5;
 
-            // Flags to track if content sections have been visited
-            let infographicsVisited = false;
-            let videoVisited = false;
-            let explanationVisited = false;
-
-            function updateContent(element, content) {
-                element.innerHTML = content;
-            }
-
-            function setMainContentFontSize(size) {
+            function setMainContentFontSize(size){
                 mainContent.style.setProperty('--base-font-size', `${size}px`);
                 localStorage.setItem('userMainFontSize', size);
             }
-
-            function loadFontSize() {
-                const savedFontSize = localStorage.getItem('userMainFontSize');
-                if (savedFontSize) {
-                    currentMainFontSize = parseFloat(savedFontSize);
+            function loadFontSize(){
+                const saved = localStorage.getItem('userMainFontSize');
+                if(saved){
+                    currentMainFontSize = parseFloat(saved);
                     setMainContentFontSize(currentMainFontSize);
                 }
             }
-
-            // Function to update button states based on visited flags
-            function updateButtonStates() {
-                videoBtn.disabled = !infographicsVisited;
-                explanationBtn.disabled = !videoVisited;
-                quizBtn.disabled = !explanationVisited;
-            }
-
             increaseFontBtn.addEventListener('click', () => {
-                if (currentMainFontSize < initialMainFontSize + MAX_FONT_SIZE_DIFF) {
-                    currentMainFontSize += FONT_SIZE_STEP;
+                if(currentMainFontSize < initialMainFontSize + MAX_DIFF){
+                    currentMainFontSize += STEP;
                     setMainContentFontSize(currentMainFontSize);
                 }
             });
-
             decreaseFontBtn.addEventListener('click', () => {
-                if (currentMainFontSize > initialMainFontSize - MAX_FONT_SIZE_DIFF) {
-                    currentMainFontSize -= FONT_SIZE_STEP;
+                if(currentMainFontSize > initialMainFontSize - MAX_DIFF){
+                    currentMainFontSize -= STEP;
                     setMainContentFontSize(currentMainFontSize);
                 }
             });
-
             resetFontBtn.addEventListener('click', () => {
                 currentMainFontSize = initialMainFontSize;
                 setMainContentFontSize(currentMainFontSize);
             });
 
-            function toggleContent(buttonId, contentElement, newContent, defaultContent, isExternalLink = false) {
-                if (isExternalLink) {
-                    window.location.href = newContent;
-                    return;
-                }
+            function updateContent(el, html){ el.innerHTML = html; }
 
-                const allContentElements = [infographicsContent, videoContent, explanationContent, quizContent];
-                const allDefaultContents = [defaultInfographicsContent, defaultVideoContent, defaultExplanationContent, defaultQuizContent];
+            function toggleContent(targetEl, newHtml, defaultHtml, external=false){
+                if(external){ window.location.href = newHtml; return; }
 
-                allContentElements.forEach((element, index) => {
-                    if (element !== contentElement && element.innerHTML.trim() !== allDefaultContents[index].trim()) {
-                        updateContent(element, allDefaultContents[index]);
-                    }
+                const pairs = [
+                    [explanationContent, defaultExplanationContent],
+                    [infographicsContent, defaultInfographicsContent],
+                    [videoContent      , defaultVideoContent],
+                    [quizContent       , defaultQuizContent]
+                ];
+                pairs.forEach(([el, def])=>{
+                    if(el!==targetEl && el.innerHTML.trim()!==def.trim()) updateContent(el, def);
                 });
-
-                if (contentElement.innerHTML.trim() === defaultContent.trim()) {
-                    updateContent(contentElement, newContent);
-                } else {
-                    updateContent(contentElement, defaultContent);
-                }
-
-                // Mark the corresponding section as visited
-                if (buttonId === 'infographics-btn') {
-                    infographicsVisited = true;
-                } else if (buttonId === 'video-btn') {
-                    videoVisited = true;
-                } else if (buttonId === 'explanation-btn') {
-                    explanationVisited = true;
-                }
-                
-                updateButtonStates(); // Update button states after each interaction
+                updateContent(targetEl,
+                    targetEl.innerHTML.trim() === defaultHtml.trim() ? newHtml : defaultHtml
+                );
             }
 
-            infographicsBtn.addEventListener('click', () => {
-                const infographicsHtml = `
-                    <div class="inner-content-wrapper">
-                        <h3>Infographics on Waste Segregation</h3>
-                        <div class="image-gallery">
-                            <img src="infographic11.jpg" alt="Infographic 1">
-                            <img src="infographic12.jpg" alt="Infographic 2">
-                            <img src="infographic13.jpg" alt="Infographic 3">
-                        </div>
-                        <button id="close-infographics-btn" class="close-button">
-                            Close Infographics
-                        </button>
-                        <a href="#" class="content-link">Top (Optional)</a>
-                    </div>
-                `;
-                toggleContent('infographics-btn', infographicsContent, infographicsHtml, defaultInfographicsContent);
+            explanationBtn.addEventListener('click', () => {
+                const html = `
+                    <div class="inner-content-wrapper explanation-content-inner-wrapper">
+                        <p class="explanation-title">Improper waste disposal, its causes, effects on human health, environmental impacts, and possible solutions.</p><br>
+                        <p>Improper waste disposal is when waste is carelessly discarded through littering, illegal dumping, or chemical discharge. It’s caused by lack of education, economic limits, rapid urban growth, poor regulation, and excessive packaging. Health effects include respiratory and reproductive issues, infections, and low birth weight near dumpsites. Environmentally, it pollutes land, water, and air, contributing to climate change. Solutions include raising awareness, promoting recycling, and reducing waste by using reusable items and supporting sustainable businesses.</p>
+                        <button id="close-explanation-btn" class="close-button">Close Explanation</button>
+                    </div>`;
+                toggleContent(explanationContent, html, defaultExplanationContent);
+                document.getElementById('close-explanation-btn')?.addEventListener('click',
+                    () => updateContent(explanationContent, defaultExplanationContent));
+            });
 
-                const closeInfographicsBtn = document.getElementById('close-infographics-btn');
-                if (closeInfographicsBtn) {
-                    closeInfographicsBtn.addEventListener('click', () => {
-                        updateContent(infographicsContent, defaultInfographicsContent);
-                    });
-                }
+            infographicsBtn.addEventListener('click', () => {
+                const html = `
+                    <div class="inner-content-wrapper">
+                        <div class="image-gallery">
+                            <img src="infographic21.jpg" alt="Infographic 1" />
+                            <img src="infographic22.jpg" alt="Infographic 2" />
+                        </div>
+                        <button id="close-infographics-btn" class="close-button">Close Infographics</button>
+                        <a href="#" class="content-link">Top (Optional)</a>
+                    </div>`;
+                toggleContent(infographicsContent, html, defaultInfographicsContent);
+                document.getElementById('close-infographics-btn')?.addEventListener('click',
+                    () => updateContent(infographicsContent, defaultInfographicsContent));
             });
 
             videoBtn.addEventListener('click', () => {
-                const videoHtml = `
+                const html = `
                     <div class="inner-content-wrapper">
-                        <h3>Educational Video: Why Waste Segregation is Important</h3>
+                        <h3>Educational Video: Current Scenerio & Effects of poor waste management</h3>
                         <div class="video-container">
-                            <iframe class="video-iframe" src="https://www.youtube.com/embed/0ZiD_Lb3Tm0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe class="video-iframe" src="https://www.youtube.com/embed/FGjjjpK5UoI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
-                        <p class="video-description-paragraph">Waste segregation is the practice of separating waste into different categories, such as organic, recyclable, and hazardous materials. By doing this, we can ensure that each type of waste is disposed of properly, reducing pollution, conserving resources, and promoting a healthier planet.</p>
-                        <button id="close-video-btn" class="close-button">
-                            Close Video
-                        </button>
-                    </div>
-                `;
-                toggleContent('video-btn', videoContent, videoHtml, defaultVideoContent);
-
-                const closeVideoBtn = document.getElementById('close-video-btn');
-                if (closeVideoBtn) {
-                    closeVideoBtn.addEventListener('click', () => {
-                        updateContent(videoContent, defaultVideoContent);
-                    });
-                }
+                        <p class="video-description-paragraph">This video explores the harmful effects of improper waste disposal on our environment. Many people today are unaware of how certain everyday products—such as face masks used for COVID-19 protection—can become hazardous if not disposed of correctly. A major contributing factor is the lack of accessible and proper waste disposal facilities. Through this video, we aim to raise awareness about the consequences of improper waste management and inspire viewers to take action in protecting and caring for our environment.</p>
+                        <button id="close-video-btn" class="close-button">Close Video</button>
+                    </div>`;
+                toggleContent(videoContent, html, defaultVideoContent);
+                document.getElementById('close-video-btn')?.addEventListener('click',
+                    () => updateContent(videoContent, defaultVideoContent));
             });
 
-            explanationBtn.addEventListener('click', () => {
-                const explanationHtml = `
-                    <div class="inner-content-wrapper explanation-content-inner-wrapper">
-                        <p class="explanation-title">Waste segregation, environmental protection, recycling and resource recovery, efficient waste management, public health and safety, sustainable practices, and the global waste challenge.</p>
-                        <p>Sorting waste into categories prevents pollution and supports recycling. It keeps soil, water, and air clean. Recyclables can be reused, saving resources. Waste is easier to collect, transport, and dispose of. Proper handling reduces disease and toxic exposure. Responsible waste habits and a circular economy are encouraged. Over 2 billion tons of waste are poorly managed, but segregation helps reduce this impact.</p>
-                        <button id="close-explanation-btn" class="close-button">
-                            Close Explanation
-                        </button>
-                    </div>
-                `;
-                toggleContent('explanation-btn', explanationContent, explanationHtml, defaultExplanationContent);
+            quizBtn.addEventListener('click', () =>
+                toggleContent(quizContent, 'quiz.html', defaultQuizContent, true)
+            );
 
-                const closeExplanationBtn = document.getElementById('close-explanation-btn');
-                if (closeExplanationBtn) {
-                    closeExplanationBtn.addEventListener('click', () => {
-                        updateContent(explanationContent, defaultExplanationContent);
-                    });
-                }
-            });
-
-            quizBtn.addEventListener('click', () => {
-                toggleContent('quiz-btn', quizContent, 'quiz.html', defaultQuizContent, true);
-            });
-
-            function initializePage() {
-                if (mainContent) {
+            (function init(){
+                if(mainContent){
                     initialMainFontSize = parseFloat(getComputedStyle(mainContent).fontSize);
                     currentMainFontSize = initialMainFontSize;
                 }
-
-                updateContent(explanationContent, defaultExplanationContent);
+                updateContent(explanationContent , defaultExplanationContent);
                 updateContent(infographicsContent, defaultInfographicsContent);
-                updateContent(videoContent, defaultVideoContent);
-                updateContent(quizContent, defaultQuizContent);
+                updateContent(videoContent       , defaultVideoContent);
+                updateContent(quizContent        , defaultQuizContent);
                 loadFontSize();
-
-                // Set initial button states
-                updateButtonStates();
-            }
-
-            initializePage();
+            })();
         });
     </script>
 </body>
