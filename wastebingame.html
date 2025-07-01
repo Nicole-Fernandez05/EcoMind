@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecomind - Waste Segregation Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: #333;
+            transition: background-color 0.5s ease;
+            display: flex; /* Use flexbox for main layout */
+            flex-direction: column; /* Stack header, main, and other content vertically */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            overflow-x: hidden; /* Prevent horizontal scroll due to sidebar */
+        }
+
+        .flash-correct {
+            background-color: #4ade80 !important;
+        }
+
+        .flash-incorrect {
+            background-color: #f87171 !important;
+        }
+
+        /*
+        ---
+        HEADER STYLES
+        ---
+        */
+        .header {
+            background-color: #fff;
+            padding: 15px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0; /* Prevent header from shrinking */
+            width: 100%; /* Ensure header takes full width */
+            position: fixed; /* Make header fixed */
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Space between hamburger and logo */
+        }
+
+        /* Hamburger Menu Icon - Always visible */
+        .hamburger-icon {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+            padding: 5px;
+            display: block; /* Ensure it's always visible */
+            flex-shrink: 0; /* Prevent icon from shrinking */
+        }
+
+        .logo {
+            display: flex; /* Make logo itself a flex container */
+            align-items: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            gap: 10px; /* Space between logo icon and text */
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #4CAF50; /* Green background for circular icon */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            flex-shrink: 0; /* Prevent icon from shrinking */
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the image covers the circular area */
+        }
+
+        .top-nav-links {
+            display: flex; /* Always display top nav links */
+            gap: 25px;
+            align-items: center;
+        }
+
+        .top-nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            padding: 8px 12px;
+            transition: color 0.3s ease, background-color 0.3s ease;
+            border-radius: 8px;
+        }
+
+        .top-nav-links a:hover {
+            color: #4CAF50; /* Green text on hover */
+            background-color: #e6f7e6; /* Light green background on hover */
+        }
+
+        /* Login Button specific styles */
+        .top-nav-links .login-btn {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .top-nav-links .login-btn:hover {
+            background-color: #45a049;
+            color: #fff; /* Keep text white on hover */
+        }
+
+        /*
+        ---
+        SIDEBAR STYLES
+        ---
+        */
+        /* Sliding Sidebar Container (Overlay) */
+        .sidebar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+            visibility: hidden; /* Hidden by default */
+            opacity: 0; /* Fade in effect */
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 1000; /* Ensures it's on top of everything */
+        }
+
+        .sidebar-container.open {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Actual Sliding Sidebar Menu */
+        .sidebar-menu {
+            width: 280px; /* Default width */
+            height: 100%;
+            background-color: #fff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translateX(-100%); /* Initially off-screen to the left */
+            transition: transform 0.3s ease; /* Smooth slide transition */
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+            padding: 20px;
+            box-sizing: border-box; /* Include padding in width */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-menu.open {
+            transform: translateX(0); /* Slide into view */
+        }
+
+        .close-sidebar-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #555;
+            align-self: flex-end; /* Pushes button to the right */
+            margin-bottom: 20px;
+        }
+
+        .sidebar-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-links li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-links a {
+            display: block;
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            padding: 12px 15px;
+            border-radius: 8px; /* Rounded corners */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .sidebar-links a:hover {
+            background-color: #e6f7e6; /* Light green background on hover */
+            color: #4CAF50; /* Green text on hover */
+        }
+
+        .sidebar-links a.active {
+            background-color: #d4edda; /* Active link background */
+            color: #4CAF50; /* Active link text color */
+            font-weight: 700;
+        }
+
+        /* Main content area to account for fixed header */
+        .main-content {
+            flex-grow: 1; /* Allows main content to take up available space */
+            padding-top: 70px; /* Offset for fixed header height */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .game-section {
+            background: url('headerwastebin.png') center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            padding: 80px 20px 40px;
+            min-height: 50vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            width: 100%; /* Ensure it takes full width */
+        }
+
+        .game-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(139, 195, 74, 0.3);
+            z-index: 1;
+        }
+
+        .game-section > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .game-title {
+            font-size: 3rem;
+            font-weight: bold;
+            color: black;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .recycling-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .start-button {
+            background-color: #B0CC29;
+            color: black;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .start-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .game-area {
+            padding: 60px 20px;
+            background-color: #f0f8ff;
+            min-height: 60vh;
+            width: 100%;
+        }
+
+        .item-display {
+            background-color: #B0CC29;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 0 auto 40px;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .waste-item {
+            width: 150px;
+            height: 150px;
+            background-color: #DC143C;
+            border-radius: 10px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            cursor: grab;
+            transition: all 0.3s ease;
+            font-size: 2rem;
+        }
+
+        .waste-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .waste-item.dragging {
+            cursor: grabbing;
+            transform: rotate(5deg);
+            z-index: 1000;
+            opacity: 0.8;
+        }
+
+        .bins-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .bin {
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .bin:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .bin.drag-over {
+            background-color: #e8f5e8;
+            border: 3px dashed #4CAF50;
+            transform: scale(1.05);
+        }
+
+        .bin-image {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 15px;
+            border-radius: 10px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bin-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .bin-label {
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+            margin-top: 10px;
+        }
+
+        .submit-button {
+            background-color: #B0CC29;
+            color: black;
+            padding: 12px 40px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: block;
+            margin: 40px auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        /*
+        ---
+        FOOTER STYLES
+        ---
+        */
+        .footer {
+            background-color: #4F6D3F;
+            color: #e0e0e0;
+            padding: 40px 20px;
+            flex-shrink: 0; /* Prevent footer from shrinking */
+            width: 100%; /* Ensure footer takes full width */
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-column h3 {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-column ul li a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: #B0CC29;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #666;
+            margin-top: 30px;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .score-display {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2d5016;
+        }
+
+        .feedback-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px 40px;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feedback-message.show {
+            opacity: 1;
+        }
+
+        .feedback-message.correct {
+            background-color: #22c55e;
+        }
+
+        .feedback-message.incorrect {
+            background-color: #ef4444;
+        }
+
+        @media (max-width: 768px) {
+            .top-nav-links {
+                display: none; /* Hide top nav links on smaller screens */
+            }
+
+            .game-title {
+                font-size: 2rem;
+            }
+            .bins-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            .game-section {
+                background-attachment: scroll;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header class="header">
+        <div class="header-left">
+            <button class="hamburger-icon" id="open-sidebar-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <img src="images/logoecomind.svg" alt="EcoMind Logo">
+                </div>
+                EcoMind
+            </a>
+        </div>
+        <nav class="top-nav-links">
+            <a href="#home" class="active">Home</a>
+            <a href="#about">About Us</a>
+            <a href="#module">Module</a>
+            <a href="#game">Game</a>
+            <a href="login.html" class="login-btn">Login</a>
+        </nav>
+    </header>
+
+    <div class="sidebar-container" id="sidebar-container">
+        <aside class="sidebar-menu" id="sidebar-menu">
+            <button class="close-sidebar-btn" id="close-sidebar-btn">
+                <i class="fas fa-times"></i>
+            </button>
+            <nav>
+                <ul class="sidebar-links">
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#module">Module</a></li>
+                    <li><a href="#game">Game</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </nav>
+        </aside>
+    </div>
+
+    <main class="main-content">
+        <section class="game-section">
+            <div class="recycling-icon">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50 10L60 30H40L50 10Z" fill="#2E7D32"/>
+                    <path d="M20 70L30 50L40 70H20Z" fill="#2E7D32"/>
+                    <path d="M80 70L70 50L60 70H80Z" fill="#2E7D32"/>
+                    <circle cx="50" cy="35" r="8" fill="#4CAF50"/>
+                    <circle cx="25" cy="65" r="8" fill="#4CAF50"/>
+                    <circle cx="75" cy="65" r="8" fill="#4CAF50"/>
+                </svg>
+            </div>
+            <h1 class="game-title">Waste Segregation</h1>
+            <button class="start-button" onclick="startGame()">Start</button>
+        </section>
+
+        <section class="game-area" id="gameArea" style="display: none;">
+            <div class="score-display" id="scoreDisplay">
+                Score: <span id="score">0</span> | Correct: <span id="correct">0</span> | Wrong: <span id="wrong">0</span>
+            </div>
+
+            <div class="item-display">
+                <div class="waste-item" id="wasteItem">
+                    </div>
+                <p class="text-lg font-semibold text-gray-800" id="itemName">Aluminum Can</p>
+                <p class="text-sm text-gray-600 mt-2">Drag the item to the correct bin!</p>
+            </div>
+
+            <div class="bins-container">
+                <div class="bin" data-bin-type="biodegradable">
+                    <div class="bin-image">
+                        <img src="biodegradable.svg" alt="Biodegradable Bin" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'color: #4CAF50; font-size: 3rem;\'>🟢</div>'">
+                    </div>
+                    <div class="bin-label">Biodegradable</div>
+                </div>
+                <div class="bin" data-bin-type="non-biodegradable">
+                    <div class="bin-image">
+                        <img src="nonbio.svg" alt="Non-Biodegradable Bin" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'color: #2196F3; font-size: 3rem;\'>🔵</div>'">
+                    </div>
+                    <div class="bin-label">Non-Biodegradable</div>
+                </div>
+                <div class="bin" data-bin-type="recyclable">
+                    <div class="bin-image">
+                        <img src="recyclable.svg" alt="Recyclable Bin" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'color: #FF9800; font-size: 3rem;\'>🟠</div>'">
+                    </div>
+                    <div class="bin-label">Recyclable</div>
+                </div>
+                <div class="bin" data-bin-type="hazardous">
+                    <div class="bin-image">
+                        <img src="hazardous.svg" alt="Hazardous Bin" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'color: #F44336; font-size: 3rem;\'>🔴</div>'">
+                    </div>
+                    <div class="bin-label">Hazardous</div>
+                </div>
+            </div>
+
+            <button class="submit-button" onclick="loadNewItem()">Next Item</button>
+        </section>
+
+        <div class="feedback-message" id="feedbackMessage"></div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h3>ECOMIND</h3>
+                <ul>
+                    <li><a href="#" class="flex items-center"><span class="mr-2">📷</span> Instagram</a></li>
+                    <li><a href="#" class="flex items-center"><span class="mr-2">🐦</span> Twitter</a></li>
+                    <li><a href="#" class="flex items-center"><span class="mr-2">👥</span> Facebook</a></li>
+                    <li><a href="#" class="flex items-center"><span class="mr-2">📌</span> Pinterest</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>About Us</h3>
+                <ul>
+                    <li><a href="#">About Ecomind</a></li>
+                    <li><a href="#">Vision & Mission</a></li>
+                    <li><a href="#">Partnership</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><a href="#">1-800-555-5555</a></li>
+                    <li><a href="#">Join us</a></li>
+                    <li><a href="#">Email us</a></li>
+                    <li><a href="#">Customer Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Learning</h3>
+                <ul>
+                    <li><a href="#">Modules</a></li>
+                    <li><a href="#">Quizzes</a></li>
+                    <li><a href="#">Games</a></li>
+                    <li><a href="#">Volunteers</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-8">
+                <p>&copy; 2049 Fitma</p>
+                <a href="#">Fitma Policies</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">About us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentItem = null;
+        let score = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+
+        const wasteItems = [
+            { name: "Aluminum Can", type: "recyclable", color: "#DC143C", emoji: "🥤" },
+            { name: "Banana Peel", type: "biodegradable", color: "#FFD700", emoji: "🍌" },
+            { name: "Plastic Bottle", type: "recyclable", color: "#1E90FF", emoji: "🍶" },
+            { name: "Battery", type: "hazardous", color: "#2F4F4F", emoji: "🔋" },
+            { name: "Paper", type: "recyclable", color: "#F5F5DC", emoji: "📄" },
+            { name: "Glass Bottle", type: "recyclable", color: "#228B22", emoji: "🍾" },
+            { name: "Food Waste", type: "biodegradable", color: "#8B4513", emoji: "🍎" },
+            { name: "Chemical Container", type: "hazardous", color: "#FF4500", emoji: "🧪" },
+            { name: "Coffee Grounds", type: "biodegradable", color: "#8B4513", emoji: "☕" },
+            { name: "Cardboard", type: "recyclable", color: "#D2B48C", emoji: "📦" },
+            { name: "Paint Can", type: "hazardous", color: "#FF6347", emoji: "🎨" },
+            { name: "Styrofoam", type: "non-biodegradable", color: "#F0F8FF", emoji: "🥡" }
+        ];
+
+        function startGame() {
+            document.querySelector('.game-section').style.display = 'none';
+            document.getElementById('gameArea').style.display = 'block';
+            score = 0;
+            correctCount = 0;
+            wrongCount = 0;
+            updateScore();
+            loadNewItem();
+            setupDragAndDrop();
+        }
+
+        function loadNewItem() {
+            currentItem = wasteItems[Math.floor(Math.random() * wasteItems.length)];
+            const wasteElement = document.getElementById('wasteItem');
+            document.getElementById('itemName').textContent = currentItem.name;
+            wasteElement.style.backgroundColor = currentItem.color;
+            wasteElement.textContent = currentItem.emoji;
+            
+            // Reset all bins
+            document.querySelectorAll('.bin').forEach(bin => {
+                bin.classList.remove('drag-over');
+            });
+        }
+
+        function setupDragAndDrop() {
+            const wasteItem = document.getElementById('wasteItem');
+            const bins = document.querySelectorAll('.bin');
+
+            // Make waste item draggable
+            wasteItem.draggable = true;
+
+            wasteItem.addEventListener('dragstart', (e) => {
+                wasteItem.classList.add('dragging');
+                e.dataTransfer.setData('text/plain', '');
+            });
+
+            wasteItem.addEventListener('dragend', () => {
+                wasteItem.classList.remove('dragging');
+            });
+
+            // Setup drop zones
+            bins.forEach(bin => {
+                bin.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    bin.classList.add('drag-over');
+                });
+
+                bin.addEventListener('dragleave', () => {
+                    bin.classList.remove('drag-over');
+                });
+
+                bin.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    bin.classList.remove('drag-over');
+                    const binType = bin.getAttribute('data-bin-type');
+                    checkAnswer(binType);
+                });
+            });
+        }
+
+        function checkAnswer(selectedBin) {
+            const isCorrect = selectedBin === currentItem.type;
+            
+            if (isCorrect) {
+                score += 10;
+                correctCount++;
+                showFeedback('Correct! Well done! 🎉', true);
+                flashBackground(true);
+            } else {
+                wrongCount++;
+                showFeedback(`Incorrect! ${currentItem.name} goes in the ${currentItem.type} bin.`, false);
+                flashBackground(false);
+            }
+
+            updateScore();
+            
+            // Load next item after delay
+            setTimeout(() => {
+                loadNewItem();
+            }, 2000);
+        }
+
+        function showFeedback(message, isCorrect) {
+            const feedbackElement = document.getElementById('feedbackMessage');
+            feedbackElement.textContent = message;
+            feedbackElement.className = `feedback-message ${isCorrect ? 'correct' : 'incorrect'} show`;
+            
+            setTimeout(() => {
+                feedbackElement.classList.remove('show');
+            }, 2000);
+        }
+
+        function flashBackground(isCorrect) {
+            const body = document.body;
+            const flashClass = isCorrect ? 'flash-correct' : 'flash-incorrect';
+            
+            body.classList.add(flashClass);
+            setTimeout(() => {
+                body.classList.remove(flashClass);
+            }, 500);
+        }
+
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('correct').textContent = correctCount;
+            document.getElementById('wrong').textContent = wrongCount;
+        }
+
+        // Sidebar logic
+        const openSidebarBtn = document.getElementById('open-sidebar-btn');
+        const closeSidebarBtn = document.getElementById('close-sidebar-btn');
+        const sidebarContainer = document.getElementById('sidebar-container');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+
+        openSidebarBtn.addEventListener('click', () => {
+            sidebarContainer.classList.add('open');
+            sidebarMenu.classList.add('open');
+        });
+
+        closeSidebarBtn.addEventListener('click', () => {
+            sidebarContainer.classList.remove('open');
+            sidebarMenu.classList.remove('open');
+        });
+
+        sidebarContainer.addEventListener('click', (e) => {
+            if (e.target === sidebarContainer) {
+                sidebarContainer.classList.remove('open');
+                sidebarMenu.classList.remove('open');
+            }
+        });
+
+        // Smooth scrolling for navigation links in sidebar (and top nav if it were not hidden on small screens)
+        document.querySelectorAll('.sidebar-links a, .top-nav-links a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId.startsWith('#')) { // Only for anchor links
+                    e.preventDefault();
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 70, // Adjust for fixed header height
+                            behavior: 'smooth'
+                        });
+                        // Close sidebar after clicking a link
+                        sidebarContainer.classList.remove('open');
+                        sidebarMenu.classList.remove('open');
+                    }
+                }
+            });
+        });
+
+        // Touch support for mobile devices
+        let touchStartX, touchStartY;
+        
+        document.getElementById('wasteItem').addEventListener('touchstart', (e) => {
+            const touch = e.touches[0];
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+            e.target.style.zIndex = '1000';
+            e.target.style.position = 'fixed'; // Set position to fixed for dragging
+        });
+
+        document.getElementById('wasteItem').addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const element = e.target;
+            element.style.left = (touch.clientX - element.offsetWidth / 2) + 'px'; // Center element on finger
+            element.style.top = (touch.clientY - element.offsetHeight / 2) + 'px'; // Center element on finger
+        });
+
+        document.getElementById('wasteItem').addEventListener('touchend', (e) => {
+            const element = e.target;
+            const touch = e.changedTouches[0];
+            
+            // Temporarily hide the element to find the element below
+            element.style.display = 'none';
+            const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+            element.style.display = ''; // Show it again
+
+            // Reset position
+            element.style.position = 'relative';
+            element.style.left = '';
+            element.style.top = '';
+            element.style.zIndex = '';
+            
+            // Check if dropped on a bin
+            const bin = elementBelow ? elementBelow.closest('.bin') : null;
+            if (bin) {
+                const binType = bin.getAttribute('data-bin-type');
+                checkAnswer(binType);
+            }
+        });
+    </script>
+
+</body>
+</html>
