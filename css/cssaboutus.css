@@ -55,13 +55,28 @@
             justify-content: space-between;
             align-items: center;
             flex-shrink: 0;
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
         }
 
         .header-left {
             display: flex;
             align-items: center;
+            gap: 15px;
+        }
+
+        .hamburger-icon {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+            padding: 5px;
+            display: block;
+            flex-shrink: 0;
         }
 
         .logo {
@@ -70,7 +85,7 @@
             font-size: 24px;
             font-weight: 700;
             color: #333;
-            gap: 10px; /* Space between logo icon and text */
+            gap: 10px;
         }
 
         .logo-icon {
@@ -91,20 +106,6 @@
             object-fit: cover;
         }
 
-        /* Hamburger Menu Icon - Always visible */
-        .hamburger-icon {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #333;
-            padding: 5px;
-            display: block;
-            flex-shrink: 0;
-            margin-right: 15px; /* Space between hamburger and logo */
-        }
-
-        /* Top nav links - Visible by default, hidden on small screens */
         .top-nav-links {
             display: flex;
             gap: 25px;
@@ -116,13 +117,111 @@
             color: #555;
             font-weight: 600;
             padding: 8px 12px;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, background-color 0.3s ease;
             border-radius: 8px;
         }
 
         .top-nav-links a:hover {
             color: #4CAF50;
             background-color: #e6f7e6;
+        }
+
+        .top-nav-links .login-btn {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .top-nav-links .login-btn:hover {
+            background-color: #45a049;
+            color: #fff;
+        }
+
+        @media (max-width: 767px) {
+            .top-nav-links {
+                display: none;
+            }
+        }
+
+        /* --- SIDEBAR STYLES --- */
+        .sidebar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar-container.open {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .sidebar-menu {
+            width: 280px;
+            height: 100%;
+            background-color: #fff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-menu.open {
+            transform: translateX(0);
+        }
+
+        .close-sidebar-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #555;
+            align-self: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-links li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-links a {
+            display: block;
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .sidebar-links a:hover {
+            background-color: #e6f7e6;
+            color: #4CAF50;
+        }
+
+        .sidebar-links a.active {
+            background-color: #d4edda;
+            color: #4CAF50;
+            font-weight: 700;
         }
 
         /* Login Button specific styles */
@@ -510,89 +609,6 @@
             .sidebar-menu {
                 width: 220px;
             }
-        }
-
-        /* Sliding Sidebar Container (Overlay) */
-        .sidebar-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 1000;
-        }
-
-        .sidebar-container.open {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Actual Sliding Sidebar Menu */
-        .sidebar-menu {
-            width: 280px;
-            height: 100%;
-            background-color: #fff;
-            position: absolute;
-            top: 0;
-            left: 0;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            border-top-right-radius: 15px;
-            border-bottom-right-radius: 15px;
-        }
-
-        .sidebar-menu.open {
-            transform: translateX(0);
-        }
-
-        .close-sidebar-btn {
-            background: none;
-            border: none;
-            font-size: 28px;
-            cursor: pointer;
-            color: #555;
-            align-self: flex-end;
-            margin-bottom: 20px;
-        }
-
-        .sidebar-links {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .sidebar-links li {
-            margin-bottom: 10px;
-        }
-
-        .sidebar-links a {
-            display: block;
-            text-decoration: none;
-            color: #555;
-            font-weight: 600;
-            padding: 12px 15px;
-            border-radius: 8px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .sidebar-links a:hover {
-            background-color: #e6f7e6;
-            color: #4CAF50;
-        }
-
-        /* Active link styling for sidebar */
-        .sidebar-links a.active {
-            background-color: #d4edda;
-            color: #4CAF50;
-            font-weight: 700;
         }
 
         /* Styles for dropBoxContainer and drop-box-item */
