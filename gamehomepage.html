@@ -83,7 +83,7 @@
       <h2>EcoSort Challenge</h2>
       <p>Learn to sort, protect the Earth.</p>
       <p>Sort waste into four categories – biodegradable, non-biodegradable, recyclable, and hazardous – race against the clock to score points and help build a cleaner, greener planet!</p>
-      <button>Start</button>
+      <button id="start-game-btn">Start</button>
     </div>
   </section>
 
@@ -136,6 +136,12 @@
 </footer>
 
    <script src="js/jsgamehomepage.js"></script>
+      <script>
+     // Add click event listener to the Start button
+     document.getElementById('start-game-btn').addEventListener('click', function() {
+       window.location.href = 'wastebingame.html';
+     });
+   </script>
      
 </body>
 </html>
