@@ -642,6 +642,10 @@
                     Think you’ve got it down? Click to start the quiz and put your knowledge to the test. It’s a quick and fun way to review what you’ve learned!
                 </div>
             </div>
+            <div class="navigation-buttons">
+    <button id="back-btn" class="section-button">Back</button>
+</div>
+        </div>
         </div>
     </main>
 
@@ -925,9 +929,21 @@
             });
 
             quizBtn.addEventListener('click', () => {
-                toggleContent('quiz-btn', quizContent, 'quiz.html', defaultQuizContent, true);
+                toggleContent('quiz-btn', quizContent, 'quizpageM5.html', defaultQuizContent, true);
             });
+document.addEventListener('DOMContentLoaded', () => {
+    // Existing code...
 
+    const backBtn = document.getElementById('back-btn');
+    // Define the URLs for the previous and next pages
+    const previousPageUrl = 'http://127.0.0.1:5500/module4.html'; // Replace with the actual URL
+
+    backBtn.addEventListener('click', () => {
+        window.location.href = previousPageUrl;
+    });
+
+    // Existing code...
+});
             function initializePage() {
                 if (mainContent) {
                     initialMainFontSize = parseFloat(getComputedStyle(mainContent).fontSize);
