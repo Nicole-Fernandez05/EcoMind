@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Basic Reset & Body Styling */
-        * {
+        *  {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -557,6 +557,15 @@
             margin-top: 1rem;
             font-size: 0.9em;
         }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
@@ -642,6 +651,11 @@
                     Think you’ve got it down? Click to start the quiz and put your knowledge to the test. It’s a quick and fun way to review what you’ve learned!
                 </div>
             </div>
+            <div class="navigation-buttons">
+    <button id="back-btn" class="section-button">Back</button>
+    <button id="next-btn" class="section-button">Next</button>
+</div>
+        </div>
         </div>
     </main>
 
@@ -925,9 +939,28 @@
             });
 
             quizBtn.addEventListener('click', () => {
-                toggleContent('quiz-btn', quizContent, 'quiz.html', defaultQuizContent, true);
+                toggleContent('quiz-btn', quizContent, 'quizpageM4.html', defaultQuizContent, true);
             });
+document.addEventListener('DOMContentLoaded', () => {
+    // Existing code...
 
+    const backBtn = document.getElementById('back-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    // Define the URLs for the previous and next pages
+    const previousPageUrl = 'http://127.0.0.1:5500/module3.html'; // Replace with the actual URL
+    const nextPageUrl = 'http://127.0.0.1:5500/module5.html'; // Replace with the actual URL
+
+    backBtn.addEventListener('click', () => {
+        window.location.href = previousPageUrl;
+    });
+
+    nextBtn.addEventListener('click', () => {
+        window.location.href = nextPageUrl;
+    });
+
+    // Existing code...
+});
             function initializePage() {
                 if (mainContent) {
                     initialMainFontSize = parseFloat(getComputedStyle(mainContent).fontSize);
@@ -949,3 +982,4 @@
     </script>
 </body>
 </html>
+
