@@ -864,10 +864,10 @@
                     <div class="inner-content-wrapper">
                         <h3>Infographics on Waste Segregation</h3>
                         <div class="image-gallery">
-                            <img src="infographic11.jpg" alt="Infographic 1">
-                            <img src="infographic12.jpg" alt="Infographic 2">
-                            <img src="infographic13.jpg" alt="Infographic 3">
-                        </div>
+        <img src="https://i.ibb.co/XZ9mC1WH/infographic51.jpg" alt="Infographic 1" />
+        <img src="https://i.ibb.co/zVPhQJ0V/infographic52.jpg" alt="Infographic 2" />
+        <img src="https://i.ibb.co/NgtpRwwS/infographic53.jpg" alt="Infographic 3" />
+    </div>
                         <button id="close-infographics-btn" class="close-button">
                             Close Infographics
                         </button>
@@ -887,14 +887,12 @@
             videoBtn.addEventListener('click', () => {
                 const videoHtml = `
                     <div class="inner-content-wrapper">
-                        <h3>Educational Video: Why Waste Segregation is Important</h3>
+                        <h3>Educational Video: Implementation of the Solid Waste Management Program of Santiago National High School</h3>
                         <div class="video-container">
-                            <iframe class="video-iframe" src="https://www.youtube.com/embed/0ZiD_Lb3Tm0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe class="video-iframe" src="https://www.youtube.com/embed/W6STjKZ7Wgc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
-                        <p class="video-description-paragraph">Waste segregation is the practice of separating waste into different categories, such as organic, recyclable, and hazardous materials. By doing this, we can ensure that each type of waste is disposed of properly, reducing pollution, conserving resources, and promoting a healthier planet.</p>
-                        <button id="close-video-btn" class="close-button">
-                            Close Video
-                        </button>
+                        <p class="video-description-paragraph">This video presents the implementation of the Solid Waste Management Program at Santiago National High School. It highlights the school’s commitment to promoting proper waste segregation, recycling, and responsible disposal practices within the campus. Through various activities and student participation, the program aims to raise environmental awareness and encourage sustainable habits among the school community.</p>
+                        <button id="close-video-btn" class="close-button">Close Video</button>
                     </div>
                 `;
                 toggleContent('video-btn', videoContent, videoHtml, defaultVideoContent);
@@ -910,11 +908,9 @@
             explanationBtn.addEventListener('click', () => {
                 const explanationHtml = `
                     <div class="inner-content-wrapper explanation-content-inner-wrapper">
-                        <p class="explanation-title">Waste segregation, environmental protection, recycling and resource recovery, efficient waste management, public health and safety, sustainable practices, and the global waste challenge.</p>
-                        <p>Sorting waste into categories prevents pollution and supports recycling. It keeps soil, water, and air clean. Recyclables can be reused, saving resources. Waste is easier to collect, transport, and dispose of. Proper handling reduces disease and toxic exposure. Responsible waste habits and a circular economy are encouraged. Over 2 billion tons of waste are poorly managed, but segregation helps reduce this impact.</p>
-                        <button id="close-explanation-btn" class="close-button">
-                            Close Explanation
-                        </button>
+                        <p class="explanation-title">Implementation of proper waste disposal, segregation at source, education and awareness, recycling and composting facilities, individual responsibility, and youth engagement.</p><br>
+                        <p>Proper waste disposal protects health and the environment through individual, community, and government actions. Segregating waste into categories at the source is key. Educating communities through campaigns and school programs encourages responsible behavior. Developing composting and recycling facilities ensures waste is processed properly. Individuals must reduce waste, dispose of it properly, and join recycling efforts. Engaging youth builds long-term habits. Coordinated efforts lead to cleaner environments and a zero-waste future.</p>
+                        <button id="close-explanation-btn" class="close-button">Close Explanation</button>
                     </div>
                 `;
                 toggleContent('explanation-btn', explanationContent, explanationHtml, defaultExplanationContent);
@@ -935,7 +931,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const backBtn = document.getElementById('back-btn');
     // Define the URLs for the previous and next pages
-    const previousPageUrl = 'http://127.0.0.1:5500/module4.html'; // Replace with the actual URL
+    const previousPageUrl = 'modulehomepage.html'; // Replace with the actual URL
 
     backBtn.addEventListener('click', () => {
         window.location.href = previousPageUrl;
