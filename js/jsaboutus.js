@@ -93,16 +93,6 @@
                 authorInfo.appendChild(authorDetails);
                 div.appendChild(authorInfo);
 
-                const delBtn = document.createElement("button");
-                delBtn.className = "delete-btn";
-                delBtn.textContent = "×";
-                // Attach event listener for deleting comments
-                // The index calculation (comments.length - 1 - index) is crucial because we are iterating a reversed array
-                delBtn.addEventListener("click", () => {
-                    deleteComment(comments.length - 1 - index);
-                });
-                div.appendChild(delBtn);
-
                 dropBoxContainer.appendChild(div);
             });
         }
@@ -111,12 +101,6 @@
          * Deletes a comment from localStorage at the specified index and reloads the comments.
          * @param {number} index The index of the comment to delete in the original (non-reversed) array.
          */
-        function deleteComment(index) {
-            const comments = JSON.parse(localStorage.getItem("comments") || "[]");
-            comments.splice(index, 1); // Remove 1 element at the given index
-            localStorage.setItem("comments", JSON.stringify(comments));
-            loadComments(); // Reload comments to update the display
-        }
 
         // Event listener for submitting a new comment
         submitBtn.addEventListener("click", () => {
