@@ -6,28 +6,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebarMenu = document.getElementById('sidebar-menu');
 
     // Open sidebar
-    hamburgerIcon.addEventListener('click', () => {
-        sidebarContainer.classList.add('open');
-        sidebarMenu.classList.add('open');
-        document.body.style.overflow = 'hidden'; // Prevent scrolling body when sidebar is open
-    });
+    if (hamburgerIcon) { // Added check for element existence
+        hamburgerIcon.addEventListener('click', () => {
+            sidebarContainer.classList.add('open');
+            sidebarMenu.classList.add('open');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling body when sidebar is open
+        });
+    }
 
     // Close sidebar by clicking close button
-    closeSidebarBtn.addEventListener('click', () => {
-        sidebarContainer.classList.remove('open');
-        sidebarMenu.classList.remove('open');
-        document.body.style.overflow = ''; // Allow body scrolling again
-    });
-
-    // Close sidebar by clicking outside the menu (on the overlay)
-    sidebarContainer.addEventListener('click', (event) => {
-        // Check if the click occurred directly on the container and not on the sidebar menu itself
-        if (event.target === sidebarContainer) {
+    if (closeSidebarBtn) { // Added check for element existence
+        closeSidebarBtn.addEventListener('click', () => {
             sidebarContainer.classList.remove('open');
             sidebarMenu.classList.remove('open');
             document.body.style.overflow = ''; // Allow body scrolling again
-        }
-    });
+        });
+    }
+
+    // Close sidebar by clicking outside the menu (on the overlay)
+    if (sidebarContainer) { // Added check for element existence
+        sidebarContainer.addEventListener('click', (event) => {
+            // Check if the click occurred directly on the container and not on the sidebar menu itself
+            if (event.target === sidebarContainer) {
+                sidebarContainer.classList.remove('open');
+                sidebarMenu.classList.remove('open');
+                document.body.style.overflow = ''; // Allow body scrolling again
+            }
+        });
+    }
 
     // Optional: Close sidebar when a link inside is clicked
     const sidebarLinks = document.querySelectorAll('.sidebar-links a');
@@ -42,13 +48,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // JavaScript for Quiz functionality
 let currentQuestionIndex = 0;
-let timeLeft = 7200; // 2 hours in seconds
+let timeLeft = 900; // 15 minutes in seconds
 let timerInterval;
 let userAnswers = [];
 // Store original questions and answers as a base, LLM will rephrase
 const originalQuestions = [
     {
-question: "What is waste segregation?",
+        question: "What is waste segregation?",
         options: [
             "A. Mixing all types of waste into one bin",
             "B. Burning all types of waste",
@@ -195,7 +201,7 @@ question: "What is waste segregation?",
             "C. Food scraps",
             "D. Glass jars"
         ],
-        answer: "C. Food scraps"
+        "answer": "C. Food scraps"
     },
     {
         question: "What is the goal of promoting composting under RA 9003?",
@@ -249,7 +255,8 @@ question: "What is waste segregation?",
     }
 ];
 
-      let questions = []; // This array will hold the current shuffled and rephrased questions
+let questions = []; // This array will hold the current shuffled and rephrased questions
+
 // Utility to shuffle an array (Fisher-Yates algorithm)
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -287,8 +294,8 @@ async function fetchRephrasedQuestion(originalQuestionObj) {
             }
         }
     };
-    // **IMPORTANT**: Replace with your actual API key
-    const apiKey = "YOUR_GEMINI_API_KEY"; // <<< Replace this placeholder
+    // Your API Key is now included here!
+    const apiKey = "AIzaSyDAaB8sAR3TKJz92Y_8AeKjent6-k2ygTM";
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
     try {
@@ -423,9 +430,8 @@ function showResults() {
     });
 
     const incorrectAnswers = questions.length - correctAnswers;
-    const timeTaken = 7200 - timeLeft; // Time taken in seconds
+    const timeTaken = 900 - timeLeft; // Using 900 seconds (15 minutes) for consistency
     const percentageScore = questions.length > 0 ? ((correctAnswers / questions.length) * 100).toFixed(1) : 0; // Fixed to 1 decimal place
-
 
     const quizContainer = document.querySelector('.quiz-container');
     // Add a class to the quiz-container to enable results-specific scrolling
@@ -441,7 +447,8 @@ function showResults() {
                     <div class="chart-title">Score Breakdown</div>
                     <p>Time: ${Math.floor(timeTaken / 60)} minutes ${timeTaken % 60} seconds</p>
                     <p>Score: ${correctAnswers} out of ${questions.length} (${percentageScore}%)</p>
-                    <button class="retake-quiz-button" onclick="retakeQuiz()">Retake Quiz</button>
+                    <div class="quiz-actions"> <button class="action-button" onclick="retakeQuiz()">Retake Quiz</button>
+                        <a href="modulehomepage.html" class="action-button">Return to Modules</a> </div>
                 </div>
             </div>
             <div class="results-list">
@@ -509,13 +516,31 @@ function showResults() {
             }
         }
     });
+
+    // --- LOGIC FOR UNLOCKING MODULES ---
+    const passingScore = 80; // 80% to pass
+    const currentModule = 1; // This is for Module 1 quiz, so it unlocks Module 2
+
+    if (percentageScore >= passingScore) {
+        localStorage.setItem(`module${currentModule}Completed`, 'true');
+        showMessageBox(`Congratulations! You passed Module ${currentModule} with a score of ${percentageScore}%. The next module is now unlocked!`, () => {
+            // No automatic redirect here, user clicks "Return to Modules"
+        });
+    } else {
+        localStorage.setItem(`module${currentModule}Completed`, 'false'); // Optionally store false if they didn't pass
+        showMessageBox(`You scored ${percentageScore}%. You need ${passingScore}% to pass Module ${currentModule}. Please review the module and try again.`, () => {
+            // No automatic redirect here, user clicks "Retake Quiz" or "Return to Modules"
+        });
+    }
+    // --- END LOGIC ---
 }
 
 function retakeQuiz() {
     // Reset quiz state
     currentQuestionIndex = 0;
     userAnswers = [];
-    timeLeft = 7200; // Reset timer
+    timeLeft = 900; // Reset timer to 15 minutes
+    clearInterval(timerInterval); // Ensure any existing timer is cleared
 
     // Re-initialize questions array with a shuffled copy of originalQuestions
     questions = [...originalQuestions]; // Create a shallow copy
@@ -527,7 +552,7 @@ function retakeQuiz() {
     quizContainer.innerHTML = `
         <div class="question-header">
             <div class="item-number">Item 1</div>
-            <div class="time" id="time">Time: 05:00</div>
+            <div class="time" id="time">Time: 15:00</div>
         </div>
         <div class="question">
             <p id="question-text"></p>
@@ -546,6 +571,10 @@ function retakeQuiz() {
     const display = document.querySelector('#time');
     startTimer(timeLeft, display);
     updateQuestion();
+}
+
+function returnToModules() {
+    window.location.href = 'modulehomepage.html';
 }
 
 
@@ -596,6 +625,7 @@ function showMessageBox(message, callback) {
         cursor: pointer;
         font-size: 1em;
         transition: background-color 0.3s ease;
+        margin-top: 10px; /* Added margin for consistency if there are other buttons */
     `;
     okButton.onmouseover = () => okButton.style.backgroundColor = '#45a049';
     okButton.onmouseout = () => okButton.style.backgroundColor = '#4CAF50';
@@ -615,22 +645,15 @@ function showMessageBox(message, callback) {
 
 // Initial setup on page load
 document.addEventListener('DOMContentLoaded', async () => {
-    // Create a mutable copy of originalQuestions to shuffle
-    questions = [...originalQuestions];
-    shuffleArray(questions); // Shuffle questions on page load
-    await updateQuestion(); // Load the first (shuffled and rephrased) question
-    const display = document.querySelector('#time');
-    startTimer(timeLeft, display);
-});
+    // Set initial time for quiz, consistent with HTML text "Time: 15:00"
+    timeLeft = 900; // 15 minutes in seconds
 
+    // Update the time display in HTML directly on load
+    const timeDisplayElement = document.querySelector('#time');
+    if (timeDisplayElement) {
+        timeDisplayElement.textContent = "Time: 15:00";
+    }
 
-    messageBox.appendChild(messageText);
-    messageBox.appendChild(okButton);
-    messageBoxOverlay.appendChild(messageBox);
-    document.body.appendChild(messageBoxOverlay);
-
-// Initial setup on page load
-document.addEventListener('DOMContentLoaded', async () => {
     // Create a mutable copy of originalQuestions to shuffle
     questions = [...originalQuestions];
     shuffleArray(questions); // Shuffle questions on page load
