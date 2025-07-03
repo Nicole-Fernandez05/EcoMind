@@ -1,72 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecomind - Create an Account</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="css/cssregister.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ecomind - Create an Account</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+  <link rel="stylesheet" href="css/cssregister.css" />
 </head>
 <body>
-    <header class="header">
-        <div class="header-left">
-            <button class="hamburger-icon" id="hamburger-icon">☰</button>
-            <div class="logo">
-                <span class="logo-icon">
-                    <img src="images/logoecomind.svg" alt="EcoMind Logo">
-                </span>
-                ECOMIND
-            </div>
-        </div>
-        <nav class="top-nav-links">
-            <a href="homepage.html" class="active">Home</a>
-            <a href="modulehomepage.html">Modules</a>
-            <a href="gamehomepage.html">Game</a>
-            <a href="login.html" class="login-btn">Login</a>
-        </nav>
-    </header>
-
-    <div class="sidebar-container" id="sidebar-container">
-        <aside class="sidebar-menu" id="sidebar-menu">
-            <button class="close-sidebar-btn" id="close-sidebar-btn">&times;</button>
-            <ul class="sidebar-links">
-                <li><a href="homepage.html" class="active">Home</a></li>
-                <li><a href="modulehomepage.html">Modules</a></li>
-                <li><a href="#quizzes">Quizzes</a></li>
-                <li><a href="finalhomepage.html">Final Assessment</a></li>
-                <li><a href="#certification">Certification</a></li>
-            </ul>
-        </aside>
+  <header class="header">
+    <div class="header-left">
+      <button class="hamburger-icon" id="hamburger-icon">☰</button>
+      <div class="logo">
+        <span class="logo-icon">
+          <img src="images/logoecomind.svg" alt="EcoMind Logo" />
+        </span>
+        ECOMIND
+      </div>
     </div>
+    <nav class="top-nav-links">
+      <a href="homepage.html" class="active">Home</a>
+      <a href="modulehomepage.html">Modules</a>
+      <a href="gamehomepage.html">Game</a>
+      <a href="login.html" class="login-btn">Login</a>
+    </nav>
+  </header>
 
-    <main class="main-content">
-        <div class="registration-container">
-            <div class="image-panel">
-                <img src="https://placehold.co/400x400/cccccc/000000?text=People+with+Boxes" alt="People carrying boxes" style="display: none;">
-                </div>
+  <div class="sidebar-container" id="sidebar-container">
+    <aside class="sidebar-menu" id="sidebar-menu">
+      <button class="close-sidebar-btn" id="close-sidebar-btn">&times;</button>
+      <ul class="sidebar-links">
+        <li><a href="homepage.html" class="active">Home</a></li>
+        <li><a href="modulehomepage.html">Modules</a></li>
+        <li><a href="#quizzes">Quizzes</a></li>
+        <li><a href="finalhomepage.html">Final Assessment</a></li>
+        <li><a href="#certification">Certification</a></li>
+      </ul>
+    </aside>
+  </div>
 
-            <div class="form-panel">
-                <a href="login.html" class="back-arrow" onclick="history.back(); return false;">&#8630;</a> <h2 class="form-heading">Create an Account</h2>
+  <main class="main-content">
+    <div class="registration-container">
+      <div class="image-panel">
+        <img
+          src="https://placehold.co/400x400/cccccc/000000?text=People+with+Boxes"
+          alt="People carrying boxes"
+          style="display: none"
+        />
+      </div>
 
-                <form class="registration-form">
-                    <div>
-                        <input type="text" id="fullName" name="fullName" placeholder="Full Name" class="form-input">
-                    </div>
-                    <div>
-                        <input type="email" id="email" name="email" placeholder="Email" class="form-input">
-                    </div>
-                    <div>
-                        <input type="password" id="password" name="password" placeholder="Password" class="form-input">
-                    </div>
-                    <button type="submit" class="submit-button">
-                        Create an Account
-                    </button>
-                </form>
-            </div>
-        </div>
-    </main>
+      <div class="form-panel">
+        <a
+          href="login.html"
+          class="back-arrow"
+          onclick="history.back(); return false;"
+          >&#8630;</a
+        >
+        <h2 class="form-heading">Create an Account</h2>
 
-    <script src="js/jsregister.js"></script>
+        <!-- Added id="registerForm" -->
+        <form id="registerForm" class="registration-form">
+          <div>
+            <input
+              type="text"
+              id="fullName"
+              name="fullName"
+              placeholder="Full Name"
+              class="form-input"
+              required
+            />
+          </div>
+          <div>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email"
+              class="form-input"
+              required
+            />
+          </div>
+          <div>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Password"
+              class="form-input"
+              required
+            />
+          </div>
+          <button type="submit" class="submit-button">Create an Account</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', async function (
+      e
+    ) {
+      e.preventDefault();
+
+      const name = document.getElementById('fullName').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const res = await fetch('http://localhost:5000/api/auth/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name, email, password }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert(data.msg || 'Registration successful!');
+          window.location.href = 'login.html'; // Redirect to login after success
+        } else {
+          alert(data.msg || data.error || 'Registration failed.');
+        }
+      } catch (error) {
+        alert('Network error: ' + error.message);
+      }
+    });
+  </script>
 </body>
 </html>
