@@ -103,6 +103,12 @@ NAVIGATION BAR (HEADER) STYLES
     background-color: #e6f7e6; /* Light green background on hover */
 }
 
+.top-nav-links a.active {
+    background-color: #d4edda; /* Active link background */
+    color: #4CAF50; /* Active link text color */
+    font-weight: 700;
+}
+
 /* Login Button specific styles */
 .top-nav-links .login-btn {
     background-color: #4CAF50;
@@ -315,6 +321,15 @@ MAIN CONTENT (User Progress Report) STYLES
     background-color: #4CAF50; /* Green for online */
 }
 
+.user-name-link {
+    text-decoration: none; /* Removes underline */
+    color: inherit; /* Keeps the text color the same as its parent */
+}
+
+.user-name-link:hover {
+    text-decoration: underline; /* Adds underline on hover for clickability */
+}
+
 .user-name {
     font-weight: 600;
     color: #333;
@@ -387,7 +402,7 @@ MODAL STYLES
 ---
 */
 .modal {
-    display: none; /* Hidden by default */
+    display: none; /* Changed from 'flex' to 'none' */
     position: fixed; /* Stay in place */
     z-index: 1001; /* Sit on top of sidebar overlay */
     left: 0;
@@ -396,7 +411,7 @@ MODAL STYLES
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
-    display: flex; /* Use flex to center modal-content */
+    /* The display: flex will be added by JavaScript when opening the modal */
     justify-content: center;
     align-items: center;
 }
