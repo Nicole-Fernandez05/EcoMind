@@ -49,26 +49,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const maxItems = 20;
 
     const items = [
-        { name: "Plastic Bottle", category: "Recyclable", image: "plastic_bottle.png" },
-        { name: "Banana Peel", category: "Biodegradable", image: "banana_peel.png" },
-        { name: "Used Battery", category: "Hazardous", image: "battery.png" },
-        { name: "Cardboard Box", category: "Recyclable", image: "cardboard_box.png" },
-        { name: "Glass Jar", category: "Recyclable", image: "glass_jar.png" },
-        { name: "Apple Core", category: "Biodegradable", image: "apple_core.jpg" },
-        { name: "Soda Can", category: "Recyclable", image: "soda_can.png" },
-        { name: "Light Bulb", category: "Hazardous", image: "light_bulb.png" },
-        { name: "Newspaper", category: "Recyclable", image: "newspaper.png" },
-        { name: "Plastic Bag", category: "Non-Biodegradable", image: "plastic_bag.png" },
-        { name: "Styrofoam Cup", category: "Non-Biodegradable", image: "styrofoam_cup.png" },
-        { name: "Expired Medicine", category: "Hazardous", image: "medicine.png" },
-        { name: "Dried Leaves", category: "Biodegradable", image: "dried_leaves.png" },
-        { name: "Milk Carton", category: "Recyclable", image: "milk_carton.png" },
-        { name: "Old Tire", category: "Non-Biodegradable", image: "tire.png" },
-        { name: "Ceramic Mug", category: "Non-Biodegradable", image: "ceramic_mug.png" },
-        { name: "Fabric Scraps", category: "Non-Biodegradable", image: "fabric_scraps.png" },
-        { name: "Aerosol Can", category: "Hazardous", image: "aerosol_can.png" },
-        { name: "Egg Shells", category: "Biodegradable", image: "egg_shells.png" },
-        { name: "Metal Scrap", category: "Recyclable", image: "metal_scrap.png" }
+        { name: "Plastic Bottle", category: "Recyclable", image: "https://i.ibb.co/ccf45hC9/plastic-bottle.png" },
+        { name: "Banana Peel", category: "Biodegradable", image: "https://i.ibb.co/ZzLbTRPk/banana-peel.png" },
+        { name: "Used Battery", category: "Hazardous", image: "https://i.ibb.co/Kv8Lg8X/battery.png" },
+        { name: "Cardboard Box", category: "Recyclable", image: "https://i.ibb.co/2Dvw1Xt/cardboard-box.png" },
+        { name: "Glass Jar", category: "Recyclable", image: "https://i.ibb.co/przWzdsq/glass-jar.png" },
+        { name: "Apple Core", category: "Biodegradable", image: "https://i.ibb.co/ynjRNZsH/apple-core.png" },
+        { name: "Soda Can", category: "Recyclable", image: "https://i.ibb.co/v4Brb6Rm/soda-can.png" },
+        { name: "Light Bulb", category: "Hazardous", image: "https://i.ibb.co/cc94YyyF/light-bulb.png" },
+        { name: "Newspaper", category: "Recyclable", image: "https://i.ibb.co/QvKdX1Kj/newspaper.png" },
+        { name: "Plastic Bag", category: "Non-Biodegradable", image: "https://i.ibb.co/bMFb0bBC/plastic-bag.png" },
+        { name: "Styrofoam Cup", category: "Non-Biodegradable", image: "https://i.ibb.co/0pgvqDTv/styrofoam-cup.png" },
+        { name: "Expired Medicine", category: "Hazardous", image: "https://i.ibb.co/HLC0Y4dx/medicine.png" },
+        { name: "Dried Leaves", category: "Biodegradable", image: "https://i.ibb.co/QWy3MwW/dried-leaves.png" },
+        { name: "Milk Carton", category: "Recyclable", image: "https://i.ibb.co/Hm9dKLW/milk-carton.png" },
+        { name: "Old Tire", category: "Non-Biodegradable", image: "https://i.ibb.co/r2K0Tc3K/tire.png" },
+        { name: "Ceramic Mug", category: "Non-Biodegradable", image: "https://i.ibb.co/xqP1BZF0/ceramic-mug.png" },
+        { name: "Fabric Scraps", category: "Non-Biodegradable", image: "https://i.ibb.co/tphvgGs4/fabric-scraps.png" },
+        { name: "Aerosol Can", category: "Hazardous", image: "https://i.ibb.co/TxnVH6sp/aerosol-can.png" },
+        { name: "Egg Shells", category: "Biodegradable", image: "https://i.ibb.co/p6JVJxGY/egg-shells.png" },
+        { name: "Metal Scrap", category: "Recyclable", image: "https://i.ibb.co/LhxGN4R0/metal-scrap.png" }
     ];
 
 
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadNextItem() {
         if (itemCounter < maxItems) {
             currentItem = randomizedItems[itemCounter];
-            currentItemImage.src = `images/wastebin/${currentItem.image}`;
+            currentItemImage.src = currentItem.image; // Updated to use direct URL
             currentItemImage.alt = currentItem.name;
             currentItemName.textContent = currentItem.name;
             draggableItem.setAttribute('data-category', currentItem.category);
