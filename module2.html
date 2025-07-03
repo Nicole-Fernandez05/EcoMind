@@ -574,7 +574,7 @@
             <button class="hamburger-icon" id="hamburger-icon">☰</button>
             <div class="logo">
                 <span class="logo-icon">
-                    <img src="https://placehold.co/30x30/4CAF50/fff?text=L" alt="Leaf Icon">
+                    <img src="https://i.ibb.co/8gNQ5CpH/logo.png" alt="Leaf Icon">
                 </span>
                 ECOMIND
             </div>
@@ -870,17 +870,13 @@
             infographicsBtn.addEventListener('click', () => {
                 const infographicsHtml = `
                     <div class="inner-content-wrapper">
-                        <h3>Infographics on Waste Segregation</h3>
-                        <div class="image-gallery">
-                            <img src="infographic11.jpg" alt="Infographic 1">
-                            <img src="infographic12.jpg" alt="Infographic 2">
-                            <img src="infographic13.jpg" alt="Infographic 3">
-                        </div>
-                        <button id="close-infographics-btn" class="close-button">
-                            Close Infographics
-                        </button>
-                        <a href="#" class="content-link">Top (Optional)</a>
-                    </div>
+    <div class="image-gallery">
+        <img src="https://i.ibb.co/zVp347Cq/infographic21.jpg" alt="Infographic 1" />
+        <img src="https://i.ibb.co/DHmMSW69/infographic22.jpg" alt="Infographic 2" />
+    </div>
+    <button id="close-infographics-btn" class="close-button">Close Infographics</button>
+    <a href="#" class="content-link">Top (Optional)</a>
+</div>
                 `;
                 toggleContent('infographics-btn', infographicsContent, infographicsHtml, defaultInfographicsContent);
 
@@ -895,11 +891,11 @@
             videoBtn.addEventListener('click', () => {
                 const videoHtml = `
                     <div class="inner-content-wrapper">
-                        <h3>Educational Video: Why Waste Segregation is Important</h3>
+                        <h3>Educational Video: Current Scenerio & Effects of poor waste management</h3>
                         <div class="video-container">
-                            <iframe class="video-iframe" src="https://www.youtube.com/embed/0ZiD_Lb3Tm0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe class="video-iframe" src="https://www.youtube.com/embed/FGjjjpK5UoI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
-                        <p class="video-description-paragraph">Waste segregation is the practice of separating waste into different categories, such as organic, recyclable, and hazardous materials. By doing this, we can ensure that each type of waste is disposed of properly, reducing pollution, conserving resources, and promoting a healthier planet.</p>
+                        <p class="video-description-paragraph">This video explores the harmful effects of improper waste disposal on our environment. Many people today are unaware of how certain everyday products—such as face masks used for COVID-19 protection—can become hazardous if not disposed of correctly. A major contributing factor is the lack of accessible and proper waste disposal facilities. Through this video, we aim to raise awareness about the consequences of improper waste management and inspire viewers to take action in protecting and caring for our environment.</p>
                         <button id="close-video-btn" class="close-button">
                             Close Video
                         </button>
@@ -918,8 +914,8 @@
             explanationBtn.addEventListener('click', () => {
                 const explanationHtml = `
                     <div class="inner-content-wrapper explanation-content-inner-wrapper">
-                        <p class="explanation-title">Waste segregation, environmental protection, recycling and resource recovery, efficient waste management, public health and safety, sustainable practices, and the global waste challenge.</p>
-                        <p>Sorting waste into categories prevents pollution and supports recycling. It keeps soil, water, and air clean. Recyclables can be reused, saving resources. Waste is easier to collect, transport, and dispose of. Proper handling reduces disease and toxic exposure. Responsible waste habits and a circular economy are encouraged. Over 2 billion tons of waste are poorly managed, but segregation helps reduce this impact.</p>
+                        <p class="explanation-title">Improper waste disposal, its causes, effects on human health, environmental impacts, and possible solutions.</p><br>
+                        <p>Improper waste disposal is when waste is carelessly discarded through littering, illegal dumping, or chemical discharge. It’s caused by lack of education, economic limits, rapid urban growth, poor regulation, and excessive packaging. Health effects include respiratory and reproductive issues, infections, and low birth weight near dumpsites. Environmentally, it pollutes land, water, and air, contributing to climate change. Solutions include raising awareness, promoting recycling, and reducing waste by using reusable items and supporting sustainable businesses.</p>
                         <button id="close-explanation-btn" class="close-button">
                             Close Explanation
                         </button>
@@ -945,7 +941,7 @@
     const nextBtn = document.getElementById('next-btn');
 
     // Define the URLs for the previous and next pages
-    const previousPageUrl = 'http://127.0.0.1:5500/module1.html'; // Replace with the actual URL
+    const previousPageUrl = 'modulehomepage.html'; // Replace with the actual URL
     const nextPageUrl = 'http://127.0.0.1:5500/module3.html'; // Replace with the actual URL
 
     backBtn.addEventListener('click', () => {
