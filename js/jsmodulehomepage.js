@@ -1,5 +1,4 @@
-
-        document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     // --- Sidebar/Hamburger Menu Functionality ---
     const hamburgerIcon = document.getElementById('hamburger-icon');
     const closeSidebarBtn = document.getElementById('close-sidebar-btn');
@@ -83,7 +82,9 @@
         moduleLinks.forEach((link, index) => {
             const moduleNumber = index + 1; // Modules are 1-indexed (Module 1, Module 2, etc.)
             const moduleCard = link.querySelector('.module-card');
-            const moduleLabel = moduleCard.querySelector('.module-label').textContent;
+            // Adjusted moduleLabel selection to work with the restored HTML structure
+            const moduleLabelElement = moduleCard.querySelector('.module-label');
+            const moduleLabel = moduleLabelElement ? moduleLabelElement.textContent : `Module ${moduleNumber}`; // Fallback if not found
 
             // Module 1 is always accessible
             if (moduleNumber === 1) {
@@ -112,7 +113,6 @@
                 moduleCard.style.opacity = '0.6'; // Visually indicate it's locked
                 moduleCard.style.cursor = 'not-allowed'; // Change cursor for locked modules
 
-              
                 if (!link.hasAttribute('data-locked-listener')) { // Prevent adding multiple listeners
                     link.addEventListener('click', (e) => {
                         if (link.classList.contains('locked')) {
