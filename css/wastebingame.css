@@ -1,0 +1,667 @@
+/* Basic Reset & Body Styling (Essential for consistent layout) */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f8f8;
+    display: flex; /* Use flexbox for main layout */
+    flex-direction: column; /* Stack header, main, and other content vertically */
+    min-height: 100vh; /* Ensure body takes full viewport height */
+    overflow-x: hidden; /* Prevent horizontal scroll due to sidebar */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/*
+---
+NAVIGATION BAR (HEADER) STYLES - FROM YOUR PROVIDED CODE
+---
+*/
+.header {
+    background-color: #fff;
+    padding: 15px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0; /* Prevent header from shrinking */
+    width: 100%; /* Ensure header takes full width */
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Space between hamburger and logo */
+}
+
+/* Hamburger Menu Icon - Always visible */
+.hamburger-icon {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+    padding: 5px;
+    display: block; /* Ensure it's always visible */
+    flex-shrink: 0; /* Prevent icon from shrinking */
+}
+
+.logo {
+    display: flex; /* Make logo itself a flex container */
+    align-items: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    gap: 10px; /* Space between logo icon and text */
+    text-decoration: none; /* Add this to remove underline for the anchor tag */
+}
+
+.logo-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #4CAF50; /* Green background for circular icon */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    flex-shrink: 0; /* Prevent icon from shrinking */
+}
+
+.logo-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the circular area */
+}
+
+.top-nav-links {
+    display: flex; /* Always display top nav links */
+    gap: 25px;
+    align-items: center;
+}
+
+.top-nav-links a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 600;
+    padding: 8px 12px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    border-radius: 8px;
+}
+
+.top-nav-links a:hover {
+    color: #4CAF50; /* Green text on hover */
+    background-color: #e6f7e6; /* Light green background on hover */
+}
+
+/* Login Button specific styles */
+.top-nav-links .login-btn {
+    background-color: #4CAF50;
+    color: #fff; /* Ensure this is specific enough to override previous 'color' */
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.top-nav-links .login-btn:hover {
+    background-color: #45a049;
+    color: #fff; /* Keep text white on hover */
+}
+
+/*
+---
+SIDEBAR STYLES - FROM YOUR PROVIDED CODE
+---
+*/
+/* Sliding Sidebar Container (Overlay) */
+.sidebar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+    visibility: hidden; /* Hidden by default */
+    opacity: 0; /* Fade in effect */
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1000; /* Ensures it's on top of everything */
+}
+
+.sidebar-container.open {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Actual Sliding Sidebar Menu */
+.sidebar-menu {
+    width: 280px; /* Default width */
+    height: 100%;
+    background-color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%); /* Initially off-screen to the left */
+    transition: transform 0.3s ease; /* Smooth slide transition */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    padding: 20px;
+    box-sizing: border-box; /* Include padding in width */
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-menu.open {
+    transform: translateX(0); /* Slide into view */
+}
+
+.close-sidebar-btn {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #555;
+    align-self: flex-end; /* Pushes button to the right */
+    margin-bottom: 20px;
+}
+
+.sidebar-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-links li {
+    margin-bottom: 10px;
+}
+
+.sidebar-links a {
+    display: block;
+    text-decoration: none;
+    color: #555;
+    font-weight: 600;
+    padding: 12px 15px;
+    border-radius: 8px; /* Rounded corners */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-links a:hover {
+    background-color: #e6f7e6; /* Light green background on hover */
+    color: #4CAF50; /* Green text on hover */
+}
+
+.sidebar-links a.active {
+    background-color: #d4edda; /* Active link background */
+    color: #4CAF50; /* Active link text color */
+    font-weight: 700;
+}
+
+
+/*
+---
+FOOTER STYLES - FROM YOUR PROVIDED CODE
+---
+*/
+.footer {
+    background-color: #4F6D44; /* Dark green */
+    color: #fff;
+    padding: 60px 0 30px;
+    position: relative;
+    margin-top: auto; /* Pushes footer to the bottom */
+    flex-shrink: 0; /* Prevents footer from shrinking */
+}
+
+.footer-content {
+    display: flex; /* Keep flex display for columns */
+    justify-content: center;
+    flex-wrap: wrap; /* Allows columns to wrap if space is tight, but won't force a stacked layout */
+    gap: 30px;
+    padding-top: 0;
+    max-width: 1200px; /* Constrain content width */
+    margin: 0 auto; /* Center content */
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 200px; /* Minimum width for columns */
+    color: #fff;
+    text-align: center; /* Center text within columns */
+}
+
+.footer-column h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 10px;
+}
+
+.footer-column ul li a, .footer-column ul li { /* Included li itself for consistent text color */
+    text-decoration: none;
+    color: #eee;
+    transition: color 0.3s ease;
+}
+
+.footer-column ul li a:hover {
+    color: #c9e4c9;
+}
+
+.footer-social-icons {
+    display: flex;
+    flex-direction: column; /* Social icons remain stacked vertically */
+    gap: 10px;
+    margin-top: 10px;
+    align-items: center; /* Center icons */
+}
+
+.footer-social-icons a {
+    color: #eee;
+    font-size: 16px;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-social-icons a:hover {
+    color: #fff;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 14px;
+    color: #aaa;
+    display: flex; /* Keep flex display for bottom links */
+    justify-content: center;
+    flex-wrap: wrap; /* Allow wrapping if needed */
+    gap: 20px;
+}
+.footer-bottom a {
+    text-decoration: none;
+    color: #aaa;
+    transition: color 0.3s ease;
+}
+.footer-bottom a:hover {
+    color: #fff;
+}
+
+/*
+---
+GAME SPECIFIC STYLES (Adjusted for consistency)
+---
+*/
+.game-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.start-screen {
+    text-align: center;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.start-screen h1 {
+    color: #4CAF50; /* Adjusted to match new green */
+    margin-bottom: 20px;
+}
+
+.start-screen button {
+    background-color: #4CAF50; /* Adjusted to match new green */
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.start-screen button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.game-screen {
+    width: 100%;
+    max-width: 900px;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.score-board {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    color: #333;
+    font-weight: bold;
+}
+
+.item-display {
+    background-color: #e6f7e6; /* Lighter green for item display */
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    text-align: center;
+    width: 80%;
+    max-width: 350px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+    min-height: 200px; /* Ensure enough space for item */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.draggable-item {
+    cursor: grab;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.draggable-item img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    margin-bottom: 15px;
+}
+
+.draggable-item p {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+.drag-instruction {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 5px;
+}
+
+.bins-container {
+    display: flex;
+    justify-content: center; /* Center the bins horizontally */
+    width: 100%;
+    flex-wrap: nowrap; /* Prevent wrapping to multiple rows on larger screens */
+    gap: 20px; /* Space between bins */
+}
+
+.bin {
+    background-color: #f8f9fa;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    width: 180px; /* Fixed width for each bin */
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    flex-shrink: 0; /* Prevent bins from shrinking */
+}
+
+.bin img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.bin p {
+    font-weight: bold;
+    color: #555;
+    margin: 0;
+}
+
+.bin.drag-over {
+    background-color: #d4edda; /* Light green on drag-over */
+    border-color: #4CAF50; /* Green border on drag-over */
+    transform: scale(1.05);
+}
+
+.game-over-screen {
+    text-align: center;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.game-over-screen h2 {
+    color: #dc3545;
+    margin-bottom: 15px;
+}
+
+.game-over-screen p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.game-over-screen button {
+    background-color: #4CAF50; /* Adjusted to new green */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.game-over-screen button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* NEW: Game Summary Screen Styles */
+.game-summary-screen {
+    text-align: center;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px; /* Adjust max-width as needed */
+    margin-top: 20px; /* Space from game elements */
+}
+
+.game-summary-screen h2 {
+    color: #4CAF50;
+    margin-bottom: 25px;
+    font-size: 2em;
+}
+
+.game-summary-screen p {
+    font-size: 1.3em;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.game-summary-screen p span {
+    font-weight: bold;
+    color: #333;
+}
+
+.chart-container {
+    width: 80%; /* Adjust chart width relative to its container */
+    max-width: 400px; /* Maximum width for the chart */
+    margin: 30px auto; /* Center the chart and add vertical spacing */
+    height: 250px; /* Set a height for the chart */
+}
+
+/* Style for the container holding the summary buttons */
+.summary-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Space between buttons */
+    margin-top: 20px;
+}
+
+.game-summary-screen button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    /* Removed margin-top here as it's handled by .summary-buttons */
+}
+
+.game-summary-screen button:hover {
+    background-color: #45a049;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 992px) { /* Adjust breakpoint for header nav links */
+    .top-nav-links {
+        display: none; /* Hide top nav links on smaller screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 10px 15px;
+    }
+
+    .game-screen {
+        padding: 20px;
+    }
+
+    .item-display {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .bins-container {
+        /* On smaller screens, allow wrapping to prevent overflow */
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .bin {
+        width: 150px; /* Adjust width for smaller screens if they wrap */
+        height: 180px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-column {
+        min-width: unset;
+    }
+
+    .footer-social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .footer-social-icons a {
+        margin-bottom: 0;
+    }
+
+    .game-summary-screen {
+        padding: 20px;
+        width: 90%;
+    }
+
+    .game-summary-screen h2 {
+        font-size: 1.8em;
+    }
+
+    .game-summary-screen p {
+        font-size: 1.1em;
+    }
+
+    .chart-container {
+        width: 90%;
+        height: 200px;
+    }
+
+    .summary-buttons {
+        flex-direction: column; /* Stack buttons vertically on small screens */
+        gap: 10px;
+    }
+
+    .game-summary-screen button {
+        padding: 10px 20px;
+        font-size: 16px;
+        width: 80%; /* Make buttons wider when stacked */
+        max-width: 200px;
+        margin: 0 auto; /* Center buttons */
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 20px;
+    }
+
+    .logo-icon img {
+        height: 30px;
+    }
+
+    .start-screen h1 {
+        font-size: 1.5em;
+    }
+
+    .start-screen button {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+
+    .draggable-item img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .draggable-item p {
+        font-size: 1em;
+    }
+
+    .drag-instruction {
+        font-size: 0.8em;
+    }
+}
