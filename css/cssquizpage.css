@@ -436,20 +436,35 @@ main {
     font-weight: 500;
 }
 
-.retake-quiz-button {
+/* New: Container for the action buttons */
+.quiz-actions {
+    display: flex;
+    justify-content: center; /* Center the buttons */
+    gap: 15px; /* Space between buttons */
+    margin-top: 30px; /* Space above the buttons */
+    width: 100%; /* Take full width to allow centering */
+}
+
+/* Unified styling for action buttons */
+.action-button {
     background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
+    padding: 12px 28px; /* Consistent padding */
+    border-radius: 25px; /* Pill shape */
     cursor: pointer;
-    font-size: 1em;
-    margin-top: 20px;
-    transition: background-color 0.3s ease;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-decoration: none; /* Remove underline for links */
+    display: inline-block; /* Essential for padding/sizing on anchor tags */
 }
 
-.retake-quiz-button:hover {
+.action-button:hover {
     background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 
