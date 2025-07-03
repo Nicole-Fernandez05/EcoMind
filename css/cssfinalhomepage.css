@@ -1,4 +1,4 @@
-         /*
+          /*
         ------------------------------------------
         GLOBAL & RESET STYLES
         ------------------------------------------
@@ -220,7 +220,7 @@
             align-items: center;
             background-color: #E0C7A9;
             padding: 40px;
-            margin-top: 80px; /* Adjust based on header height */
+            margin-top: 70px; /* Adjust based on header height */
             flex-direction: row; /* Always row for desktop-only */
             text-align: left; /* Always left for desktop-only */
         }
