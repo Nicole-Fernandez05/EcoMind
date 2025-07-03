@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .generator {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .generator input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .generator button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .generator button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="generator">
+        <h2>Certificate Generator</h2>
+        <input type="text" id="name" placeholder="Enter name">
+        <button onclick="redirectToCertificate()">Generate Certificate</button>
+    </div>
+
+    <script>
+        function redirectToCertificate() {
+            const name = document.getElementById('name').value;
+            if (name) {
+                // Redirect to certificate page with the name as a query parameter
+                window.location.href = `generated-certificate.html?name=${encodeURIComponent(name)}`;
+            } else {
+                alert('Please enter a name');
+            }
+        }
+    </script>
+</body>
+</html>
