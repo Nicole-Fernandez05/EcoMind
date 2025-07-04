@@ -1,53 +1,21 @@
-// wastebingame.js
-
 document.addEventListener('DOMContentLoaded', () => {
-    const startGameBtn = document.getElementById('start-game-btn');
-    const startScreen = document.getElementById('start-screen');
     const gameScreen = document.getElementById('game-screen');
     const gameOverScreen = document.getElementById('game-over-screen');
     const playAgainBtn = document.getElementById('play-again-btn');
     const finalScoreSpan = document.getElementById('final-score');
-
     const scoreElement = document.getElementById('score');
     const correctElement = document.getElementById('correct');
     const wrongElement = document.getElementById('wrong');
-
     const currentItemImage = document.getElementById('current-item-image');
     const currentItemName = document.getElementById('current-item-name');
     const draggableItem = document.querySelector('.draggable-item');
     const bins = document.querySelectorAll('.bin');
-
-    // New elements for the game summary screen
-    const gameSummaryScreen = document.createElement('div');
-    gameSummaryScreen.id = 'game-summary-screen';
-    gameSummaryScreen.classList.add('game-summary-screen', 'hidden');
-    gameSummaryScreen.innerHTML = `
-        <h2>Game Summary</h2>
-        <p>Total Score: <span id="summary-total-score">0</span></p>
-        <p>Correct Answers: <span id="summary-correct-answers">0</span></p>
-        <p>Wrong Answers: <span id="summary-wrong-answers">0</span></p>
-        <div class="chart-container">
-            <canvas id="summary-chart"></canvas>
-        </div>
-        <div class="summary-buttons"> <button id="summary-play-again-btn">Play Again</button>
-            <button id="summary-home-btn" onclick="location.href='homepage.html'">Home</button>
-        </div>
-    `;
-    document.querySelector('main.game-container').appendChild(gameSummaryScreen);
-
-    const summaryTotalScoreSpan = document.getElementById('summary-total-score');
-    const summaryCorrectAnswersSpan = document.getElementById('summary-correct-answers');
-    const summaryWrongAnswersSpan = document.getElementById('summary-wrong-answers');
-    const summaryPlayAgainBtn = document.getElementById('summary-play-again-btn');
-    const summaryHomeBtn = document.getElementById('summary-home-btn'); // Get the new home button
-    const summaryChartCanvas = document.getElementById('summary-chart');
 
     let score = 0;
     let correctCount = 0;
     let wrongCount = 0;
     let itemCounter = 0;
     const maxItems = 20;
-
     const items = [
         { name: "Plastic Bottle", category: "Recyclable", image: "https://i.ibb.co/ccf45hC9/plastic-bottle.png" },
         { name: "Banana Peel", category: "Biodegradable", image: "https://i.ibb.co/ZzLbTRPk/banana-peel.png" },
@@ -71,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "Metal Scrap", category: "Recyclable", image: "https://i.ibb.co/LhxGN4R0/metal-scrap.png" }
     ];
 
-
     let randomizedItems = [];
     let currentItem = null;
 
@@ -90,90 +57,23 @@ document.addEventListener('DOMContentLoaded', () => {
         scoreElement.textContent = score;
         correctElement.textContent = correctCount;
         wrongElement.textContent = wrongCount;
-
         shuffleArray(items);
-        randomizedItems = items.slice(0, maxItems); // Get first 20 randomized items
-
-        startScreen.classList.add('hidden');
+        randomizedItems = items.slice(0, maxItems);
         gameScreen.classList.remove('hidden');
         gameOverScreen.classList.add('hidden');
-        gameSummaryScreen.classList.add('hidden'); // Hide summary screen on new game
         loadNextItem();
     }
 
     function endGame() {
         gameScreen.classList.add('hidden');
         gameOverScreen.classList.remove('hidden');
-        finalScoreSpan.textContent = score; // This is the old game over screen, still updating it for consistency
-
-        // Immediately transition to the new summary screen
-        showGameSummary();
-    }
-
-    // Function to show game summary
-    function showGameSummary() {
-        gameScreen.classList.add('hidden');
-        gameOverScreen.classList.add('hidden'); // Ensure old game over screen is hidden
-        gameSummaryScreen.classList.remove('hidden');
-
-        summaryTotalScoreSpan.textContent = score;
-        summaryCorrectAnswersSpan.textContent = correctCount;
-        summaryWrongAnswersSpan.textContent = wrongCount;
-
-        // Chart.js implementation
-        const ctx = summaryChartCanvas.getContext('2d');
-        if (window.myChart) {
-            window.myChart.destroy(); // Destroy previous chart instance if it exists
-        }
-        window.myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Correct', 'Wrong'],
-                datasets: [{
-                    label: 'Answers',
-                    data: [correctCount, wrongCount],
-                    backgroundColor: [
-                        'rgba(76, 175, 80, 0.7)', // Green for Correct
-                        'rgba(220, 53, 69, 0.7)'  // Red for Wrong
-                    ],
-                    borderColor: [
-                        'rgba(76, 175, 80, 1)',
-                        'rgba(220, 53, 69, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false, // Allows the chart to fit into its container better
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            precision: 0 // Ensure whole numbers for counts
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: false // Hide the legend as labels are self-explanatory
-                    },
-                    title: {
-                        display: true,
-                        text: 'Answer Breakdown',
-                        font: {
-                            size: 18
-                        }
-                    }
-                }
-            }
-        });
+        finalScoreSpan.textContent = score;
     }
 
     function loadNextItem() {
         if (itemCounter < maxItems) {
             currentItem = randomizedItems[itemCounter];
-            currentItemImage.src = currentItem.image; // Updated to use direct URL
+            currentItemImage.src = currentItem.image;
             currentItemImage.alt = currentItem.name;
             currentItemName.textContent = currentItem.name;
             draggableItem.setAttribute('data-category', currentItem.category);
@@ -181,14 +81,11 @@ document.addEventListener('DOMContentLoaded', () => {
             draggableItem.style.pointerEvents = 'auto';
             itemCounter++;
         } else {
-            // Call the new summary function when all items are done
-            showGameSummary();
+            endGame();
         }
     }
 
-    // Drag and Drop functionality
     let draggedItem = null;
-
     draggableItem.addEventListener('dragstart', (e) => {
         draggedItem = e.target.closest('.draggable-item');
         e.dataTransfer.setData('text/plain', draggedItem.dataset.category);
@@ -215,10 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
         bin.addEventListener('drop', (e) => {
             e.preventDefault();
             bin.classList.remove('drag-over');
-
             const droppedCategory = e.dataTransfer.getData('text/plain');
             const targetBinCategory = bin.id;
-
             if (draggedItem && droppedCategory === targetBinCategory) {
                 score += 10;
                 correctCount++;
@@ -229,17 +124,14 @@ document.addEventListener('DOMContentLoaded', () => {
             scoreElement.textContent = score;
             correctElement.textContent = correctCount;
             wrongElement.textContent = wrongCount;
-
             loadNextItem();
         });
     });
 
-    // Event Listeners for Game Flow
-    startGameBtn.addEventListener('click', initializeGame);
-    playAgainBtn.addEventListener('click', initializeGame); // This is for the old "Game Over" screen
-    summaryPlayAgainBtn.addEventListener('click', initializeGame); // New button for the summary screen
+    playAgainBtn.addEventListener('click', initializeGame);
 
-    // No need for a separate event listener for summaryHomeBtn as it uses inline onclick
+    // Initialize the game automatically when the page loads
+    initializeGame();
 
     // Sidebar functionality
     const hamburgerIcon = document.getElementById('hamburger-icon');
@@ -276,6 +168,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Set current year for footer
     document.getElementById('year').textContent = new Date().getFullYear();
 });
