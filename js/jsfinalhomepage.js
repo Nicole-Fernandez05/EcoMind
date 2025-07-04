@@ -1,5 +1,4 @@
-
-        document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
             const hamburgerIcon = document.getElementById('hamburger-icon');
             const closeSidebarBtn = document.getElementById('close-sidebar-btn');
             const sidebarContainer = document.getElementById('sidebar-container');
