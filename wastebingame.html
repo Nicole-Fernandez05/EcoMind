@@ -1,172 +1,126 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const gameScreen = document.getElementById('game-screen');
-    const gameOverScreen = document.getElementById('game-over-screen');
-    const playAgainBtn = document.getElementById('play-again-btn');
-    const finalScoreSpan = document.getElementById('final-score');
-    const scoreElement = document.getElementById('score');
-    const correctElement = document.getElementById('correct');
-    const wrongElement = document.getElementById('wrong');
-    const currentItemImage = document.getElementById('current-item-image');
-    const currentItemName = document.getElementById('current-item-name');
-    const draggableItem = document.querySelector('.draggable-item');
-    const bins = document.querySelectorAll('.bin');
-
-    let score = 0;
-    let correctCount = 0;
-    let wrongCount = 0;
-    let itemCounter = 0;
-    const maxItems = 20;
-    const items = [
-        { name: "Plastic Bottle", category: "Recyclable", image: "https://i.ibb.co/ccf45hC9/plastic-bottle.png" },
-        { name: "Banana Peel", category: "Biodegradable", image: "https://i.ibb.co/ZzLbTRPk/banana-peel.png" },
-        { name: "Used Battery", category: "Hazardous", image: "https://i.ibb.co/Kv8Lg8X/battery.png" },
-        { name: "Cardboard Box", category: "Recyclable", image: "https://i.ibb.co/2Dvw1Xt/cardboard-box.png" },
-        { name: "Glass Jar", category: "Recyclable", image: "https://i.ibb.co/przWzdsq/glass-jar.png" },
-        { name: "Apple Core", category: "Biodegradable", image: "https://i.ibb.co/ynjRNZsH/apple-core.png" },
-        { name: "Soda Can", category: "Recyclable", image: "https://i.ibb.co/v4Brb6Rm/soda-can.png" },
-        { name: "Light Bulb", category: "Hazardous", image: "https://i.ibb.co/cc94YyyF/light-bulb.png" },
-        { name: "Newspaper", category: "Recyclable", image: "https://i.ibb.co/QvKdX1Kj/newspaper.png" },
-        { name: "Plastic Bag", category: "Non-Biodegradable", image: "https://i.ibb.co/bMFb0bBC/plastic-bag.png" },
-        { name: "Styrofoam Cup", category: "Non-Biodegradable", image: "https://i.ibb.co/0pgvqDTv/styrofoam-cup.png" },
-        { name: "Expired Medicine", category: "Hazardous", image: "https://i.ibb.co/HLC0Y4dx/medicine.png" },
-        { name: "Dried Leaves", category: "Biodegradable", image: "https://i.ibb.co/QWy3MwW/dried-leaves.png" },
-        { name: "Milk Carton", category: "Recyclable", image: "https://i.ibb.co/Hm9dKLW/milk-carton.png" },
-        { name: "Old Tire", category: "Non-Biodegradable", image: "https://i.ibb.co/r2K0Tc3K/tire.png" },
-        { name: "Ceramic Mug", category: "Non-Biodegradable", image: "https://i.ibb.co/xqP1BZF0/ceramic-mug.png" },
-        { name: "Fabric Scraps", category: "Non-Biodegradable", image: "https://i.ibb.co/tphvgGs4/fabric-scraps.png" },
-        { name: "Aerosol Can", category: "Hazardous", image: "https://i.ibb.co/TxnVH6sp/aerosol-can.png" },
-        { name: "Egg Shells", category: "Biodegradable", image: "https://i.ibb.co/p6JVJxGY/egg-shells.png" },
-        { name: "Metal Scrap", category: "Recyclable", image: "https://i.ibb.co/LhxGN4R0/metal-scrap.png" }
-    ];
-
-    let randomizedItems = [];
-    let currentItem = null;
-
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-    }
-
-    function initializeGame() {
-        score = 0;
-        correctCount = 0;
-        wrongCount = 0;
-        itemCounter = 0;
-        scoreElement.textContent = score;
-        correctElement.textContent = correctCount;
-        wrongElement.textContent = wrongCount;
-        shuffleArray(items);
-        randomizedItems = items.slice(0, maxItems);
-        gameScreen.classList.remove('hidden');
-        gameOverScreen.classList.add('hidden');
-        loadNextItem();
-    }
-
-    function endGame() {
-        gameScreen.classList.add('hidden');
-        gameOverScreen.classList.remove('hidden');
-        finalScoreSpan.textContent = score;
-    }
-
-    function loadNextItem() {
-        if (itemCounter < maxItems) {
-            currentItem = randomizedItems[itemCounter];
-            currentItemImage.src = currentItem.image;
-            currentItemImage.alt = currentItem.name;
-            currentItemName.textContent = currentItem.name;
-            draggableItem.setAttribute('data-category', currentItem.category);
-            draggableItem.style.opacity = '1';
-            draggableItem.style.pointerEvents = 'auto';
-            itemCounter++;
-        } else {
-            endGame();
-        }
-    }
-
-    let draggedItem = null;
-    draggableItem.addEventListener('dragstart', (e) => {
-        draggedItem = e.target.closest('.draggable-item');
-        e.dataTransfer.setData('text/plain', draggedItem.dataset.category);
-        setTimeout(() => {
-            draggedItem.style.opacity = '0.5';
-        }, 0);
-    });
-
-    draggableItem.addEventListener('dragend', () => {
-        draggedItem.style.opacity = '1';
-        draggedItem = null;
-    });
-
-    bins.forEach(bin => {
-        bin.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            bin.classList.add('drag-over');
-        });
-
-        bin.addEventListener('dragleave', () => {
-            bin.classList.remove('drag-over');
-        });
-
-        bin.addEventListener('drop', (e) => {
-            e.preventDefault();
-            bin.classList.remove('drag-over');
-            const droppedCategory = e.dataTransfer.getData('text/plain');
-            const targetBinCategory = bin.id;
-            if (draggedItem && droppedCategory === targetBinCategory) {
-                score += 10;
-                correctCount++;
-            } else {
-                score -= 5;
-                wrongCount++;
-            }
-            scoreElement.textContent = score;
-            correctElement.textContent = correctCount;
-            wrongElement.textContent = wrongCount;
-            loadNextItem();
-        });
-    });
-
-    playAgainBtn.addEventListener('click', initializeGame);
-
-    // Initialize the game automatically when the page loads
-    initializeGame();
-
-    // Sidebar functionality
-    const hamburgerIcon = document.getElementById('hamburger-icon');
-    const closeSidebarBtn = document.getElementById('close-sidebar-btn');
-    const sidebarContainer = document.getElementById('sidebar-container');
-    const sidebarMenu = document.getElementById('sidebar-menu');
-
-    hamburgerIcon.addEventListener('click', () => {
-        sidebarContainer.classList.add('open');
-        sidebarMenu.classList.add('open');
-        document.body.style.overflow = 'hidden';
-    });
-
-    closeSidebarBtn.addEventListener('click', () => {
-        sidebarContainer.classList.remove('open');
-        sidebarMenu.classList.remove('open');
-        document.body.style.overflow = '';
-    });
-
-    sidebarContainer.addEventListener('click', (event) => {
-        if (event.target === sidebarContainer) {
-            sidebarContainer.classList.remove('open');
-            sidebarMenu.classList.remove('open');
-            document.body.style.overflow = '';
-        }
-    });
-
-    const sidebarLinks = document.querySelectorAll('.sidebar-links a');
-    sidebarLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            sidebarContainer.classList.remove('open');
-            sidebarMenu.classList.remove('open');
-            document.body.style.overflow = '';
-        });
-    });
-
-    document.getElementById('year').textContent = new Date().getFullYear();
-});
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoMind Sorting Game</title>
+    <link rel="stylesheet" href="css/wastebingame.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <button class="hamburger-icon" id="hamburger-icon">☰</button>
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <img src="images/logoecomind.svg" alt="EcoMind Logo">
+                </div>
+                ECOMIND
+            </a>
+        </div>
+        <nav class="top-nav-links">
+            <a href="#home" class="active">Home</a>
+            <a href="#modules">Modules</a>
+            <a href="#game">Game</a>
+            <a href="login.html" class="login-btn">Login</a>
+        </nav>
+    </header>
+    <div class="sidebar-container" id="sidebar-container">
+        <aside class="sidebar-menu" id="sidebar-menu">
+            <button class="close-sidebar-btn" id="close-sidebar-btn">&times;</button>
+            <ul class="sidebar-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#modules">Modules</a></li>
+                <li><a href="#final-assessment">Final Assessment</a></li>
+                <li><a href="#certification">Certification</a></li>
+            </ul>
+        </aside>
+    </div>
+    <main class="game-container">
+        <div id="game-screen" class="game-screen">
+            <div class="score-board">
+                Score: <span id="score">0</span> | Correct: <span id="correct">0</span> | Wrong: <span id="wrong">0</span>
+            </div>
+            <div class="item-display">
+                <div class="draggable-item" draggable="true">
+                    <img id="current-item-image" src="" alt="Item to sort">
+                    <p id="current-item-name"></p>
+                    <p class="drag-instruction">Drag the item to the correct bin!</p>
+                </div>
+            </div>
+            <div class="bins-container">
+                <div class="bin" id="Biodegradable">
+                    <img src="images/biodegradable.svg" alt="Biodegradable Bin">
+                    <p>Biodegradable</p>
+                </div>
+                <div class="bin" id="Non-Biodegradable">
+                    <img src="images/nonbio.svg" alt="Non-Biodegradable Bin">
+                    <p>Non-Biodegradable</p>
+                </div>
+                <div class="bin" id="Recyclable">
+                    <img src="images/recyclable.svg" alt="Recyclable Bin">
+                    <p>Recyclable</p>
+                </div>
+                <div class="bin" id="Hazardous">
+                    <img src="images/hazardous.svg" alt="Hazardous Bin">
+                    <p>Hazardous</p>
+                </div>
+            </div>
+            <div id="game-over-screen" class="game-over-screen hidden">
+                <h2>Game Over!</h2>
+                <p>Your final score: <span id="final-score"></span></p>
+                <button id="play-again-btn">Play Again</button>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-column">
+                <h3>ECOMIND</h3>
+                <div class="footer-social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                    <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+                    <a href="#"><i class="fab fa-pinterest"></i> Pinterest</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>About Us</h3>
+                <ul>
+                    <li><a href="#">About Ecomind</a></li>
+                    <li><a href="#">Vision & Mission</a></li>
+                    <li><a href="#">Partnership</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li>1-800-555-5555</li>
+                    <li><a href="#">Join us</a></li>
+                    <li><a href="#">Email us</a></li>
+                    <li><a href="#">Customer Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Learning</h3>
+                <ul>
+                    <li><a href="#">Modules</a></li>
+                    <li><a href="#">Quizzes</a></li>
+                    <li><a href="#">Games</a></li>
+                    <li><a href="#">Volunteers</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; <span id="year"></span> EcoMind</span>
+            <a href="#">EcoMind Policies</a>
+            <a href="#">Terms of Use</a>
+            <a href="#">About us</a>
+        </div>
+    </footer>
+    <script src="js/wastebingame.js"></script>
+</body>
+</html>
