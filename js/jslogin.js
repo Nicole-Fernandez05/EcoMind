@@ -1,4 +1,3 @@
-
 // --- Sidebar and Header Navigation JavaScript ---
 const hamburgerIcon = document.getElementById('hamburger-icon');
 const closeSidebarBtn = document.getElementById('close-sidebar-btn');
