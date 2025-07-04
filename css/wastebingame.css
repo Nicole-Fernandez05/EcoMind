@@ -17,7 +17,6 @@ body {
 }
 
 .container {
-    max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -315,34 +314,6 @@ GAME SPECIFIC STYLES (Adjusted for consistency)
     justify-content: center;
     align-items: center;
     padding: 20px;
-}
-
-.start-screen {
-    text-align: center;
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.start-screen h1 {
-    color: #4CAF50; /* Adjusted to match new green */
-    margin-bottom: 20px;
-}
-
-.start-screen button {
-    background-color: #4CAF50; /* Adjusted to match new green */
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    font-size: 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.start-screen button:hover {
-    background-color: #45a049; /* Darker green on hover */
 }
 
 .game-screen {
