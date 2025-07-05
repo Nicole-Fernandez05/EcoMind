@@ -1,183 +1,144 @@
-// --- Sidebar and Header Navigation JavaScript ---
-const hamburgerIcon = document.getElementById('hamburger-icon');
-const closeSidebarBtn = document.getElementById('close-sidebar-btn');
-const sidebarContainer = document.getElementById('sidebar-container');
-const sidebarMenu = document.getElementById('sidebar-menu');
-const sidebarLinks = document.querySelectorAll('.sidebar-links a');
-const topNavLinks = document.querySelectorAll('.top-nav-links a');
-
-// Function to open the sidebar
-function openSidebar() {
-    sidebarContainer.classList.add('open');
-    sidebarMenu.classList.add('open');
-    document.body.style.overflow = 'hidden';
-}
-
-// Function to close the sidebar
-function closeSidebar() {
-    sidebarContainer.classList.remove('open');
-    sidebarMenu.classList.remove('open');
-    document.body.style.overflow = '';
-}
-
-// Event listeners for sidebar functionality
-hamburgerIcon.addEventListener('click', openSidebar);
-closeSidebarBtn.addEventListener('click', closeSidebar);
-
-sidebarContainer.addEventListener('click', (event) => {
-    if (event.target === sidebarContainer) {
-        closeSidebar();
-    }
-});
-
-sidebarLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        closeSidebar();
-        console.log(`Sidebar navigating to: ${link.getAttribute('href')}`);
-    });
-});
-
-topNavLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        console.log(`Top nav navigating to: ${link.getAttribute('href')}`);
-    });
-});
-
-// Close sidebar if window is resized above mobile breakpoint while sidebar is open
-window.addEventListener('resize', () => {
-    if (window.innerWidth > 768 && sidebarContainer.classList.contains('open')) {
-        closeSidebar();
-    }
-});
-
-// --- Login Form Validation and Modal JavaScript ---
-const emailInput = document.getElementById('email');
-const passwordInput = document.getElementById('password');
-const loginButton = document.getElementById('loginButton') || document.querySelector('.login-button');
-
-// Function to check if both email and password fields have values
-function checkFormValidity() {
-    const emailValue = emailInput.value.trim();
-    const passwordValue = passwordInput.value.trim();
-
-    loginButton.disabled = !(emailValue && passwordValue);
-}
-
-// Add event listeners to input fields for real-time validation
-if (emailInput && passwordInput && loginButton) {
-    loginButton.disabled = true;
-    emailInput.addEventListener('input', checkFormValidity);
-    passwordInput.addEventListener('input', checkFormValidity);
-}
-
-// Function to display the custom modal with a message and optional callback
-function showModal(message, callback) {
-    const modalMessage = document.getElementById('modalMessage');
-    const modal = document.getElementById('myModal');
-
-    if (modalMessage && modal) {
-        modalMessage.textContent = message;
-        modal.style.display = 'flex';
-        window.modalCallback = callback;
-    }
-}
-
-// Function to close the custom modal
-function closeModal() {
-    const modal = document.getElementById('myModal');
-    if (modal) {
-        modal.style.display = 'none';
-        if (window.modalCallback) {
-            window.modalCallback();
-            window.modalCallback = null;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoMind - Environmental Education</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/csslogin.css">
+    <style>
+        /* Add some basic styling for the avatar/logged-in state */
+        .login-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+            cursor: pointer; 
+            position: relative;
         }
-    }
-}
-
-// Event listener for the login form submission
-document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value.trim();
-
-    // Define specific passwords for students and admins
-    const studentPassword = "student123";
-    const adminPassword = "admin123";
-
-    if (!email || !password) {
-        showModal('Please fill in both email and password fields.');
-        return;
-    }
-
-    if (email.startsWith('2024')) {
-        if (password === studentPassword) {
-            showModal('Welcome back! Login successful.', function() {
-                window.location.href = 'modulehomepage.html';
-            });
-        } else {
-            showModal('Invalid email or password.');
+        .login-info img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #5cb85c; /* Example background for avatar */
+            padding: 2px;
+            border: 1px solid #fff;
         }
-    } else if (email.startsWith('2020')) {
-        if (password === adminPassword) {
-            showModal('Welcome back! Login successful.', function() {
-                window.location.href = 'statusbar.html';
-            });
-        } else {
-            showModal('Incorrect password.');
+        .login-info .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            right: 0;
+            top: 40px; /* Adjust as needed */
+            border-radius: 5px;
+            overflow: hidden;
         }
-    } else {
-        showModal('Invalid email or password.');
-    }
-
-    console.log('Login attempt:', {
-        email,
-        password,
-        userType: email.startsWith('2024') ? 'student' : 'admin'
-    });
-});
-
-// Function to toggle password visibility
-function togglePassword() {
-    const passwordField = document.getElementById('password');
-    const toggleImg = document.getElementById('passwordToggleImg');
-
-    if (passwordField && toggleImg) {
-        if (passwordField.type === 'password') {
-            passwordField.type = 'text';
-            toggleImg.src = 'images/hidden.png';
-            toggleImg.alt = 'Hide password';
-        } else {
-            passwordField.type = 'password';
-            toggleImg.src = 'images/show.png';
-            toggleImg.alt = 'Show password';
+        .login-info .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
         }
-    }
-}
+        .login-info .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+        .login-info.active .dropdown-content {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">
+                <button class="hamburger-icon" id="hamburger-icon">☰</button>
+                <span class="logo-icon">
+                    <img src="images/logoecomind.svg" alt="Leaf Icon">
+                </span>
+                ECOMIND
+            </div>
+        </div>
+        <nav class="top-nav-links">
+            <a href="homepage.html" class="active">Home</a>
+            <a href="modulehomepage.html">Modules</a>
+            <a href="gamehomepage.html">Game</a>
+            <div id="login-status-container">
+                <a href="login.html" id="loginLink">Login</a>
 
-// Function for social login simulation
-function socialLogin(provider) {
-    showModal(`Redirecting to ${provider} login...`);
-    console.log(`Social login with ${provider}`);
-}
+                <div class="login-info" id="userInfoContainer" style="display: none;">
+                    <img src="images/default-avatar.png" alt="User Avatar" id="userAvatar">
+                    <span id="userDisplayName"></span>
+                    <div class="dropdown-content">
+                        <a href="#" id="logoutButton">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-// Function to navigate to registration page
-function showRegister() {
-    window.location.href = 'register.html';
-}
+    <div class="sidebar-container" id="sidebar-container">
+        <aside class="sidebar-menu" id="sidebar-menu">
+            <button class="close-sidebar-btn" id="close-sidebar-btn">&times;</button>
+            <ul class="sidebar-links">
+                <li><a href="homepage.html" class="active">Home</a></li>
+                <li><a href="modulehomepage.html">Modules</a></li>
+                <li><a href="finalhomepage.html">Final Assessment</a></li>
+                <li><a href="login.html" id="sidebarLoginLink">Login</a></li> <li style="display: none;" id="sidebarLogoutItem"><a href="#" id="sidebarLogoutButton">Logout</a></li>
+            </ul>
+        </aside>
+    </div>
 
-// User type selection functionality
-function selectUserType(selectedBtn, userType) {
-    const allButtons = document.querySelectorAll('.user-type-btn');
-    allButtons.forEach(btn => btn.classList.remove('active'));
-    selectedBtn.classList.add('active');
-    selectedBtn.setAttribute('data-selected', userType);
-}
+    <main class="main-content">
+        <section class="welcome-section">
+        </section>
 
-// Close modal when clicking outside of it
-window.onclick = function(event) {
-    const modal = document.getElementById('myModal');
-    if (event.target === modal) {
-        closeModal();
-    }
-};
+        <section class="login-section">
+            <h2>Login</h2>
+            <div class="user-type-buttons">
+                <button type="button" class="user-type-btn" data-user-role="student" onclick="selectUserType(this, 'student')">Student</button>
+                <span class="or-divider">or</span>
+                <button type="button" class="user-type-btn" data-user-role="admin" onclick="selectUserType(this, 'admin')">Admin</button>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="email" id="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <div class="password-field">
+                        <input type="password" id="password" placeholder="Password" required>
+                        <span class="password-toggle" onclick="togglePassword()">
+                            <img id="passwordToggleImg" src="images/show.png" alt="Show password">
+                        </span>
+                    </div>
+                </div>
+                <button type="submit" class="login-button">Login</button>
+            </form>
+
+            <div class="social-login">
+                <button class="social-btn" onclick="socialLogin('facebook')">
+                    <img src="images/facebook.png" alt="Facebook" width="16" height="16"> Facebook
+                </button>
+                <button class="social-btn" onclick="socialLogin('google')">
+                    <img src="images/google.png" alt="Google" width="16" height="16"> Google
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <p id="modalMessage"></p>
+            <button class="login-button mt-4" onclick="closeModal()">OK</button>
+        </div>
+    </div>
+
+    <script src="js/jsauth.js"></script>
+    <script src="js/jslogin.js"></script>
+</body>
+</html>
