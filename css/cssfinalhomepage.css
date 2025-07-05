@@ -341,91 +341,92 @@
         ------------------------------------------
         */
         .footer {
-            background-color: #4F6D44;
-            color: #fff;
-            padding: 60px 0 30px;
-            position: relative;
-            margin-top: auto; /* Pushes footer to the bottom of the page */
-            flex-shrink: 0; /* Prevents footer from shrinking */
-        }
+    background-color: #4F6D44;
+    color: #fff;
+    padding: 60px 0 30px;
+    position: relative;
+    margin-top: auto;
+    flex-shrink: 0;
+}
 
-        .footer-content {
-            display: grid; /* Always grid for desktop-only */
-            grid-template-columns: repeat(4, 1fr); /* 4 columns on desktop */
-            gap: 30px;
-            padding: 0 20px; /* Add padding for content */
-            justify-content: center;
-        }
+.footer-content {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding-top: 0;
+}
 
-        .footer-column {
-            min-width: 200px;
-            color: #fff;
-            text-align: left; /* Always left-aligned for desktop-only */
-        }
+.footer-column {
+    flex: 1;
+    min-width: 200px;
+    color: #fff;
+    text-align: center; /* Centered text within each column */
+}
 
-        .footer-column h3 {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: #fff;
-        }
+.footer-column h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #fff;
+}
 
-        .footer-column ul {
-            list-style: none;
-            padding-left: 0;
-        }
+.footer-column ul {
+    list-style: none;
+    padding-left: 0;
+}
 
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
+.footer-column ul li {
+    margin-bottom: 10px;
+}
 
-        .footer-column ul li a, .footer-column ul li {
-            text-decoration: none;
-            color: #eee;
-            transition: color 0.3s ease;
-        }
+.footer-column ul li a, .footer-column ul li {
+    text-decoration: none;
+    color: #eee;
+    transition: color 0.3s ease;
+}
 
-        .footer-column ul li a:hover {
-            color: #c9e4c9;
-        }
+.footer-column ul li a:hover {
+    color: #c9e4c9;
+}
 
-        .footer-social-icons {
-            display: flex;
-            flex-direction: column; /* Keep social icons stacked */
-            gap: 10px;
-            margin-top: 10px;
-            align-items: flex-start; /* Align icons to left for desktop */
-        }
+.footer-social-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    align-items: center; /* Centered social icons */
+}
 
-        .footer-social-icons a {
-            color: #eee;
-            font-size: 16px;
-            transition: color 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+.footer-social-icons a {
+    color: #eee;
+    font-size: 16px;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-        .footer-social-icons a:hover {
-            color: #fff;
-        }
+.footer-social-icons a:hover {
+    color: #fff;
+}
 
-        .footer-bottom {
-            text-align: center;
-            margin-top: 50px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 14px;
-            color: #aaa;
-            display: flex;
-            justify-content: center;
-            flex-direction: row; /* Always row for desktop-only */
-            gap: 20px;
-        }
-        .footer-bottom a {
-            text-decoration: none;
-            color: #aaa;
-            transition: color 0.3s ease;
-        }
-        .footer-bottom a:hover {
-            color: #fff;
-        }
+.footer-bottom {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 14px;
+    color: #aaa;
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 20px;
+}
+.footer-bottom a {
+    text-decoration: none;
+    color: #aaa;
+    transition: color 0.3s ease;
+}
+.footer-bottom a:hover {
+    color: #fff;
+}
