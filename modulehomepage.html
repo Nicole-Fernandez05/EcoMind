@@ -7,6 +7,145 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/cssmodulehomepage.css">
+    <style>
+        /* Add these styles to your css/cssmodulehomepage.css or keep them here if preferred */
+
+        /* Styles for the avatar/logged-in state */
+        #login-status-container {
+            position: relative; /* Needed for absolute positioning of dropdown */
+            display: flex; /* To align avatar if needed */
+            align-items: center;
+        }
+
+        .user-avatar {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .user-avatar img {
+            width: 40px; /* Adjust as needed */
+            height: 40px; /* Adjust as needed */
+            border-radius: 50%; /* Makes it round */
+            object-fit: cover;
+            margin-left: 10px; /* Spacing from other nav items */
+            border: 2px solid #ccc; /* Optional: adds a border around the avatar */
+        }
+
+        /* Styles for the dropdown content */
+        .profile-dropdown-content {
+            display: none; /* Hidden by default */
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 100; /* Ensure it's above other content */
+            right: 0; /* Align to the right of the avatar */
+            top: calc(100% + 5px); /* Position below the avatar with a small gap */
+            border-radius: 5px;
+            overflow: hidden; /* For rounded corners */
+        }
+
+        .profile-dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+
+        .profile-dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        /* Show the dropdown when the 'show' class is added */
+        .profile-dropdown-content.show {
+            display: block;
+        }
+
+        /* Style the login button if it's placed directly in the header */
+        .header .login-button {
+            background-color: #4CAF50; /* Example green */
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none; /* If it's a link styled as button */
+            display: inline-block; /* Ensure padding works */
+        }
+
+        .header .login-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Basic Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1001; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be adjusted */
+            max-width: 500px; /* Max width for larger screens */
+            border-radius: 8px;
+            position: relative;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #modalMessage {
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        #modalOkButton {
+            background-color: #5cb85c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        #modalOkButton:hover {
+            background-color: #4cae4c;
+        }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -23,7 +162,9 @@
             <a href="homepage.html">Home</a>
             <a href="modulehomepage.html" class="active">Modules</a>
             <a href="gamehomepage.html">Game</a>
-            <a href="login.html" class="login-btn">Login</a>
+            <div id="login-status-container">
+                <a href="login.html" class="login-button" id="loginLink">Login</a>
+            </div>
         </nav>
     </header>
 
@@ -34,6 +175,8 @@
                 <li><a href="homepage.html">Home</a></li>
                 <li><a href="modulehomepage.html" class="active">Modules</a></li>
                 <li><a href="finalhomepage.html">Final Assessment</a></li>
+                <li id="sidebarLoginItem"><a href="login.html">Login</a></li>
+                <li style="display: none;" id="sidebarLogoutItem"><a href="#" id="sidebarLogoutButton">Logout</a></li>
             </ul>
         </aside>
     </div>
@@ -163,10 +306,13 @@
         </div>
     </footer>
 
-    <script src="js/jsmodulehomepage.js"></script>
-
-</body>
-</html>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <p id="modalMessage"></p>
+            <button id="modalOkButton" onclick="closeModal()">OK</button>
+        </div>
+    </div>
 
     <script src="js/jsmodulehomepage.js"></script>
 
