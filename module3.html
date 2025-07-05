@@ -375,24 +375,18 @@
             });
 
             quizBtn.addEventListener('click', () => {
-                toggleContent('quiz-btn', quizContent, 'M3quizhomepage.html', defaultQuizContent, true);
+                toggleContent('quiz-btn', quizContent, 'M1quizhomepage.html', defaultQuizContent, true);
             });
-document.addEventListener('DOMContentLoaded', () => {
-    // Existing code...
 
-    const backBtn = document.getElementById('back-btn');
+            // Navigation buttons
+            const backBtn = document.getElementById('back-btn');
 
-    // Define the URLs for the previous and next pages
-    const previousPageUrl = 'http://127.0.0.1:5500/module1.html'; // Replace with the actual URL
-    const nextPageUrl = 'http://127.0.0.1:5500/module3.html'; // Replace with the actual URL
-
-    backBtn.addEventListener('click', () => {
-        window.location.href = previousPageUrl;
-    });
+            const previousPageUrl = 'modulehomepage.html'; // Replace with the actual URL
+            backBtn.addEventListener('click', () => {
+                window.location.href = previousPageUrl;
+            });
 
 
-    // Existing code...
-});
             function initializePage() {
                 if (mainContent) {
                     initialMainFontSize = parseFloat(getComputedStyle(mainContent).fontSize);
