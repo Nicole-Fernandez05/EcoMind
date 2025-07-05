@@ -29,25 +29,19 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-shrink: 0;
+            flex-shrink: 0; /* Prevents header from shrinking */
+            position: fixed; /* Fixed position at the top */
             width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 50; /* Ensure header is above other content */
         }
 
         .header-left {
             display: flex;
             align-items: center;
-            gap: 15px;
-        }
-
-        .hamburger-icon {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #333;
-            padding: 5px;
-            display: block;
-            flex-shrink: 0;
+            padding-left: 5px; /* Added padding to give some space on the left edge */
+            gap: 10px; /* Space between logo and ECOMIND text */
         }
 
         .logo {
@@ -56,7 +50,7 @@
             font-size: 24px;
             font-weight: 700;
             color: #333;
-            gap: 10px;
+            gap: 10px; /* Space between logo icon and ECOMIND text */
         }
 
         .logo-icon {
@@ -77,8 +71,22 @@
             object-fit: cover;
         }
 
+        /* Hamburger icon styles - now always visible for desktop layout */
+        .hamburger-icon {
+            background: none;
+            border: none;
+            font-size: 28px; /* Made slightly larger for visibility */
+            cursor: pointer;
+            color: #333;
+            padding: 5px;
+            display: block; /* Always displayed for desktop-only design */
+            flex-shrink: 0;
+            line-height: 1; /* Ensures text is vertically centered without extra spacing */
+            align-self: center; /* Vertically align in flex container */
+        }
+
         .top-nav-links {
-            display: flex;
+            display: flex; /* Always displayed for desktop-only design */
             gap: 25px;
             align-items: center;
         }
@@ -88,7 +96,7 @@
             color: #555;
             font-weight: 600;
             padding: 8px 12px;
-            transition: color 0.3s ease, background-color 0.3s ease;
+            transition: color 0.3s ease;
             border-radius: 8px;
         }
 
@@ -254,96 +262,92 @@
 
         /* Footer Styles */
         .footer {
-            background-color: #4F6D44;
-            color: #fff;
-            padding: 60px 0 30px;
-            position: relative;
-            margin-top: auto;
-            flex-shrink: 0;
-        }
+    background-color: #4F6D44;
+    color: #fff;
+    padding: 60px 0 30px;
+    position: relative;
+    margin-top: auto;
+    flex-shrink: 0;
+}
 
-        .footer-content {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 30px;
-            padding-top: 0;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+.footer-content {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding-top: 0;
+}
 
-        .footer-column {
-            flex: 1;
-            min-width: 200px;
-            color: #fff;
-            text-align: center;
-        }
+.footer-column {
+    flex: 1;
+    min-width: 200px;
+    color: #fff;
+    text-align: center; /* Centered text within each column */
+}
 
-        .footer-column h3 {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: #fff;
-        }
+.footer-column h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #fff;
+}
 
-        .footer-column ul {
-            list-style: none;
-            padding-left: 0;
-        }
+.footer-column ul {
+    list-style: none;
+    padding-left: 0;
+}
 
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
+.footer-column ul li {
+    margin-bottom: 10px;
+}
 
-        .footer-column ul li a, .footer-column ul li {
-            text-decoration: none;
-            color: #eee;
-            transition: color 0.3s ease;
-        }
+.footer-column ul li a, .footer-column ul li {
+    text-decoration: none;
+    color: #eee;
+    transition: color 0.3s ease;
+}
 
-        .footer-column ul li a:hover {
-            color: #c9e4c9;
-        }
+.footer-column ul li a:hover {
+    color: #c9e4c9;
+}
 
-        .footer-social-icons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 10px;
-            align-items: center;
-        }
+.footer-social-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    align-items: center; /* Centered social icons */
+}
 
-        .footer-social-icons a {
-            color: #eee;
-            font-size: 16px;
-            transition: color 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+.footer-social-icons a {
+    color: #eee;
+    font-size: 16px;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-        .footer-social-icons a:hover {
-            color: #fff;
-        }
+.footer-social-icons a:hover {
+    color: #fff;
+}
 
-        .footer-bottom {
-            text-align: center;
-            margin-top: 50px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 14px;
-            color: #aaa;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .footer-bottom a {
-            text-decoration: none;
-            color: #aaa;
-            transition: color 0.3s ease;
-        }
-
-        .footer-bottom a:hover {
-            color: #fff;
-        }
+.footer-bottom {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 14px;
+    color: #aaa;
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 20px;
+}
+.footer-bottom a {
+    text-decoration: none;
+    color: #aaa;
+    transition: color 0.3s ease;
+}
+.footer-bottom a:hover {
+    color: #fff;
+}
