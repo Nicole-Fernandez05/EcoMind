@@ -1,131 +1,319 @@
+// --- Sidebar and Header Navigation JavaScript ---
+
+const hamburgerIcon = document.getElementById('hamburger-icon');
+
+const closeSidebarBtn = document.getElementById('close-sidebar-btn');
+
+const sidebarContainer = document.getElementById('sidebar-container');
+
+const sidebarMenu = document.getElementById('sidebar-menu');
+
+const sidebarLinks = document.querySelectorAll('.sidebar-links a');
+
+const topNavLinks = document.querySelectorAll('.top-nav-links a');
+
+
+
+// Function to open the sidebar
+
+function openSidebar() {
+
+    sidebarContainer.classList.add('open');
+
+    sidebarMenu.classList.add('open');
+
+    document.body.style.overflow = 'hidden';
+
+}
+
+
+
+// Function to close the sidebar
+
+function closeSidebar() {
+
+    sidebarContainer.classList.remove('open');
+
+    sidebarMenu.classList.remove('open');
+
+    document.body.style.overflow = '';
+
+}
+
+
+
+// Event listeners for sidebar functionality
+
+if (hamburgerIcon) hamburgerIcon.addEventListener('click', openSidebar);
+
+if (closeSidebarBtn) closeSidebarBtn.addEventListener('click', closeSidebar);
+
+
+
+if (sidebarContainer) {
+
+    sidebarContainer.addEventListener('click', (event) => {
+
+        if (event.target === sidebarContainer) {
+
+            closeSidebar();
+
+        }
+
+    });
+
+}
+
+
+
+sidebarLinks.forEach(link => {
+
+    link.addEventListener('click', () => {
+
+        closeSidebar();
+
+        console.log(`Sidebar navigating to: ${link.getAttribute('href')}`);
+
+    });
+
+});
+
+
+
+topNavLinks.forEach(link => {
+
+    link.addEventListener('click', () => {
+
+        console.log(`Top nav navigating to: ${link.getAttribute('href')}`);
+
+    });
+
+});
+
+
+
+// Close sidebar if window is resized above mobile breakpoint while sidebar is open
+
+window.addEventListener('resize', () => {
+
+    if (window.innerWidth > 768 && sidebarContainer && sidebarContainer.classList.contains('open')) {
+
+        closeSidebar();
+
+    }
+
+});
+
+
+
+
+
+// --- Login Button to Avatar / Logout Functionality ---
+
+const loginStatusContainer = document.getElementById('login-status-container');
+
+const loginLink = document.getElementById('loginLink'); // The original login link element
+
+
+
+function updateLoginStatusUI() {
+
+    if (!loginStatusContainer) {
+
+        console.warn("login-status-container not found. Login/Avatar functionality may not work.");
+
+        return;
+
+    }
+
+
+
+    const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true'; // Check login status
+
+
+
+    if (isLoggedIn) {
+
+        // If logged in, display the avatar and a basic dropdown
+
+        loginStatusContainer.innerHTML = `
+
+            <div class="user-avatar" onclick="toggleProfileMenu()">
+
+                <img src="images/avatar.png" alt="User Avatar">
+
+            </div>
+
+            <div id="profile-dropdown" class="profile-dropdown-content">
+
+                <a href="profile.html">My Profile</a>
+
+                <a href="#" onclick="logoutUser()">Logout</a>
+
+            </div>
+
+        `;
+
+        // Hide the original login link if it's separate and was still visible
+
+        if (loginLink) loginLink.style.display = 'none';
+
+
+
+    } else {
+
+        // If not logged in, display the login button
+
+        loginStatusContainer.innerHTML = `
+
+            <a href="login.html" class="login-button">Login</a>
+
+        `;
+
+        // Ensure the original login link is shown if it was hidden
+
+        if (loginLink) loginLink.style.display = ''; // Reset display
+
+    }
+
+}
+
+
+
+function toggleProfileMenu() {
+
+    const dropdown = document.getElementById('profile-dropdown');
+
+    if (dropdown) {
+
+        dropdown.classList.toggle('show');
+
+    }
+
+}
+
+
+
+// Close the dropdown if the user clicks outside of it
+
+window.addEventListener('click', function(event) {
+
+    const avatarImg = document.querySelector('.user-avatar img');
+
+    const dropdown = document.getElementById('profile-dropdown');
+
+
+
+    if (dropdown && !dropdown.contains(event.target) && (!avatarImg || !avatarImg.contains(event.target))) {
+
+        if (dropdown.classList.contains('show')) {
+
+            dropdown.classList.remove('show');
+
+        }
+
+    }
+
+});
+
+
+
+
+
+function logoutUser() {
+
+    sessionStorage.removeItem('isLoggedIn'); // Clear login status
+
+    localStorage.removeItem('token'); // Clear any stored token (if applicable)
+
+    // You might want to redirect to the homepage or login page after logout
+
+    window.location.href = 'homepage.html';
+
+}
+
+
+
+// Make functions globally accessible if called from HTML onclick attributes
+
+window.toggleProfileMenu = toggleProfileMenu;
+
+window.logoutUser = logoutUser;
+
+
+
+
+
+// --- Module Completion/Locking Logic (Add your specific module logic here) ---
+
+// This part remains specific to your module homepage functionality.
+
+// Example:
+
+// const module2Link = document.getElementById('module2-link');
+
+// const module3Link = document.getElementById('module3-link');
+
+// etc.
+
+
+
+// function checkModuleCompletion() {
+
+//     // Example: Check if Module 1 is completed (using sessionStorage or localStorage)
+
+//     const module1Completed = sessionStorage.getItem('module1Completed') === 'true';
+
+
+
+//     if (module1Completed && module2Link) {
+
+//         module2Link.classList.remove('locked');
+
+//         module2Link.href = 'module2.html'; // Set the actual link
+
+//     } else if (module2Link) {
+
+//         module2Link.addEventListener('click', (e) => {
+
+//             if (module2Link.classList.contains('locked')) {
+
+//                 e.preventDefault();
+
+//                 alert('Please complete Module 1 first!');
+
+//             }
+
+//         });
+
+//     }
+
+//     // Repeat for other modules
+
+// }
+
+
+
+
+
+// --- Initial calls on page load ---
+
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Sidebar/Hamburger Menu Functionality ---
-    const hamburgerIcon = document.getElementById('hamburger-icon');
-    const closeSidebarBtn = document.getElementById('close-sidebar-btn');
-    const sidebarContainer = document.getElementById('sidebar-container');
-    const sidebarMenu = document.getElementById('sidebar-menu');
-    const currentYearSpan = document.getElementById('year');
 
-    // Set current year in the footer
-    if (currentYearSpan) {
-        currentYearSpan.textContent = new Date().getFullYear();
-    }
+updateLoginStatusUI(); // Update the login/avatar in the header
 
-    // Open sidebar - will only work if hamburgerIcon is made visible in CSS
-    if (hamburgerIcon) {
-        hamburgerIcon.addEventListener('click', () => {
-            sidebarContainer.classList.add('open');
-            sidebarMenu.classList.add('open');
-        });
-    }
+    // checkModuleCompletion(); // Call your module locking logic
 
-    // Close sidebar by clicking close button
-    if (closeSidebarBtn) {
-        closeSidebarBtn.addEventListener('click', () => {
-            sidebarContainer.classList.remove('open');
-            sidebarMenu.classList.remove('open');
-        });
-    }
+   
 
-    // Close sidebar by clicking outside the menu (on the overlay)
-    if (sidebarContainer) {
-        sidebarContainer.addEventListener('click', (event) => {
-            if (event.target === sidebarContainer) {
-                sidebarContainer.classList.remove('open');
-                sidebarMenu.classList.remove('open');
-            }
-        });
-    }
+    // Set the current year in the footer
 
-    // Optional: Close sidebar when a link inside is clicked
-    const sidebarLinks = document.querySelectorAll('.sidebar-links a');
-    sidebarLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            sidebarContainer.classList.remove('open');
-            sidebarMenu.classList.remove('open');
-        });
-    });
+    const yearSpan = document.getElementById('year');
 
-    // Update navigation links to match the new structure
-    const topNavLinks = document.querySelectorAll('.top-nav-links a');
-    const currentPath = window.location.pathname;
+    if (yearSpan) {
 
-    topNavLinks.forEach(link => {
-        link.classList.remove('active'); // Remove active from all first
-        // Adjust active class based on current page
-        if (link.href.includes('home.html') && currentPath.includes('home.html')) {
-            link.classList.add('active');
-        } else if (link.href.includes('modulehomepage.html') && currentPath.includes('modulehomepage.html')) {
-            link.classList.add('active');
-        } else if (link.href.includes('gamehomepage.html') && currentPath.includes('gamehomepage.html')) {
-            link.classList.add('active');
-        }
-        // Default active for home if no other match
-        if (currentPath === '/' || currentPath.includes('index.html')) {
-            // Check if home link is specifically present and mark active
-            if (link.href.includes('home.html') || link.href.endsWith('#home')) {
-                link.classList.add('active');
-            }
-        }
-    });
+        yearSpan.textContent = new Date().getFullYear();
 
-
-    const moduleLinks = document.querySelectorAll('.modules-container .module-link');
-
-    // Function to check module completion status from localStorage
-    const isModuleCompleted = (moduleNumber) => {
-        return localStorage.getItem(`module${moduleNumber}Completed`) === 'true';
-    };
-
-    // Function to update module link status based on completion
-    const updateModuleLinks = () => {
-        moduleLinks.forEach((link, index) => {
-            const moduleNumber = index + 1; // Modules are 1-indexed (Module 1, Module 2, etc.)
-            const moduleCard = link.querySelector('.module-card');
-            // Adjusted moduleLabel selection to work with the restored HTML structure
-            const moduleLabelElement = moduleCard.querySelector('.module-label');
-            const moduleLabel = moduleLabelElement ? moduleLabelElement.textContent : `Module ${moduleNumber}`; // Fallback if not found
-
-            // Module 1 is always accessible
-            if (moduleNumber === 1) {
-                link.href = `module1.html`; // Set the actual link for Module 1
-                link.classList.remove('locked');
-                moduleCard.setAttribute('aria-disabled', 'false');
-                link.style.pointerEvents = 'auto'; // Ensure it's clickable
-                moduleCard.style.opacity = '1'; // Ensure full visibility
-                moduleCard.style.cursor = 'pointer'; // Restore pointer cursor
-                return; // Skip further checks for Module 1
-            }
-
-            // For subsequent modules, check if the previous module is completed
-            if (isModuleCompleted(moduleNumber - 1)) {
-                link.href = `module${moduleNumber}.html`; // Set the actual link for the module
-                link.classList.remove('locked');
-                moduleCard.setAttribute('aria-disabled', 'false');
-                link.style.pointerEvents = 'auto';
-                moduleCard.style.opacity = '1';
-                moduleCard.style.cursor = 'pointer';
-            } else {
-                link.href = '#'; // Prevent navigation
-                link.classList.add('locked');
-                moduleCard.setAttribute('aria-disabled', 'true');
-                link.style.pointerEvents = 'none'; // Disable clicks
-                moduleCard.style.opacity = '0.6'; // Visually indicate it's locked
-                moduleCard.style.cursor = 'not-allowed'; // Change cursor for locked modules
-
-                if (!link.hasAttribute('data-locked-listener')) { // Prevent adding multiple listeners
-                    link.addEventListener('click', (e) => {
-                        if (link.classList.contains('locked')) {
-                            e.preventDefault(); // Stop the default link behavior
-                            alert(`Please complete ${moduleLabel} before accessing this module.`);
-                        }
-                    });
-                    link.setAttribute('data-locked-listener', 'true'); // Mark that listener is added
-                }
-            }
-        });
-    };
-
-    updateModuleLinks();
+    }
 
 });
