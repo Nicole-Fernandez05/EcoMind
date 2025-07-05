@@ -344,24 +344,6 @@
                         <button id="close-video-btn" class="close-button">Close Video</button>
                     </div>
                 `;
-                toggleContent('video-btn', videoContent, videoHtml, defaultVideoContent);
-
-                const closeVideoBtn = document.getElementById('close-video-btn');
-                if (closeVideoBtn) {
-                    closeVideoBtn.addEventListener('click', () => {
-                        updateContent(videoContent, defaultVideoContent);
-                    });
-                }
-            });
-
-            explanationBtn.addEventListener('click', () => {
-                const explanationHtml = `
-                    <div class="inner-content-wrapper explanation-content-inner-wrapper">
-                        <p class="explanation-title">Implementation of proper waste disposal, segregation at source, education and awareness, recycling and composting facilities, individual responsibility, and youth engagement.</p><br>
-                        <p>Proper waste disposal protects health and the environment through individual, community, and government actions. Segregating waste into categories at the source is key. Educating communities through campaigns and school programs encourages responsible behavior. Developing composting and recycling facilities ensures waste is processed properly. Individuals must reduce waste, dispose of it properly, and join recycling efforts. Engaging youth builds long-term habits. Coordinated efforts lead to cleaner environments and a zero-waste future.</p>
-                        <button id="close-explanation-btn" class="close-button">Close Explanation</button>
-                    </div>
-                `;
                 toggleContent('explanation-btn', explanationContent, explanationHtml, defaultExplanationContent);
 
                 const closeExplanationBtn = document.getElementById('close-explanation-btn');
@@ -373,17 +355,18 @@
             });
 
             quizBtn.addEventListener('click', () => {
-                toggleContent('quiz-btn', quizContent, 'M5quizhomepage.html', defaultQuizContent, true);
+                toggleContent('quiz-btn', quizContent, 'M1quizhomepage.html', defaultQuizContent, true);
             });
-document.addEventListener('DOMContentLoaded', () => {
-    // Existing code...
 
-    const backBtn = document.getElementById('back-btn');
-    // Define the URLs for the previous and next pages
-    const previousPageUrl = 'modulehomepage.html'; // Replace with the actual URL
+            // Navigation buttons
+            const backBtn = document.getElementById('back-btn');
 
-    // Existing code...
-});
+            const previousPageUrl = 'modulehomepage.html'; // Replace with the actual URL
+            backBtn.addEventListener('click', () => {
+                window.location.href = previousPageUrl;
+            });
+
+
             function initializePage() {
                 if (mainContent) {
                     initialMainFontSize = parseFloat(getComputedStyle(mainContent).fontSize);
