@@ -10,21 +10,21 @@ const topNavLinks = document.querySelectorAll('.top-nav-links a');
 function openSidebar() {
     sidebarContainer.classList.add('open');
     sidebarMenu.classList.add('open');
-    document.body.style.overflow = 'hidden'; // Prevent body scroll when sidebar is open
+    document.body.style.overflow = 'hidden';
 }
 
 // Function to close the sidebar
 function closeSidebar() {
     sidebarContainer.classList.remove('open');
     sidebarMenu.classList.remove('open');
-    document.body.style.overflow = ''; // Restore body scroll
+    document.body.style.overflow = '';
 }
 
 // Event listeners for sidebar functionality
 hamburgerIcon.addEventListener('click', openSidebar);
 closeSidebarBtn.addEventListener('click', closeSidebar);
+
 sidebarContainer.addEventListener('click', (event) => {
-    // Close sidebar if the click is on the overlay (not the menu itself)
     if (event.target === sidebarContainer) {
         closeSidebar();
     }
@@ -32,20 +32,18 @@ sidebarContainer.addEventListener('click', (event) => {
 
 sidebarLinks.forEach(link => {
     link.addEventListener('click', () => {
-        closeSidebar(); // Close sidebar after clicking a link
-        // You can add logic here to handle navigation if not using direct href
+        closeSidebar();
         console.log(`Sidebar navigating to: ${link.getAttribute('href')}`);
     });
 });
 
 topNavLinks.forEach(link => {
     link.addEventListener('click', () => {
-        // Handle navigation for top bar links
         console.log(`Top nav navigating to: ${link.getAttribute('href')}`);
     });
 });
 
-// Optional: Close sidebar if window is resized above mobile breakpoint while sidebar is open
+// Close sidebar if window is resized above mobile breakpoint while sidebar is open
 window.addEventListener('resize', () => {
     if (window.innerWidth > 768 && sidebarContainer.classList.contains('open')) {
         closeSidebar();
@@ -53,7 +51,6 @@ window.addEventListener('resize', () => {
 });
 
 // --- Login Form Validation and Modal JavaScript ---
-// Get form elements for validation
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
 const loginButton = document.getElementById('loginButton') || document.querySelector('.login-button');
@@ -62,75 +59,81 @@ const loginButton = document.getElementById('loginButton') || document.querySele
 function checkFormValidity() {
     const emailValue = emailInput.value.trim();
     const passwordValue = passwordInput.value.trim();
-    
-    // Enable button only if both fields have values
-    if (emailValue && passwordValue) {
-        loginButton.disabled = false;
-    } else {
-        loginButton.disabled = true;
-    }
+
+    loginButton.disabled = !(emailValue && passwordValue);
 }
 
 // Add event listeners to input fields for real-time validation
 if (emailInput && passwordInput && loginButton) {
-    // Initially disable the login button
     loginButton.disabled = true;
-    
     emailInput.addEventListener('input', checkFormValidity);
     passwordInput.addEventListener('input', checkFormValidity);
 }
 
 // Function to display the custom modal with a message and optional callback
 function showModal(message, callback) {
-    document.getElementById('modalMessage').textContent = message;
-    document.getElementById('myModal').style.display = 'flex'; /* Show modal */
-    
-    // Store callback for later use
-    window.modalCallback = callback;
+    const modalMessage = document.getElementById('modalMessage');
+    const modal = document.getElementById('myModal');
+
+    if (modalMessage && modal) {
+        modalMessage.textContent = message;
+        modal.style.display = 'flex';
+        window.modalCallback = callback;
+    }
 }
 
 // Function to close the custom modal
 function closeModal() {
-    document.getElementById('myModal').style.display = 'none';
-    
-    // Execute callback if it exists
-    if (window.modalCallback) {
-        window.modalCallback();
-        window.modalCallback = null;
+    const modal = document.getElementById('myModal');
+    if (modal) {
+        modal.style.display = 'none';
+        if (window.modalCallback) {
+            window.modalCallback();
+            window.modalCallback = null;
+        }
     }
 }
 
 // Event listener for the login form submission
 document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();
 
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value.trim();
 
-    // Basic validation
+    // Define specific passwords for students and admins
+    const studentPassword = "student123";
+    const adminPassword = "admin123";
+
     if (!email || !password) {
         showModal('Please fill in both email and password fields.');
         return;
     }
 
-    // Check if user type is selected
-    const selectedUserType = document.querySelector('.user-type-btn.active');
-    if (!selectedUserType) {
-        showModal('Please select whether you are a Student or Admin.');
-        return;
+    if (email.startsWith('2024')) {
+        if (password === studentPassword) {
+            showModal('Welcome back! Login successful.', function() {
+                window.location.href = 'modulehomepage.html';
+            });
+        } else {
+            showModal('Invalid email or password.');
+        }
+    } else if (email.startsWith('2020')) {
+        if (password === adminPassword) {
+            showModal('Welcome back! Login successful.', function() {
+                window.location.href = 'statusbar.html';
+            });
+        } else {
+            showModal('Incorrect password.');
+        }
+    } else {
+        showModal('Invalid email or password.');
     }
 
-    // Simulate successful login and redirect to homepage
-    showModal(`Welcome back! Login successful for ${email}`, function() {
-        // Redirect to homepage after successful login
-        window.location.href = 'homepage.html';
-    });
-    
-    // In a real application, you would send this data to a server for authentication.
-    console.log('Login attempt:', { 
-        email, 
-        password, 
-        userType: selectedUserType.getAttribute('data-selected') || 'student' 
+    console.log('Login attempt:', {
+        email,
+        password,
+        userType: email.startsWith('2024') ? 'student' : 'admin'
     });
 });
 
@@ -139,14 +142,16 @@ function togglePassword() {
     const passwordField = document.getElementById('password');
     const toggleImg = document.getElementById('passwordToggleImg');
 
-    if (passwordField.type === 'password') {
-        passwordField.type = 'text';
-        toggleImg.src = 'images/hidden.png';
-        toggleImg.alt = 'Hide password';
-    } else {
-        passwordField.type = 'password';
-        toggleImg.src = 'images/show.png';
-        toggleImg.alt = 'Show password';
+    if (passwordField && toggleImg) {
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            toggleImg.src = 'images/hidden.png';
+            toggleImg.alt = 'Hide password';
+        } else {
+            passwordField.type = 'password';
+            toggleImg.src = 'images/show.png';
+            toggleImg.alt = 'Show password';
+        }
     }
 }
 
@@ -156,22 +161,16 @@ function socialLogin(provider) {
     console.log(`Social login with ${provider}`);
 }
 
-// Function to navigate to registration page - UPDATED TO REDIRECT
+// Function to navigate to registration page
 function showRegister() {
-    // Redirect to register.html page
     window.location.href = 'register.html';
 }
 
 // User type selection functionality
 function selectUserType(selectedBtn, userType) {
-    // Remove active class from all user type buttons
     const allButtons = document.querySelectorAll('.user-type-btn');
     allButtons.forEach(btn => btn.classList.remove('active'));
-    
-    // Add active class to the clicked button
     selectedBtn.classList.add('active');
-    
-    // Store the selected user type for form processing
     selectedBtn.setAttribute('data-selected', userType);
 }
 
@@ -181,17 +180,4 @@ window.onclick = function(event) {
     if (event.target === modal) {
         closeModal();
     }
-}
-
-// User type selection functionality
-function selectUserType(selectedBtn, userType) {
-     // Remove active class from all user type buttons
-    const allButtons = document.querySelectorAll('.user-type-btn');
-    allButtons.forEach(btn => btn.classList.remove('active'));
-            
-    // Add active class to the clicked button
-    selectedBtn.classList.add('active');
-            
-    // Store the selected user type (optional - for form processing)
-    selectedBtn.setAttribute('data-selected', userType);
-        }
+};
