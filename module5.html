@@ -34,7 +34,6 @@
                 <li><a href="homepage.html" class="active">Home</a></li>
                 <li><a href="modulehomepage.html">Modules</a></li>
                 <li><a href="finalhomepage.html">Final Assessment</a></li>
-                <li><a href="#certification">Certification</a></li>
             </ul>
         </aside>
     </div>
@@ -342,6 +341,24 @@
                         </div>
                         <p class="video-description-paragraph">This video presents the implementation of the Solid Waste Management Program at Santiago National High School. It highlights the school’s commitment to promoting proper waste segregation, recycling, and responsible disposal practices within the campus. Through various activities and student participation, the program aims to raise environmental awareness and encourage sustainable habits among the school community.</p>
                         <button id="close-video-btn" class="close-button">Close Video</button>
+                    </div>
+                `;
+                toggleContent('video-btn', videoContent, videoHtml, defaultVideoContent);
+
+                const closeVideoBtn = document.getElementById('close-video-btn');
+                if (closeVideoBtn) {
+                    closeVideoBtn.addEventListener('click', () => {
+                        updateContent(videoContent, defaultVideoContent);
+                    });
+                }
+            });
+
+            explanationBtn.addEventListener('click', () => {
+                const explanationHtml = `
+                    <div class="inner-content-wrapper explanation-content-inner-wrapper">
+                        <p class="explanation-title">Implementation of proper waste disposal, segregation at source, education and awareness, recycling and composting facilities, individual responsibility, and youth engagement.</p><br>
+                        <p>Proper waste disposal protects health and the environment through individual, community, and government actions. Segregating waste into categories at the source is key. Educating communities through campaigns and school programs encourages responsible behavior. Developing composting and recycling facilities ensures waste is processed properly. Individuals must reduce waste, dispose of it properly, and join recycling efforts. Engaging youth builds long-term habits. Coordinated efforts lead to cleaner environments and a zero-waste future.</p>
+                        <button id="close-explanation-btn" class="close-button">Close Explanation</button>
                     </div>
                 `;
                 toggleContent('explanation-btn', explanationContent, explanationHtml, defaultExplanationContent);
