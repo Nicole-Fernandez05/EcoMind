@@ -320,7 +320,101 @@ MAIN CONTENT / REGISTRATION FORM STYLES
 .submit-button:hover {
     background-color: #65a30d; /* Darker lime green */
 }
+ 
+.modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1000; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+      justify-content: center; /* Center horizontally */
+      align-items: center; /* Center vertically */
+    }
 
+    .modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%; /* Could be responsive */
+      max-width: 500px; /* Max width for larger screens */
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+      animation-name: animatetop;
+      animation-duration: 0.4s;
+      text-align: center;
+      border-radius: 8px;
+    }
+
+    /* Add Animation */
+    @-webkit-keyframes animatetop {
+      from {top:-300px; opacity:0}
+      to {top:0; opacity:1}
+    }
+
+    @keyframes animatetop {
+      from {top:-300px; opacity:0}
+      to {top:0; opacity:1}
+    }
+
+    .close-button {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close-button:hover,
+    .close-button:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .user-type-selection {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .user-type-btn {
+      padding: 10px 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #f0f0f0;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .user-type-btn.active {
+      background-color: #4CAF50; /* Example active color */
+      color: white;
+      border-color: #4CAF50;
+    }
+
+    /* Basic style for password toggle */
+    .password-input-container {
+        position: relative;
+        width: 100%; /* Ensure it fills its parent */
+    }
+    .password-input-container input {
+        width: calc(100% - 40px); /* Adjust width to make space for the icon */
+        padding-right: 35px; /* Space for the icon */
+    }
+    .password-toggle-icon {
+        position: absolute;
+        right: 10px; /* Adjust as needed */
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        width: 20px; /* Size of your image */
+        height: 20px;
+    }
 
 @media (min-width: 769px) {
     /* Header */
