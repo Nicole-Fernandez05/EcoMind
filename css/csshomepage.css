@@ -235,7 +235,7 @@ main {
     padding: 0;
     display: flex;
     align-items: center;
-    min-height: 700px;
+    min-height: 800px;
     overflow: hidden;
     justify-content: center;
 }
@@ -253,7 +253,7 @@ main {
 .hero-text-content {
     text-align: left;
     position: absolute;
-    top: 80px;
+    top: 150px;
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
