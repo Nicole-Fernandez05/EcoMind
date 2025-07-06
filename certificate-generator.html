@@ -10,18 +10,36 @@
     <div class="generator">
         <h2>Certificate Generator</h2>
         <input type="text" id="name" placeholder="Enter name">
+        <input type="email" id="email" placeholder="Enter email for Verification">
         <button onclick="redirectToCertificate()">Generate Certificate</button>
     </div>
 
     <script>
         function redirectToCertificate() {
             const name = document.getElementById('name').value;
-            if (name) {
-                // Redirect to certificate page with the name as a query parameter
-                window.location.href = `generated-certificate.html?name=${encodeURIComponent(name)}`;
-            } else {
-                alert('Please enter a name');
+            const email = document.getElementById('email').value;
+
+            // Define the required email pattern
+            const requiredEmailPattern = /^.*2024.*$/; // Regex to match "2024" and end with "@fit.edu.ph"
+
+            if (!name) {
+                alert('Please enter your name.');
+                return; // Stop the function if name is missing
             }
+
+            if (!email) {
+                alert('Please enter your email for verification.');
+                return; // Stop the function if email is missing
+            }
+
+            // Validate the email format
+            if (!requiredEmailPattern.test(email)) {
+                alert('Invalid email format.');
+                return; // Stop the function if email format is incorrect
+            }
+
+            // If both name and email are valid, proceed
+            window.location.href = `generated-certificate.html?name=${encodeURIComponent(name)}`;
         }
     </script>
 </body>
