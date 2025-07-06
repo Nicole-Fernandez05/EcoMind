@@ -224,15 +224,11 @@ MAIN CONTENT STYLES
 
 .banner {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
-    background-color: #fdf3e4; /* Specific background for the banner */
-    padding: 2rem 4rem; /* Adjusted padding for full width */
-    margin-top: 0;
-    border-radius: 0;
-    margin-bottom: 2rem;
-    width: 100%; /* Ensure it takes full width */
+    background-color: #fdf3e4;
+    padding: 2rem 4rem;
+    margin-top: 100px;
+    width: 100%;
 }
 
 .banner-text {
