@@ -518,8 +518,19 @@
             </div>
         </div>
         <nav class="top-nav-links">
-            <a href="login.html" id="authLink" class="login-btn">Login</a>
-            <!-- Add other top navigation links here if needed -->
+            <a href="homepage.html" class="active">Home</a>
+            <a href="modulehomepage.html">Modules</a>
+            <a href="gamehomepage.html">Game</a>
+             <div id="login-status-container">
+            <a href="login.html" class="login-button" id="loginLink">Login</a>
+            <div id="userAvatarContainer" class="user-avatar-container hidden">
+                <img id="userAvatarImg" src="https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small/user-icon-on-transparent-background-free-png.png" alt="User Avatar">
+                <div class="profile-dropdown-content" id="userDropdownMenu"> 
+                    <a href="profile.html" id="profileLinkDropdown">My Profile</a>
+                    <a href="#" id="logoutButton">Logout</a>        
+                </div>
+            </div>
+        </div>
         </nav>
     </header>
 
