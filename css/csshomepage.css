@@ -118,6 +118,58 @@ body {
             color: #fff;
         }
 
+ /* Avatar styles */
+       .user-avatar {
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .user-avatar img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border: 2px solid #4CAF50; /* Example border */
+        }
+
+        .profile-dropdown-content {
+            display: none; /* Hidden by default */
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            right: 0;
+            top: 50px; /* Adjust as needed */
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .profile-dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            white-space: nowrap;
+        }
+
+        .profile-dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .profile-dropdown-content.show {
+            display: block; /* Show when 'show' class is added */
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .login-button {
+            display: block; /* Ensure login button is block when visible */
+        }
 
 /* Login info dropdown styles */
 .login-info {
@@ -135,31 +187,6 @@ body {
     background-color: #5cb85c;
     padding: 2px;
     border: 1px solid #fff;
-}
-.login-info .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    right: 0;
-    top: 40px;
-    border-radius: 5px;
-    overflow: hidden;
-}
-.login-info .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-}
-.login-info .dropdown-content a:hover {
-    background-color: #ddd;
-}
-.login-info.active .dropdown-content {
-    display: block;
 }
 
 /* Sliding Sidebar Container (Overlay) */
