@@ -25,7 +25,16 @@
       <a href="homepage.html" class="active">Home</a>
       <a href="modulehomepage.html">Modules</a>
       <a href="gamehomepage.html">Game</a>
-      <a href="login.html" class="login-btn">Login</a>
+     <div id="login-status-container">
+            <a href="login.html" class="login-button" id="loginLink">Login</a>
+            <div id="userAvatarContainer" class="user-avatar-container hidden">
+                <img id="userAvatarImg" src="https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small/user-icon-on-transparent-background-free-png.png" alt="User Avatar">
+                <div class="profile-dropdown-content" id="userDropdownMenu"> 
+                    <a href="profile.html" id="profileLinkDropdown">My Profile</a>
+                    <a href="#" id="logoutButton">Logout</a>
+                </div>
+            </div>
+        </div>
     </nav>
   </header>
 
@@ -40,7 +49,7 @@
       </ul>
     </aside>
   </div>
-
+<div id="userIdDisplay" class="user-id-display">Not logged in</div>
   <!-- Main Content (Integrated from new UI components) -->
   <section class="hero">
     <h1>LEARN SEGREGATION</h1>
@@ -125,14 +134,378 @@
         <a href="#">About us</a>
     </div>
 </footer>
+<script>
+        window.__firebase_config = JSON.stringify({
+            apiKey: "AIzaSyCXhfb3vyz3uWd-4p3t4UudLPzT-PD9JtE",
+            authDomain: "ecomind-164ad.firebaseapp.com",
+            projectId: "ecomind-164ad",
+            storageBucket: "ecomind-164ad.firebasestorage.app",
+            messagingSenderId: "342215046607",
+            appId: "1:342215046607:web:3b7465bc2a846acb000eba"
+        });
+        window.__app_id = "1:342215046607:web:3b7465bc2a846acb000eba";
+    </script>
+    <script type="module">
+        // --- DOM Element References (initialized once on script load) ---
+        // Note: Some elements like sidebarContainer, sidebarMenu, etc. are also retrieved
+        // within specific functions/listeners to ensure they are available after DOMContentLoaded.
+        // This redundancy is acceptable for robust error handling.
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        const closeSidebarBtn = document.getElementById('close-sidebar-btn');
+        const sidebarContainer = document.getElementById('sidebar-container');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        // These querySelectorAll results are static; if your DOM changes after initial load,
+        // you might need to re-query or delegate events.
+        const sidebarLinks = document.querySelectorAll('.sidebar-links a');
+        const topNavLinks = document.querySelectorAll('.top-nav-links a');
 
-   <script src="js/jsgamehomepage.js"></script>
-      <script>
-     // Add click event listener to the Start button
-     document.getElementById('start-game-btn').addEventListener('click', function() {
-       window.location.href = 'wastebingame.html';
-     });
-   </script>
+        // --- Sidebar Functionality ---
+
+        // Function to open the sidebar
+        function openSidebar() {
+            const sidebarContainer = document.getElementById('sidebar-container');
+            const sidebarMenu = document.getElementById('sidebar-menu');
+            if (sidebarContainer && sidebarMenu) {
+                sidebarContainer.classList.add('open');
+                sidebarMenu.classList.add('open');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling when sidebar is open
+            }
+        }
+
+        // Function to close the sidebar
+        function closeSidebar() {
+            const sidebarContainer = document.getElementById('sidebar-container');
+            const sidebarMenu = document.getElementById('sidebar-menu');
+            if (sidebarContainer && sidebarMenu) {
+                sidebarContainer.classList.remove('open');
+                sidebarMenu.classList.remove('open');
+                document.body.style.overflow = ''; // Restore scrolling
+            }
+        }
+
+        // Event listeners for sidebar functionality
+        if (hamburgerIcon) hamburgerIcon.addEventListener('click', openSidebar);
+        if (closeSidebarBtn) closeSidebarBtn.addEventListener('click', closeSidebar);
+
+        if (sidebarContainer) {
+            sidebarContainer.addEventListener('click', (event) => {
+                if (event.target === sidebarContainer) { // Close if clicked on the overlay
+                    closeSidebar();
+                }
+            });
+        }
+
+        // Close sidebar when a link inside is clicked (but not logout buttons, as they handle redirect)
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                // For hash links that navigate within the same page, close the sidebar.
+                // For actual page links (e.g., to module1.html), close sidebar but let browser navigate.
+                // Exclude logout buttons, as their click handler will manage redirection.
+                if (link.getAttribute('href') && link.getAttribute('href').startsWith('#') && link.id !== 'sidebarLogoutButton') {
+                    closeSidebar();
+                    console.log(`Sidebar hash link clicked: ${link.getAttribute('href')}`);
+                } else if (link.id !== 'sidebarLogoutButton') {
+                    closeSidebar();
+                    console.log(`Sidebar navigating to: ${link.getAttribute('href')}`);
+                }
+            });
+        });
+
+        // Top navigation links console log (existing behavior)
+        topNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                console.log(`Top nav navigating to: ${link.getAttribute('href')}`);
+            });
+        });
+
+        // Close sidebar if window is resized above mobile breakpoint while sidebar is open
+        window.addEventListener('resize', () => {
+            // Assuming 768px is your mobile breakpoint
+            if (window.innerWidth > 768 && sidebarContainer && sidebarContainer.classList.contains('open')) {
+                closeSidebar();
+            }
+        });
+
+    
+        window.showModal = function(message, callback) {
+            console.log("Showing modal with message:", message);
+            const modal = document.getElementById('myModal');
+            const modalMessage = document.getElementById('modalMessage');
+            if (modal && modalMessage) { // Ensure elements exist
+                modalMessage.textContent = message;
+                modal.style.display = 'flex'; // Use flex to center
+                modal.dataset.callback = callback ? 'true' : 'false';
+                if (callback) {
+                    modal.callback = callback;
+                }
+            } else {
+                console.error("Modal elements not found. Message:", message);
+                alert(message); // Fallback to alert if modal elements are missing
+            }
+        };
+
+        window.closeModal = function() {
+            console.log("Closing modal.");
+            const modal = document.getElementById('myModal');
+            if (modal) { // Ensure element exists
+                modal.style.display = 'none';
+                if (modal.dataset.callback === 'true' && typeof modal.callback === 'function') {
+                    console.log("Executing modal callback.");
+                    modal.callback();
+                    modal.callback = null; // Clear callback
+                    modal.dataset.callback = 'false';
+                }
+            }
+        };
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global Firebase variables
+        let app;
+        let auth;
+        let db;
+        let currentUserId = null;
+        let isAuthReady = false; // Flag to indicate if Firebase auth state has been initially checked
+
+        // Initialize Firebase
+        let firebaseConfig = {};
+        let appId = '1:342215046607:web:3b7465bc2a846acb000eba'; // Fallback appId, primarily overridden by window.__app_id
+
+        console.log("Checking __firebase_config from global window:", typeof window.__firebase_config, window.__firebase_config);
+        console.log("Checking __app_id from global window:", typeof window.__app_id, window.__app_id);
+
+
+        try {
+            // Parse firebaseConfig from the global window variable if available
+            if (typeof window.__firebase_config !== 'undefined' && window.__firebase_config) {
+                try {
+                    firebaseConfig = JSON.parse(window.__firebase_config);
+                    console.log("Parsed firebaseConfig:", firebaseConfig);
+                } catch (parseError) {
+                    console.error("Error parsing __firebase_config:", parseError);
+                    window.showModal("Firebase configuration parsing error. Please check the Canvas environment settings.");
+                    throw new Error("Firebase config parsing failed.");
+                }
+            } else {
+                console.warn("__firebase_config is undefined or empty. Firebase will not be initialized with proper config.");
+                // If config is truly missing, a modal is appropriate
+                window.showModal("Firebase configuration is missing. Please ensure your Canvas environment provides it.");
+                throw new Error("Firebase config missing.");
+            }
+
+            // Get appId from the global window variable if available
+            if (typeof window.__app_id !== 'undefined' && window.__app_id) {
+                appId = window.__app_id;
+                console.log("App ID from __app_id:", appId);
+            } else {
+                console.warn("__app_id is undefined or empty. Using default-app-id.");
+            }
+
+            if (Object.keys(firebaseConfig).length > 0) {
+                app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                console.log("Firebase initialized successfully. App, Auth, and DB instances created.");
+
+                // Listen for authentication state changes
+                onAuthStateChanged(auth, async (user) => {
+                    console.log("Auth state changed. User:", user ? user.uid : "null");
+
+                    // Get references to all relevant UI elements
+                    // Top Navigation elements
+                    const loginLink = document.getElementById('loginLink');
+                    const userAvatarContainer = document.getElementById('userAvatarContainer');
+                    const userAvatarImg = document.getElementById('userAvatarImg');
+                    const userDropdownMenu = document.getElementById('userDropdownMenu');
+                    const logoutButton = document.getElementById('logoutButton');
+                    const profileLinkDropdown = document.getElementById('profileLinkDropdown');
+
+                    // Sidebar Navigation elements
+                    const sidebarLoginListItem = document.getElementById('sidebarLoginListItem');
+                    const sidebarUserAvatarListItem = document.getElementById('sidebarUserAvatarListItem');
+                    const sidebarUserAvatarImg = document.getElementById('sidebarUserAvatarImg');
+                    const sidebarLogoutButton = document.getElementById('sidebarLogoutButton');
+                    const sidebarProfileLinkDropdown = document.getElementById('sidebarProfileLinkDropdown');
+
+
+                    if (user) {
+                        // User is signed in
+                        currentUserId = user.uid;
+                        const userIdDisplay = document.getElementById('userIdDisplay');
+                        if (userIdDisplay) userIdDisplay.textContent = `User ID: ${currentUserId}`;
+
+                        // --- Top Navigation UI Update ---
+                        if (loginLink) loginLink.classList.add('hidden'); // Hide Login button
+                        if (userAvatarContainer) {
+                            userAvatarContainer.classList.remove('hidden'); // Show avatar container
+                            if (userAvatarImg) {
+                                // Use user.photoURL from Firebase, fallback to email initial, then a generic default
+                                userAvatarImg.src = user.photoURL || `https://placehold.co/40x40/4CAF50/FFFFFF?text=${user.email ? user.email.charAt(0).toUpperCase() : 'U'}`;
+                                userAvatarImg.alt = user.displayName || 'User Avatar';
+                                console.log("Top Nav Avatar SRC set to:", userAvatarImg.src); // Debug log
+                            }
+                            userAvatarContainer.onclick = toggleUserDropdown; // Attach dropdown toggle
+                        }
+                        // Attach logout handler to the logout link inside the dropdown
+                        if (logoutButton) {
+                            logoutButton.onclick = handleLogout;
+                        }
+                        // Update profile/settings links inside the dropdown if they exist
+                        if (profileLinkDropdown) profileLinkDropdown.href = `profile.html?uid=${user.uid}`; // Example: pass UID
+
+                        // --- Sidebar Navigation UI Update ---
+                        if (sidebarLoginListItem) sidebarLoginListItem.classList.add('hidden'); // Hide Login link
+                        if (sidebarUserAvatarListItem) {
+                            sidebarUserAvatarListItem.classList.remove('hidden'); // Show sidebar avatar container
+                            if (sidebarUserAvatarImg) {
+                                sidebarUserAvatarImg.src = user.photoURL || `https://placehold.co/40x40/4CAF50/FFFFFF?text=${user.email ? user.email.charAt(0).toUpperCase() : 'U'}`;
+                                sidebarUserAvatarImg.alt = user.displayName || 'User Avatar';
+                                console.log("Sidebar Avatar SRC set to:", sidebarUserAvatarImg.src); // Debug log
+                            }
+                        }
+                        if (sidebarLogoutButton) sidebarLogoutButton.onclick = handleLogout; // Attach logout to sidebar button
+                        if (sidebarProfileLinkDropdown) sidebarProfileLinkDropdown.href = `profile.html?uid=${user.uid}`;
+
+
+                        // --- Firestore User Profile Management ---
+                        const userProfileRef = doc(db, `artifacts/${appId}/users/${currentUserId}/user_profiles`, currentUserId);
+                        try {
+                            const userProfileSnap = await getDoc(userProfileRef);
+                            if (!userProfileSnap.exists()) {
+                                await setDoc(userProfileRef, {
+                                    email: user.email || null,
+                                    displayName: user.displayName || null,
+                                    photoURL: user.photoURL || null,
+                                    role: user.isAnonymous ? 'anonymous' : 'standard', // Default role
+                                    registrationDate: new Date().toISOString(),
+                                }, { merge: true }); // Use merge to ensure other fields aren't overwritten if they exist
+                                console.log("Created new user profile for:", currentUserId);
+                            }
+
+                            // Always update last login time
+                            await setDoc(userProfileRef, {
+                                lastLogin: new Date().toISOString()
+                            }, { merge: true });
+                            console.log("Last login updated for user:", currentUserId);
+                        } catch (error) {
+                            console.error("Error ensuring/updating user profile in Firestore:", error);
+                            window.showModal('Error updating user profile: ' + error.message);
+                        }
+
+                    } else {
+                        // User is signed out
+                        currentUserId = null;
+                        const userIdDisplay = document.getElementById('userIdDisplay');
+                        if (userIdDisplay) userIdDisplay.textContent = 'Not logged in';
+
+                        // --- Top Navigation UI Update ---
+                        if (loginLink) {
+                            loginLink.classList.remove('hidden'); // Show Login button
+                            loginLink.textContent = 'Login';
+                            loginLink.href = 'login.html';
+                            loginLink.onclick = null; // Remove any previous logout handler
+                        }
+                        if (userAvatarContainer) userAvatarContainer.classList.add('hidden'); // Hide avatar container
+                        if (userDropdownMenu) userDropdownMenu.classList.remove('show'); // Ensure dropdown is hidden
+
+                        // --- Sidebar Navigation UI Update ---
+                        if (sidebarLoginListItem) {
+                            sidebarLoginListItem.classList.remove('hidden'); // Show Login link
+                            const sidebarLoginLink = document.getElementById('sidebarLoginLink'); // Get the specific link
+                            if (sidebarLoginLink) {
+                                sidebarLoginLink.textContent = 'Login';
+                                sidebarLoginLink.href = 'login.html';
+                                sidebarLoginLink.onclick = null; // Remove any previous logout handler
+                            }
+                        }
+                        if (sidebarUserAvatarListItem) sidebarUserAvatarListItem.classList.add('hidden'); // Hide sidebar avatar container
+                    }
+                    isAuthReady = true;
+                    console.log("Firebase Auth state initial check complete (isAuthReady = true).");
+                });
+            } else {
+                console.error("Firebase config is empty after parsing. Firebase will not be initialized.");
+                const userIdDisplay = document.getElementById('userIdDisplay');
+                if (userIdDisplay) userIdDisplay.textContent = 'Firebase not initialized (config empty)';
+                window.showModal("Firebase configuration is empty. Please ensure your Canvas environment provides a valid config.");
+            }
+        } catch (e) {
+            console.error("Critical error during Firebase setup:", e);
+            window.showModal('A critical error occurred during Firebase setup: ' + e.message + '. Check console for details.');
+            const userIdDisplay = document.getElementById('userIdDisplay');
+            if (userIdDisplay) userIdDisplay.textContent = 'Firebase critical error';
+        }
+
+        // --- Logout Function ---
+        async function handleLogout(e) {
+            e.preventDefault(); // Prevent default link behavior
+            console.log("Logout button clicked.");
+
+            if (!auth) {
+                window.showModal('Firebase Auth is not initialized. Cannot log out.');
+                return;
+            }
+            try {
+                await signOut(auth);
+                // Clear local storage items that might persist data if not cleared by Firebase itself
+                localStorage.removeItem('token'); // Example of a token you might store
+
+                window.showModal('You have been logged out.', () => {
+                    window.location.href = 'login.html'; // Redirect to login page after logout
+                });
+            } catch (error) {
+                console.error("Error during logout:", error);
+                window.showModal('Logout failed: ' + error.message);
+            }
+        }
+
+        // --- User Avatar Dropdown Toggle ---
+        function toggleUserDropdown() {
+            const userDropdownMenu = document.getElementById('userDropdownMenu');
+            if (userDropdownMenu) {
+                userDropdownMenu.classList.toggle('show');
+            }
+        }
+
+        // --- Close dropdown if clicked outside ---
+        document.addEventListener('click', (event) => {
+            const userAvatarContainer = document.getElementById('userAvatarContainer');
+            const userDropdownMenu = document.getElementById('userDropdownMenu');
+            // Check if the click was outside both the avatar container and the dropdown menu
+            if (userAvatarContainer && userDropdownMenu && !userAvatarContainer.contains(event.target) && !userDropdownMenu.contains(event.target)) {
+                userDropdownMenu.classList.remove('show');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOMContentLoaded event fired.");
+
+            // Set the current year in the footer
+            const yearSpan = document.getElementById('year');
+            if (yearSpan) {
+                yearSpan.textContent = new Date().getFullYear();
+            }
+
+            // JavaScript for progress circle (for visual effect, not actual data) - if still needed
+            const statCards = document.querySelectorAll('.stat-card');
+            statCards.forEach(card => {
+                const percentageTextElement = card.querySelector('.stat-progress-circle span');
+                if (percentageTextElement) {
+                    const percentageText = percentageTextElement.textContent;
+                    const percentage = parseFloat(percentageText.replace('%', ''));
+                    let progressFill = card.querySelector('.stat-progress-fill');
+                    if (!progressFill) {
+                        progressFill = document.createElement('div');
+                        progressFill.classList.add('stat-progress-fill');
+                        card.querySelector('.stat-progress-circle').prepend(progressFill);
+                    }
+                    progressFill.style.setProperty('--progress', percentage + '%');
+                }
+            });
+        });
+    </script>
      
 </body>
 </html>
