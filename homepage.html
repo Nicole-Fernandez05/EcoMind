@@ -24,8 +24,17 @@
             <a href="homepage.html" class="active">Home</a>
             <a href="modulehomepage.html">Modules</a>
             <a href="gamehomepage.html">Game</a>
-            <div id="login-status-container">
-                <a href="login.html" class="login-button" id="loginLink">Login</a>
+                <div id="login-status-container">
+        <a href="login.html" class="login-button" id="loginLink">Login</a>
+
+        <div class="user-avatar hidden" id="userAvatarContainer">
+            <img id="userAvatarImg" src="https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small/user-icon-on-transparent-background-free-png.png" alt="User Avatar">
+            <div class="profile-dropdown-content" id="userDropdownMenu">
+                <a href="profile.html">My Profile</a>
+                <a href="#" id="logoutButton">Logout</a>
+                    </div>
+                </div>
+            </div>
         </nav>
     </header>
 
@@ -39,6 +48,8 @@
             </ul>
         </aside>
     </div>
+    <div id="userIdDisplay" class="user-id-display">Not logged in</div>
+    </main>
 
     <main>
         <section id="home" class="hero-section">
@@ -90,7 +101,7 @@
                 <div class="card">
                     <h2>MISSION</h2>
                     <p>To provide accessible and interactive learning materials that make waste disposal easier to learn and promote environmentally friendly practices among individuals of all ages.</p>
-                 </div>
+                </div>
             </div>
         </section>
 
@@ -102,7 +113,7 @@
                     <div class="step-item">
                         <div class="step-circle">
                             <a href="#"><i class="fas fa-mobile-alt"></i></a>
-                        </div></a>
+                        </div>
                         <h3>STEP 1</h3>
                         <span><b>Log in or create an account.</b></span>
                         <span>Create an account or log in to access the learning platform</span>
@@ -111,7 +122,7 @@
                     <div class="step-item">
                         <div class="step-circle">
                             <a href="#"><i class="fas fa-newspaper"></i></a>
-                        </div></a>
+                        </div>
                         <h3>STEP 2</h3>
                         <span><b>Start the modules</b></span>
                         <span>Begin working through the available learning modules at your own pace.</span>
@@ -120,7 +131,7 @@
                     <div class="step-item">
                         <div class="step-circle">
                             <a href="#"><i class="fas fa-pen"></i></a>
-                        </div></a>
+                        </div>
                         <h3>STEP 3</h3>
                         <span><b>Complete all quizzes in each module</b></span>
                         <span>Make sure to answer and pass all quizzes included within each module.</span>
@@ -202,7 +213,6 @@
             <a href="#">About us</a>
         </div>
     </footer>
-    <!-- Modal HTML (add before </body>) -->
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close-button" onclick="closeModal()">&times;</span>
@@ -210,6 +220,302 @@
             <button id="modalOkButton" onclick="closeModal()">OK</button>
         </div>
     </div>
-    <script src="js/jshomepage.js"></script>
+    <script>
+        window.__firebase_config = JSON.stringify({
+            apiKey: "AIzaSyCXhfb3vyz3uWd-4p3t4UudLPzT-PD9JtE",
+            authDomain: "ecomind-164ad.firebaseapp.com",
+            projectId: "ecomind-164ad",
+            storageBucket: "ecomind-164ad.firebasestorage.app",
+            messagingSenderId: "342215046607",
+            appId: "1:342215046607:web:3b7465bc2a846acb000eba"
+        });
+        window.__app_id = "1:342215046607:web:3b7465bc2a846acb000eba";
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global Firebase variables
+        let app;
+        let auth;
+        let db;
+        let currentUserId = null;
+        let isAuthReady = false; // Flag to indicate if Firebase auth state has been initially checked
+
+        // Initialize Firebase
+        let firebaseConfig = {};
+        let appId = '1:342215046607:web:3b7465bc2a846acb000eba'; // Fallback appId
+
+        console.log("Checking __firebase_config:", typeof __firebase_config, __firebase_config);
+
+        try {
+            if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+                try {
+                    firebaseConfig = JSON.parse(__firebase_config);
+                    console.log("Raw __firebase_config (after check):", __firebase_config); // Re-log for clarity
+                    console.log("Parsed firebaseConfig:", firebaseConfig);
+                } catch (parseError) {
+                    console.error("Error parsing __firebase_config:", parseError);
+                    window.showModal("Firebase configuration parsing error. Please check the Canvas environment settings.");
+                    throw new Error("Firebase config parsing failed.");
+                }
+            } else {
+                console.warn("__firebase_config is undefined or empty. Firebase will not be initialized with proper config.");
+                window.showModal("Firebase configuration is missing. Please ensure your Canvas environment provides it.");
+                throw new Error("Firebase config missing.");
+            }
+
+            if (typeof __app_id !== 'undefined' && __app_id) {
+                appId = __app_id;
+                console.log("App ID from __app_id:", appId);
+            } else {
+                console.warn("__app_id is undefined or empty. Using default-app-id.");
+            }
+
+            if (Object.keys(firebaseConfig).length > 0) {
+                app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                console.log("Firebase initialized successfully. App, Auth, and DB instances created.");
+
+                // Listen for authentication state changes
+                onAuthStateChanged(auth, async (user) => {
+                    console.log("Auth state changed. User:", user ? user.uid : "null");
+
+                    // Top Navigation elements
+                    const loginLink = document.getElementById('loginLink');
+                    const userAvatarContainer = document.getElementById('userAvatarContainer');
+                    const userAvatarImg = document.getElementById('userAvatarImg');
+                    const logoutButton = document.getElementById('logoutButton');
+                    const userDropdownMenu = document.getElementById('userDropdownMenu'); // Get the dropdown menu
+
+                    // Sidebar Navigation elements
+                    const sidebarLoginLink = document.getElementById('sidebarLoginLink');
+                    const sidebarUserAvatarContainer = document.getElementById('sidebarUserAvatarContainer');
+                    const sidebarUserAvatarImg = document.getElementById('sidebarUserAvatarImg');
+                    const sidebarLogoutButton = document.getElementById('sidebarLogoutButton');
+
+                    if (user) {
+                        currentUserId = user.uid;
+                        document.getElementById('userIdDisplay').textContent = `User ID: ${currentUserId}`;
+
+                        // Top Navigation
+                        if (loginLink) loginLink.classList.add('hidden'); // Hide Login button
+                        if (userAvatarContainer) {
+                            userAvatarContainer.classList.remove('hidden'); // Show avatar container
+                            if (userAvatarImg) {
+                                userAvatarImg.src = user.photoURL || `https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small/user-icon-on-transparent-background-free-png.png${user.email ? user.email.charAt(0).toUpperCase() : 'U'}`;
+                            }
+                            userAvatarContainer.onclick = toggleUserDropdown; // Add event listener to toggle dropdown
+                        }
+                        if (logoutButton) logoutButton.onclick = handleLogout; // Attach logout to avatar dropdown link
+
+                        // Sidebar Navigation
+                        if (sidebarLoginLink) sidebarLoginLink.classList.add('hidden'); // Hide Login link
+                        if (sidebarUserAvatarContainer) {
+                            sidebarUserAvatarContainer.classList.remove('hidden'); // Show sidebar avatar container
+                            if (sidebarUserAvatarImg) {
+                                sidebarUserAvatarImg.src = user.photoURL || `https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small/user-icon-on-transparent-background-free-png.png${user.email ? user.email.charAt(0).toUpperCase() : 'U'}`;
+                            }
+                        }
+                        if (sidebarLogoutButton) sidebarLogoutButton.onclick = handleLogout; // Attach logout to sidebar logout button
+
+
+                        // Ensure user profile exists and update last login time
+                        const userProfileRef = doc(db, `artifacts/${appId}/users/${currentUserId}/user_profiles`, currentUserId);
+                        try {
+                            const userProfileSnap = await getDoc(userProfileRef);
+                            if (!userProfileSnap.exists()) {
+                                await setDoc(userProfileRef, {
+                                    email: user.email || null,
+                                    role: user.isAnonymous ? 'anonymous' : 'unknown',
+                                    registrationDate: new Date().toISOString(),
+                                });
+                                console.log("Created new user profile for:", currentUserId);
+                            }
+
+                            await setDoc(userProfileRef, {
+                                lastLogin: new Date().toISOString()
+                            }, { merge: true });
+                            console.log("Last login updated for user:", currentUserId);
+                        } catch (error) {
+                            console.error("Error ensuring/updating user profile:", error);
+                            window.showModal('Error updating user profile: ' + error.message);
+                        }
+
+                    } else {
+                        currentUserId = null;
+                        document.getElementById('userIdDisplay').textContent = 'Not logged in';
+
+                        // Top Navigation
+                        if (loginLink) {
+                            loginLink.classList.remove('hidden'); // Show Login button
+                            loginLink.textContent = 'Login';
+                            loginLink.href = 'login.html';
+                            loginLink.onclick = null; // Remove logout handler
+                        }
+                        if (userAvatarContainer) userAvatarContainer.classList.add('hidden'); // Hide avatar container
+                        if (userDropdownMenu) userDropdownMenu.classList.remove('show'); // Ensure dropdown is hidden
+
+                        // Sidebar Navigation
+                        if (sidebarLoginLink) {
+                            sidebarLoginLink.classList.remove('hidden'); // Show Login link
+                            sidebarLoginLink.textContent = 'Login';
+                            sidebarLoginLink.href = 'login.html';
+                            sidebarLoginLink.onclick = null; // Remove logout handler
+                        }
+                        if (sidebarUserAvatarContainer) sidebarUserAvatarContainer.classList.add('hidden'); // Hide sidebar avatar container
+                    }
+                    isAuthReady = true;
+                    console.log("isAuthReady set to true.");
+                });
+            } else {
+                console.error("Firebase config is empty after parsing. Firebase will not be initialized.");
+                document.getElementById('userIdDisplay').textContent = 'Firebase not initialized (config empty)';
+                window.showModal("Firebase configuration is empty. Please ensure your Canvas environment provides a valid config.");
+            }
+        } catch (e) {
+            console.error("Critical error during Firebase setup:", e);
+            window.showModal('A critical error occurred during Firebase setup: ' + e.message + '. Check console for details.');
+            document.getElementById('userIdDisplay').textContent = 'Firebase critical error';
+        }
+
+        async function handleLogout(e) {
+            e.preventDefault();
+            console.log("Logout button clicked.");
+            if (!auth) {
+                window.showModal('Firebase Auth is not initialized. Cannot log out.');
+                return;
+            }
+            try {
+                await signOut(auth);
+                // Clear session storage items as per user's request
+                sessionStorage.removeItem('isLoggedIn');
+                sessionStorage.removeItem('userEmail');
+                sessionStorage.removeItem('userType');
+                // You might also clear localStorage if you store tokens there
+                localStorage.removeItem('token');
+
+                window.showModal('You have been logged out.', () => {
+                    window.location.href = 'login.html'; // Redirect to login page after logout
+                });
+            } catch (error) {
+                console.error("Error during logout:", error);
+                window.showModal('Logout failed: ' + error.message);
+            }
+        }
+
+        // Function to toggle the user dropdown menu
+        function toggleUserDropdown() {
+            const userDropdownMenu = document.getElementById('userDropdownMenu');
+            if (userDropdownMenu) {
+                userDropdownMenu.classList.toggle('show');
+            }
+        }
+
+        // Close dropdown if clicked outside
+        document.addEventListener('click', (event) => {
+            const userAvatarContainer = document.getElementById('userAvatarContainer');
+            const userDropdownMenu = document.getElementById('userDropdownMenu');
+            // Check if the click was outside both the avatar container and the dropdown menu
+            if (userAvatarContainer && userDropdownMenu && !userAvatarContainer.contains(event.target) && !userDropdownMenu.contains(event.target)) {
+                userDropdownMenu.classList.remove('show');
+            }
+        });
+
+
+        window.showModal = function(message, callback) {
+            console.log("Showing modal with message:", message);
+            const modal = document.getElementById('myModal');
+            const modalMessage = document.getElementById('modalMessage');
+            modalMessage.textContent = message;
+            modal.style.display = 'flex';
+            modal.dataset.callback = callback ? 'true' : 'false';
+            if (callback) {
+                modal.callback = callback;
+            }
+        };
+
+        window.closeModal = function() {
+            console.log("Closing modal.");
+            const modal = document.getElementById('myModal');
+            modal.style.display = 'none';
+            if (modal.dataset.callback === 'true' && typeof modal.callback === 'function') {
+                console.log("Executing modal callback.");
+                modal.callback();
+                modal.callback = null;
+                modal.dataset.callback = 'false';
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOMContentLoaded event fired on homepage.");
+
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const sidebarContainer = document.getElementById('sidebar-container');
+            const sidebarMenu = document.getElementById('sidebar-menu');
+            const closeSidebarBtn = document.getElementById('close-sidebar-btn');
+
+            if (hamburgerIcon) {
+                hamburgerIcon.addEventListener('click', () => {
+                    console.log("Hamburger icon clicked.");
+                    sidebarContainer.classList.add('open');
+                    sidebarMenu.classList.add('open');
+                });
+            }
+
+            if (closeSidebarBtn) {
+                closeSidebarBtn.addEventListener('click', () => {
+                    console.log("Close sidebar button clicked.");
+                    sidebarContainer.classList.remove('open');
+                    sidebarMenu.classList.remove('open');
+                });
+            }
+
+            if (sidebarContainer) {
+                sidebarContainer.addEventListener('click', (event) => {
+                    if (event.target === sidebarContainer) {
+                        console.log("Clicked outside sidebar, closing.");
+                        sidebarContainer.classList.remove('open');
+                        sidebarMenu.classList.remove('open');
+                    }
+                });
+            }
+
+            // Optional: Close sidebar when a link inside is clicked
+            const sidebarLinks = document.querySelectorAll('.sidebar-links a');
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    // Only close if it's not the logout link within the avatar container
+                    if (link.id !== 'sidebarLogoutButton') { // Changed from sidebarAvatarLogoutLink
+                        sidebarContainer.classList.remove('open');
+                        sidebarMenu.classList.remove('open');
+                    }
+                });
+            });
+
+            // JavaScript for progress circle (for visual effect, not actual data)
+            const statCards = document.querySelectorAll('.stat-card');
+            statCards.forEach(card => {
+                const percentageTextElement = card.querySelector('.stat-progress-circle span');
+                if (percentageTextElement) {
+                    const percentageText = percentageTextElement.textContent;
+                    const percentage = parseFloat(percentageText.replace('%', ''));
+                    let progressFill = card.querySelector('.stat-progress-fill');
+                    if (!progressFill) {
+                        progressFill = document.createElement('div');
+                        progressFill.classList.add('stat-progress-fill');
+                        card.querySelector('.stat-progress-circle').prepend(progressFill);
+                    }
+                    progressFill.style.setProperty('--progress', percentage + '%');
+                }
+            });
+
+            // Set the current year in the footer
+            document.getElementById('year').textContent = new Date().getFullYear();
+        });
+    </script>
 </body>
 </html>
