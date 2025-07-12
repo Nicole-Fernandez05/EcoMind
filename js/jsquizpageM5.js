@@ -210,7 +210,7 @@ const originalQuestions = [
     }
 ];
 
-let questions = []; // This array will hold the current shuffled and rephrased questions for Module 5
+let questions = []; // This array will hold the current shuffled questions for Module 5
 
 // --- Common/Utility Functions (Self-contained within jsquizpageM5.js) ---
 
@@ -219,88 +219,6 @@ function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
-    }
-}
-
-// Function to fetch a rephrased question and options from Gemini API
-async function fetchRephrasedQuestion(originalQuestionObj) {
-    // IMPORTANT: Replace with your actual API key
-    const apiKey = "YOUR_GEMINI_API_KEY"; // <<< Replace this placeholder with your actual key
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-    const prompt = `Rephrase the following multiple-choice question and its options. Provide the correct answer text separately. Ensure the meaning of the question and the correct answer remains the same.
-    \nOriginal Question: ${originalQuestionObj.question}
-    \nOriginal Options (without A,B,C,D prefixes):
-    ${originalQuestionObj.options.map(o => o.substring(3)).join('\n')}
-    \nOriginal Correct Answer Text (without prefix): ${originalQuestionObj.answer.substring(3)}
-    \nProvide the response in JSON format with 'rephrasedQuestion' (string), 'rephrasedOptions' (array of strings, no A,B,C,D prefixes), and 'correctAnswerText' (string, the plain text of the correct option).`;
-
-    let chatHistory = [];
-    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-    const payload = {
-        contents: chatHistory,
-        generationConfig: {
-            responseMimeType: "application/json",
-            responseSchema: {
-                type: "OBJECT",
-                properties: {
-                    "rephrasedQuestion": { "type": "STRING" },
-                    "rephrasedOptions": {
-                        "type": "ARRAY",
-                        "items": { "type": "STRING" }
-                    },
-                    "correctAnswerText": { "type": "STRING" }
-                },
-                "required": ["rephrasedQuestion", "rephrasedOptions", "correctAnswerText"]
-            }
-        }
-    };
-
-    try {
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-        const result = await response.json();
-
-        if (result.candidates && result.candidates.length > 0 &&
-            result.candidates[0].content && result.candidates[0].content.parts &&
-            result.candidates[0].content.parts.length > 0) {
-            const jsonString = result.candidates[0].content.parts[0].text;
-            const parsedJson = JSON.parse(jsonString);
-
-            let newOptions = parsedJson.rephrasedOptions;
-            shuffleArray(newOptions); // Shuffle the rephrased options
-
-            // Add A, B, C, D prefixes to the shuffled options
-            const prefixedOptions = newOptions.map((option, idx) => {
-                return String.fromCharCode(65 + idx) + ". " + option;
-            });
-
-            // Find the correct answer text in the newly prefixed and shuffled options
-            let newCorrectAnswer = "";
-            const correctText = parsedJson.correctAnswerText;
-            for (let i = 0; i < prefixedOptions.length; i++) {
-                // Check if the option's text (after the prefix) matches the correct text
-                if (prefixedOptions[i].substring(3).trim() === correctText.trim()) {
-                    newCorrectAnswer = prefixedOptions[i];
-                    break;
-                }
-            }
-            return {
-                question: parsedJson.rephrasedQuestion,
-                options: prefixedOptions,
-                answer: newCorrectAnswer || originalQuestionObj.answer // Fallback if remapping fails
-            };
-
-        } else {
-            console.error("LLM response structure unexpected or empty:", result);
-            return originalQuestionObj; // Fallback to original on bad structure
-        }
-    } catch (error) {
-        console.error("Error fetching rephrased question:", error);
-        return originalQuestionObj; // Fallback to original on error
     }
 }
 
@@ -399,13 +317,13 @@ function showMessageBox(message, callback) {
 
 // --- Quiz Specific Functions ---
 
-async function nextQuestion() {
+function nextQuestion() {
     const selectedOption = document.querySelector('.option.selected');
     if (selectedOption) {
         userAnswers[currentQuestionIndex] = selectedOption.textContent;
         currentQuestionIndex++;
         if (currentQuestionIndex < questions.length) {
-            await updateQuestion();
+            updateQuestion();
         } else {
             showMessageBox("Quiz completed!", () => {
                 clearInterval(timerInterval); // Clear the module's timer interval
@@ -417,40 +335,34 @@ async function nextQuestion() {
     }
 }
 
-async function updateQuestion() {
+function updateQuestion() {
     const questionText = document.getElementById('question-text');
     const optionsElements = document.querySelectorAll('.options .option');
     const itemNumber = document.querySelector('.item-number');
 
     if (currentQuestionIndex < questions.length) {
-        // Clear content while fetching to avoid "Loading..." text
-        questionText.textContent = "";
-        optionsElements.forEach(option => {
-            option.textContent = "";
-            option.classList.remove('selected');
+        const currentQuestion = questions[currentQuestionIndex];
+
+        questionText.textContent = currentQuestion.question;
+        optionsElements.forEach((option, index) => {
+            // Remove the first three characters ("A. ", "B. ", etc.)
+            option.textContent = currentQuestion.options[index].substring(3); 
+            option.classList.remove('selected'); // Clear selected state for the new question
         });
         itemNumber.textContent = `Item ${currentQuestionIndex + 1}`; // Update item number immediately
-
-        // Fetch rephrased question and options
-        const originalQuestion = questions[currentQuestionIndex];
-        const rephrasedData = await fetchRephrasedQuestion(originalQuestion);
-
-        questions[currentQuestionIndex].question = rephrasedData.question;
-        questions[currentQuestionIndex].options = rephrasedData.options;
-        questions[currentQuestionIndex].answer = rephrasedData.answer; // Update to new answer string
-
-        // Populate with fetched data
-        questionText.textContent = questions[currentQuestionIndex].question;
-        optionsElements.forEach((option, index) => {
-            option.textContent = questions[currentQuestionIndex].options[index];
-        });
     }
 }
 
 function showResults() {
     let correctAnswers = 0;
     questions.forEach((question, index) => {
-        if (userAnswers[index] === question.answer) {
+        // Compare user's answer (without prefix) to the correct answer (with prefix)
+        // This assumes userAnswers[index] will contain the text without the prefix,
+        // so we need to remove the prefix from question.answer for comparison.
+        const userAnswerText = userAnswers[index];
+        const correctAnswerText = question.answer.substring(3); // Get the text part of the correct answer
+
+        if (userAnswerText === correctAnswerText) {
             correctAnswers++;
         }
     });
@@ -481,12 +393,12 @@ function showResults() {
             <div class="results-list">
                 <h2>Detailed Answers</h2>
                 ${questions.map((question, index) => {
-                    const isCorrect = userAnswers[index] === question.answer;
+                    const isCorrect = (userAnswers[index] === question.answer.substring(3)); // Compare text without prefix
                     return `
                         <div class="${isCorrect ? 'correct' : 'incorrect'}">
                             <p><strong>Question ${index + 1}:</strong> ${question.question}</p>
                             <p><strong>Your Choice:</strong> ${userAnswers[index] || 'Not answered'}</p>
-                            <p><strong>Correct Answer:</strong> ${question.answer}</p>
+                            <p><strong>Correct Answer:</strong> ${question.answer.substring(3)}</p>
                         </div>
                     `;
                 }).join('')}
@@ -582,7 +494,7 @@ function returnToModules() {
 
 // --- Event Listeners for Page Initialization and Sidebar ---
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
     // Initialize Header and Sidebar functionality
     const hamburgerIcon = document.getElementById('hamburger-icon');
     const closeSidebarBtn = document.getElementById('close-sidebar-btn');
@@ -634,7 +546,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     questions = [...originalQuestions];
     shuffleArray(questions); // Use the local shuffleArray function
-    await updateQuestion(); // Load the first (shuffled and rephrased) question using the local updateQuestion
+    updateQuestion(); // Load the first (shuffled) question using the local updateQuestion
     const display = document.querySelector('#time');
     startTimer(timeLeft, display); // Use the local startTimer function
 });
