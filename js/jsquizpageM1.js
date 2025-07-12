@@ -56,202 +56,202 @@ const originalQuestions = [
     {
         question: "What is waste segregation?",
         options: [
-            "A. Mixing all types of waste into one bin",
-            "B. Burning all types of waste",
-            "C. Separating waste based on type, composition, or recyclability",
-            "D. Throwing away waste without classification"
+            "Mixing all types of waste into one bin",
+            "Burning all types of waste",
+            "Separating waste based on type, composition, or recyclability",
+            "Throwing away waste without classification"
         ],
-        answer: "C. Separating waste based on type, composition, or recyclability"
+        answer: "Separating waste based on type, composition, or recyclability"
     },
     {
         question: "What law is known as the Ecological Solid Waste Management Act of 2000?",
         options: [
-            "A. Republic Act No. 7160",
-            "B. Republic Act No. 9003",
-            "C. Republic Act No. 10121",
-            "D. Republic Act No. 8425"
+            "Republic Act No. 7160",
+            "Republic Act No. 9003",
+            "Republic Act No. 10121",
+            "Republic Act No. 8425"
         ],
-        answer: "B. Republic Act No. 9003"
+        answer: "Republic Act No. 9003"
     },
     {
         question: "What is one key purpose of Republic Act No. 9003?",
         options: [
-            "A. Encourage illegal dumping",
-            "B. Promote incineration",
-            "C. Mandate solid waste management programs",
-            "D. Increase landfill usage"
+            "Encourage illegal dumping",
+            "Promote incineration",
+            "Mandate solid waste management programs",
+            "Increase landfill usage"
         ],
-        answer: "C. Mandate solid waste management programs"
+        answer: "Mandate solid waste management programs"
     },
     {
         question: "Which of the following is a category of waste that should be separated?",
         options: [
-            "A. Liquid only",
-            "B. Biodegradable",
-            "C. Precious metals",
-            "D. Unused items"
+            "Liquid only",
+            "Biodegradable",
+            "Precious metals",
+            "Unused items"
         ],
-        answer: "B. Biodegradable"
+        answer: "Biodegradable"
     },
     {
         question: "Why is proper waste segregation important for the environment?",
         options: [
-            "A. It increases pollution",
-            "B. It reduces the risk of contamination",
-            "C. It delays waste disposal",
-            "D. It produces more waste"
+            "It increases pollution",
+            "It reduces the risk of contamination",
+            "It delays waste disposal",
+            "It produces more waste"
         ],
-        answer: "B. It reduces the risk of contamination"
+        answer: "It reduces the risk of contamination"
     },
     {
         question: "How does recycling contribute to natural resource conservation?",
         options: [
-            "A. It increases energy use",
-            "B. It uses more raw materials",
-            "C. It reduces demand for virgin resources",
-            "D. It harms the environment"
+            "It increases energy use",
+            "It uses more raw materials",
+            "It reduces demand for virgin resources",
+            "It harms the environment"
         ],
-        answer: "C. It reduces demand for virgin resources"
+        answer: "It reduces demand for virgin resources"
     },
     {
         question: "What is a direct benefit of efficient waste management?",
         options: [
-            "A. More waste is created",
-            "B. Higher landfill dependency",
-            "C. Increased collection costs",
-            "D. Streamlined collection and processing"
+            "More waste is created",
+            "Higher landfill dependency",
+            "Increased collection costs",
+            "Streamlined collection and processing"
         ],
-        answer: "D. Streamlined collection and processing"
+        answer: "Streamlined collection and processing"
     },
     {
         question: "What does proper hazardous waste disposal prevent?",
         options: [
-            "A. Soil enrichment",
-            "B. Health risks from toxic exposure",
-            "C. Recycling of toxic materials",
-            "D. Water purification"
+            "Soil enrichment",
+            "Health risks from toxic exposure",
+            "Recycling of toxic materials",
+            "Water purification"
         ],
-        answer: "B. Health risks from toxic exposure"
+        answer: "Health risks from toxic exposure"
     },
     {
         question: "What is one effect of reducing landfill dependency?",
         options: [
-            "A. Increased pollution",
-            "B. Shortened landfill lifespan",
-            "C. Extended landfill lifespan",
-            "D. More land needed for dumpsites"
+            "Increased pollution",
+            "Shortened landfill lifespan",
+            "Extended landfill lifespan",
+            "More land needed for dumpsites"
         ],
-        answer: "C. Extended landfill lifespan"
+        answer: "Extended landfill lifespan"
     },
     {
         question: "What is a common obstacle in effective waste segregation?",
         options: [
-            "A. Excess awareness",
-            "B. Too many recycling centers",
-            "C. Lack of education and awareness",
-            "D. Perfect compliance"
+            "Excess awareness",
+            "Too many recycling centers",
+            "Lack of education and awareness",
+            "Perfect compliance"
         ],
-        answer: "C. Lack of education and awareness"
+        answer: "Lack of education and awareness"
     },
     {
         question: "Why can inconsistent segregation practices be problematic?",
         options: [
-            "A. They save time",
-            "B. They lead to less waste",
-            "C. They cause confusion and reduce efficiency",
-            "D. They promote sustainability"
+            "They save time",
+            "They lead to less waste",
+            "They cause confusion and reduce efficiency",
+            "They promote sustainability"
         ],
-        answer: "C. They cause confusion and reduce efficiency"
+        answer: "They cause confusion and reduce efficiency"
     },
     {
         question: "What infrastructure issue affects waste segregation?",
         options: [
-            "A. Excess collection bins",
-            "B. Limited recycling bins and collection systems",
-            "C. Too many composting options",
-            "D. Free recycling services"
+            "Excess collection bins",
+            "Limited recycling bins and collection systems",
+            "Too many composting options",
+            "Free recycling services"
         ],
-        answer: "B. Limited recycling bins and collection systems"
+        answer: "Limited recycling bins and collection systems"
     },
     {
         question: "What happens when food waste is mixed with recyclables?",
         options: [
-            "A. Better composting",
-            "B. Easier sorting",
-            "C. Contamination of recyclable materials",
-            "D. Lower waste volume"
+            "Better composting",
+            "Easier sorting",
+            "Contamination of recyclable materials",
+            "Lower waste volume"
         ],
-        answer: "C. Contamination of recyclable materials"
+        answer: "Contamination of recyclable materials"
     },
     {
         question: "Which factor can limit the ability to set up waste segregation systems?",
         options: [
-            "A. Overfunding",
-            "B. Lack of waste",
-            "C. Cost and limited resources",
-            "D. Too much space"
+            "Overfunding",
+            "Lack of waste",
+            "Cost and limited resources",
+            "Too much space"
         ],
-        answer: "C. Cost and limited resources"
+        answer: "Cost and limited resources"
     },
     {
         question: "What type of waste is typically biodegradable?",
         options: [
-            "A. Plastic bottles",
-            "B. Aluminum cans",
-            "C. Food scraps",
-            "D. Glass jars"
+            "Plastic bottles",
+            "Aluminum cans",
+            "Food scraps",
+            "Glass jars"
         ],
-        "answer": "C. Food scraps"
+        "answer": "Food scraps"
     },
     {
         question: "What is the goal of promoting composting under RA 9003?",
         options: [
-            "A. To burn organic waste",
-            "B. To reduce organic waste in landfills",
-            "C. To sell waste overseas",
-            "D. To increase garbage collection"
+            "To burn organic waste",
+            "To reduce organic waste in landfills",
+            "To sell waste overseas",
+            "To increase garbage collection"
         ],
-        answer: "B. To reduce organic waste in landfills"
+        answer: "To reduce organic waste in landfills"
     },
     {
         question: "Which of the following is a sustainable waste management practice?",
         options: [
-            "A. Dumping into rivers",
-            "B. Incineration",
-            "C. Recycling",
-            "D. Burning plastics"
+            "Dumping into rivers",
+            "Incineration",
+            "Recycling",
+            "Burning plastics"
         ],
-        answer: "C. Recycling"
+        answer: "Recycling"
     },
     {
         question: "How can communities help improve waste segregation?",
         options: [
-            "A. Ignore recycling laws",
-            "B. Mix all types of waste",
-            "C. Practice and promote proper segregation",
-            "D. Depend solely on the government"
+            "Ignore recycling laws",
+            "Mix all types of waste",
+            "Practice and promote proper segregation",
+            "Depend solely on the government"
         ],
-        answer: "C. Practice and promote proper segregation"
+        answer: "Practice and promote proper segregation"
     },
     {
         question: "Which sector is responsible for educating people on waste segregation?",
         options: [
-            "A. Private companies only",
-            "B. The military",
-            "C. Communities, schools, and local government",
-            "D. Tourists"
+            "Private companies only",
+            "The military",
+            "Communities, schools, and local government",
+            "Tourists"
         ],
-        answer: "C. Communities, schools, and local government"
+        answer: "Communities, schools, and local government"
     },
     {
         question: "What is a consequence of poor waste segregation?",
         options: [
-            "A. Increased recyclability",
-            "B. Cleaner environment",
-            "C. Contaminated waste streams",
-            "D. Decreased landfill use"
+            "Increased recyclability",
+            "Cleaner environment",
+            "Contaminated waste streams",
+            "Decreased landfill use"
         ],
-        answer: "C. Contaminated waste streams"
+        answer: "Contaminated waste streams"
     }
 ];
 
@@ -267,11 +267,11 @@ function shuffleArray(array) {
 
 // Function to rephrase question and options using LLM
 async function fetchRephrasedQuestion(originalQuestionObj) {
-    const prompt = `Rephrase the following multiple-choice question and its options. Provide the correct answer text separately. Ensure the meaning of the question and the correct answer remains the same.
+    const prompt = `Rephrase the following multiple-choice question and its options. Ensure the meaning of the question and the correct answer remains the same.
     \nOriginal Question: ${originalQuestionObj.question}
     \nOriginal Options (without A,B,C,D prefixes):
-    ${originalQuestionObj.options.map(o => o.substring(3)).join('\n')}
-    \nOriginal Correct Answer Text (without prefix): ${originalQuestionObj.answer.substring(3)}
+    ${originalQuestionObj.options.map(o => o.replace(/^[A-D]\.\s*/, '')).join('\n')}
+    \nOriginal Correct Answer Text (without prefix): ${originalQuestionObj.answer.replace(/^[A-D]\.\s*/, '')}
     \nProvide the response in JSON format with 'rephrasedQuestion' (string), 'rephrasedOptions' (array of strings, no A,B,C,D prefixes), and 'correctAnswerText' (string, the plain text of the correct option).`;
 
     let chatHistory = [];
@@ -294,7 +294,6 @@ async function fetchRephrasedQuestion(originalQuestionObj) {
             }
         }
     };
-    // Your API Key is now included here!
     const apiKey = "AIzaSyDAaB8sAR3TKJz92Y_8AeKjent6-k2ygTM";
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
@@ -313,28 +312,47 @@ async function fetchRephrasedQuestion(originalQuestionObj) {
             const parsedJson = JSON.parse(jsonString);
 
             let newOptions = parsedJson.rephrasedOptions;
-            shuffleArray(newOptions); // Shuffle the rephrased options
+            let llmCorrectAnswerText = parsedJson.correctAnswerText;
 
-            // Add A, B, C, D prefixes to the shuffled options
-            const prefixedOptions = newOptions.map((option, idx) => {
-                return String.fromCharCode(65 + idx) + ". " + option;
-            });
+            // --- CRITICAL FIX START ---
+            // Find the *exact* matching rephrased option for the correct answer
+            let finalCorrectAnswerText = '';
+            // First, try to find an exact match from the LLM's rephrased options
+            const exactMatch = newOptions.find(option => option === llmCorrectAnswerText);
 
-            // Find the correct answer text in the newly prefixed and shuffled options
-            let newCorrectAnswer = "";
-            const correctText = parsedJson.correctAnswerText;
-            for (let i = 0; i < prefixedOptions.length; i++) {
-                // Check if the option's text (after the prefix) matches the correct text
-                if (prefixedOptions[i].substring(3).trim() === correctText.trim()) {
-                    newCorrectAnswer = prefixedOptions[i];
-                    break;
+            if (exactMatch) {
+                finalCorrectAnswerText = exactMatch;
+            } else {
+                // If no exact match, try to find a "contains" match or closest match
+                // This is a fallback and can still be imperfect if rephrasing is too drastic
+                const fuzzyMatch = newOptions.find(option =>
+                    option.toLowerCase().includes(llmCorrectAnswerText.toLowerCase()) ||
+                    llmCorrectAnswerText.toLowerCase().includes(option.toLowerCase())
+                );
+
+                if (fuzzyMatch) {
+                    finalCorrectAnswerText = fuzzyMatch;
+                    console.warn(`Fuzzy match for correct answer: Original LLM provided "${llmCorrectAnswerText}", using rephrased option "${fuzzyMatch}"`);
+                } else {
+                    // As a last resort, if the LLM's correct answer text isn't in its own options,
+                    // we'll add it if it's not already there and set it as the correct answer.
+                    // This scenario suggests a significant LLM misbehavior, but provides a fallback.
+                    console.error("LLM's rephrased correct answer text does not match any of its rephrased options. Adding it as an option.");
+                    if (!newOptions.includes(llmCorrectAnswerText)) {
+                        newOptions.push(llmCorrectAnswerText); // Add it to ensure it's an option
+                        shuffleArray(newOptions); // Re-shuffle after adding
+                    }
+                    finalCorrectAnswerText = llmCorrectAnswerText; // Use the LLM's exact text
                 }
             }
+            // --- CRITICAL FIX END ---
+
+            shuffleArray(newOptions); // Shuffle the rephrased options
 
             return {
                 question: parsedJson.rephrasedQuestion,
-                options: prefixedOptions,
-                answer: newCorrectAnswer || originalQuestionObj.answer // Fallback if remapping fails
+                options: newOptions,
+                answer: finalCorrectAnswerText // Now this *guarantees* it's one of the displayed options
             };
 
         } else {
@@ -406,24 +424,35 @@ async function updateQuestion() {
         itemNumber.textContent = `Item ${currentQuestionIndex + 1}`; // Update item number immediately
 
         // Fetch rephrased question and options
-        const originalQuestion = questions[currentQuestionIndex];
+        const originalQuestion = originalQuestions[currentQuestionIndex]; // Use originalQuestions here
         const rephrasedData = await fetchRephrasedQuestion(originalQuestion);
 
-        questions[currentQuestionIndex].question = rephrasedData.question;
-        questions[currentQuestionIndex].options = rephrasedData.options;
-        questions[currentQuestionIndex].answer = rephrasedData.answer; // Update to new answer string
+        // Update the current question in the `questions` array with the rephrased data
+        questions[currentQuestionIndex] = {
+            question: rephrasedData.question,
+            options: rephrasedData.options,
+            answer: rephrasedData.answer // This is the plain text of the correct option, now guaranteed to be in options
+        };
 
         // Populate with fetched data
         questionText.textContent = questions[currentQuestionIndex].question;
         optionsElements.forEach((option, index) => {
-            option.textContent = questions[currentQuestionIndex].options[index];
+            // Ensure there are enough options to populate. If LLM provides fewer than 4,
+            // the extra option elements will remain blank.
+            if (questions[currentQuestionIndex].options[index]) {
+                option.textContent = questions[currentQuestionIndex].options[index];
+            } else {
+                option.textContent = ""; // Clear if no option available
+            }
         });
     }
 }
 
+
 function showResults() {
     let correctAnswers = 0;
     questions.forEach((question, index) => {
+        // Now compare the selected text directly with the plain text answer
         if (userAnswers[index] === question.answer) {
             correctAnswers++;
         }
