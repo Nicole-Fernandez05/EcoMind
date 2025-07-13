@@ -246,51 +246,63 @@ window.logoutUser = logoutUser;
 
 // --- Module Completion/Locking Logic (Add your specific module logic here) ---
 
-// This part remains specific to your module homepage functionality.
+const moduleLinks = document.querySelectorAll('.modules-container .module-link');
 
-// Example:
+    // Function to check module completion status from localStorage
+    const isModuleCompleted = (moduleNumber) => {
+        return localStorage.getItem(`module${moduleNumber}Completed`) === 'true';
+    };
 
-// const module2Link = document.getElementById('module2-link');
+    // Function to update module link status based on completion
+    const updateModuleLinks = () => {
+        moduleLinks.forEach((link, index) => {
+            const moduleNumber = index + 1; // Modules are 1-indexed (Module 1, Module 2, etc.)
+            const moduleCard = link.querySelector('.module-card');
+            // Adjusted moduleLabel selection to work with the restored HTML structure
+            const moduleLabelElement = moduleCard.querySelector('.module-label');
+            const moduleLabel = moduleLabelElement ? moduleLabelElement.textContent : `Module ${moduleNumber}`; // Fallback if not found
 
-// const module3Link = document.getElementById('module3-link');
+            // Module 1 is always accessible
+            if (moduleNumber === 1) {
+                link.href = `module1.html`; // Set the actual link for Module 1
+                link.classList.remove('locked');
+                moduleCard.setAttribute('aria-disabled', 'false');
+                link.style.pointerEvents = 'auto'; // Ensure it's clickable
+                moduleCard.style.opacity = '1'; // Ensure full visibility
+                moduleCard.style.cursor = 'pointer'; // Restore pointer cursor
+                return; // Skip further checks for Module 1
+            }
 
-// etc.
+            // For subsequent modules, check if the previous module is completed
+            if (isModuleCompleted(moduleNumber - 1)) {
+                link.href = `module${moduleNumber}.html`; // Set the actual link for the module
+                link.classList.remove('locked');
+                moduleCard.setAttribute('aria-disabled', 'false');
+                link.style.pointerEvents = 'auto';
+                moduleCard.style.opacity = '1';
+                moduleCard.style.cursor = 'pointer';
+            } else {
+                link.href = '#'; // Prevent navigation
+                link.classList.add('locked');
+                moduleCard.setAttribute('aria-disabled', 'true');
+                link.style.pointerEvents = 'none'; // Disable clicks
+                moduleCard.style.opacity = '0.6'; // Visually indicate it's locked
+                moduleCard.style.cursor = 'not-allowed'; // Change cursor for locked modules
 
+                if (!link.hasAttribute('data-locked-listener')) { // Prevent adding multiple listeners
+                    link.addEventListener('click', (e) => {
+                        if (link.classList.contains('locked')) {
+                            e.preventDefault(); // Stop the default link behavior
+                            alert(`Please complete ${moduleLabel} before accessing this module.`);
+                        }
+                    });
+                    link.setAttribute('data-locked-listener', 'true'); // Mark that listener is added
+                }
+            }
+        });
+    };
 
-
-// function checkModuleCompletion() {
-
-//     // Example: Check if Module 1 is completed (using sessionStorage or localStorage)
-
-//     const module1Completed = sessionStorage.getItem('module1Completed') === 'true';
-
-
-
-//     if (module1Completed && module2Link) {
-
-//         module2Link.classList.remove('locked');
-
-//         module2Link.href = 'module2.html'; // Set the actual link
-
-//     } else if (module2Link) {
-
-//         module2Link.addEventListener('click', (e) => {
-
-//             if (module2Link.classList.contains('locked')) {
-
-//                 e.preventDefault();
-
-//                 alert('Please complete Module 1 first!');
-
-//             }
-
-//         });
-
-//     }
-
-//     // Repeat for other modules
-
-// }
+    updateModuleLinks();
 
 
 
