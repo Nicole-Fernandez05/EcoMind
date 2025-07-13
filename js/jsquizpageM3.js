@@ -446,18 +446,21 @@ function showResults() {
         }
     });
 
-    const passingScore = 80;
-    const currentModule = 3; // This is specifically for Module 3 quiz
-    const nextModule = currentModule + 1;
+    const passingScore = 80; // 80% to pass
+const currentModule = 3; 
+const nextModule = currentModule + 1; // <--- ADD THIS LINE TO DEFINE nextModule
 
-    if (percentageScore >= passingScore) {
-        localStorage.setItem(`module${currentModule}Completed`, 'true');
-        localStorage.setItem(`module${nextModule}Unlocked`, 'true'); // Unlock the next module (Module 4)
-        showMessageBox(`Congratulations! You passed Module ${currentModule} with a score of ${percentageScore}%. Module ${nextModule} is now unlocked!`, () => {});
-    } else {
-        localStorage.setItem(`module${currentModule}Completed`, 'false');
-        showMessageBox(`You scored ${percentageScore}%. You need ${passingScore}% to pass Module ${currentModule}. Please review the module and try again.`, () => {});
-    }
+if (percentageScore >= passingScore) {
+    localStorage.setItem(`module${currentModule}Completed`, 'true'); // Correctly sets 'module1Completed': 'true'
+
+    // The message can refer to nextModule as it's now defined.
+    // However, it's generally better to let the homepage handle the "unlocked" message
+    // as the quiz itself just completes the current module.
+    showMessageBox(`Congratulations! You passed Module ${currentModule} with a score of ${percentageScore}%. Module ${nextModule} is now unlocked!`, () => {});
+} else {
+    localStorage.setItem(`module${currentModule}Completed`, 'false'); // Sets 'module1Completed': 'false' on failure
+    showMessageBox(`You scored ${percentageScore}%. You need ${passingScore}% to pass Module ${currentModule}. Please review the module and try again.`, () => {});
+}
 }
 
 function retakeQuiz() {
