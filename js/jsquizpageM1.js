@@ -3,7 +3,7 @@
 // Module-specific variables for Module 1
 let currentQuestionIndex = 0;
 let userAnswers = [];
-let timeLeft = 600; // 10 minutes in seconds for Module 1
+let timeLeft = 900; // 15 minutes in seconds for Module 1
 let timerInterval; // Declare timer interval here for this module
 
 // STORE ORIGINAL QUESTIONS AND ANSWERS FOR MODULE 1
@@ -448,17 +448,20 @@ function showResults() {
 
     // --- LOGIC FOR UNLOCKING MODULES ---
     const passingScore = 80; // 80% to pass
-    const currentModule = 1; // This is for Module 1 quiz
-    const nextModule = currentModule + 1; // This will be 2 for Module 1
+const currentModule = 1; 
+const nextModule = currentModule + 1; // <--- ADD THIS LINE TO DEFINE nextModule
 
-    if (percentageScore >= passingScore) {
-        localStorage.setItem(`module${currentModule}Completed`, 'true');
-        localStorage.setItem(`module${nextModule}Unlocked`, 'true'); // Unlock Module 2
-        showMessageBox(`Congratulations! You passed Module ${currentModule} with a score of ${percentageScore}%. Module ${nextModule} is now unlocked!`, () => {});
-    } else {
-        localStorage.setItem(`module${currentModule}Completed`, 'false');
-        showMessageBox(`You scored ${percentageScore}%. You need ${passingScore}% to pass Module ${currentModule}. Please review the module and try again.`, () => {});
-    }
+if (percentageScore >= passingScore) {
+    localStorage.setItem(`module${currentModule}Completed`, 'true'); // Correctly sets 'module1Completed': 'true'
+
+    // The message can refer to nextModule as it's now defined.
+    // However, it's generally better to let the homepage handle the "unlocked" message
+    // as the quiz itself just completes the current module.
+    showMessageBox(`Congratulations! You passed Module ${currentModule} with a score of ${percentageScore}%. Module ${nextModule} is now unlocked!`, () => {});
+} else {
+    localStorage.setItem(`module${currentModule}Completed`, 'false'); // Sets 'module1Completed': 'false' on failure
+    showMessageBox(`You scored ${percentageScore}%. You need ${passingScore}% to pass Module ${currentModule}. Please review the module and try again.`, () => {});
+}
     // --- END LOGIC ---
 }
 
